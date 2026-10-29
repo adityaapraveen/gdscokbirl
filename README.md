@@ -6,7 +6,7 @@ WindLens reconstructs the wind forecast available when a procurement decision ha
 
 **Live app:** [gdscokbirl.vercel.app](https://gdscokbirl.vercel.app) · **API contract:** [interactive documentation](https://gdscokbirl.vercel.app/api/docs)
 
-**Video:** The candidate recording is outstanding. A [timed recording guide](docs/DEMO.md) is included. Do not submit the challenge without its required unlisted video.
+**Video:** The candidate recording is outstanding. Do not submit the challenge without its required unlisted video.
 
 ![WindLens overview](docs/screenshots/overview.jpg)
 
@@ -91,7 +91,7 @@ SQLite suits this small, fixed pilot. Docker persists it in a volume. Vercel ato
 - `frontend/src/`: React shell, four pages, charts, API types/client and responsive styling.
 - `scripts/`: source audit, residual benchmark and snapshot packaging.
 - `tests/`: original research integrity checks.
-- `docs/`: research evidence, screenshots, verification and recording guide.
+- `docs/`: research evidence, screenshots and verification notes.
 - `docker-compose.yml`, Dockerfiles, `frontend/nginx.conf`: local application.
 - `api/index.py`, `vercel.json`: same-origin Vercel deployment.
 - `.github/workflows/ci.yml`: tests and frontend build on pushes and PRs.

@@ -9,3 +9,4 @@ frontend/node_modules
 .env
 .env.*
 docs/screenshots
+.local-only/
