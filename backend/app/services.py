@@ -1,5 +1,4 @@
 """Compose domain calculations into views; routes only validate inputs and serialize."""
-from collections import defaultdict
 from datetime import date, datetime, time, timedelta
 from math import ceil, floor, isclose
 from statistics import mean
@@ -59,7 +58,7 @@ def overview(dataset: Dataset, delivery_day: date, cutoff_time: time, reveal: bo
                   if calibration["available"] else "There is insufficient prior history to estimate an empirical range.")
     publications = [point["publish_time"] for point in curve if point["publish_time"]]
     return {"delivery_date": delivery_day.isoformat(), "decision_date": (delivery_day - timedelta(days=1)).isoformat(),
-        "decision_cutoff": cutoff.isoformat(), "latest_eligible_publication": max(publications) if publications else None,
+        "decision_cutoff": cutoff.isoformat(), "latest_eligible_publication": max(publications, key=datetime.fromisoformat) if publications else None,
         "expected_wind_mw": expected, "latest_revision_mw": revision,
         "change_from_first_mw": average(point["change_from_first_mw"] for point in curve),
         "mean_downside_mw": average(point.get("downside_mw") for point in curve),

@@ -15,7 +15,8 @@ from .schemas import Accuracy, DataQuality, Evolution, Overview
 from . import services
 
 LOG = logging.getLogger("windlens")
-app = FastAPI(title="WindLens API", version="1.0.0",
+logging.basicConfig(level=logging.INFO, format="%(message)s")
+app = FastAPI(title="WindLens API", version="1.0.0", docs_url="/api/docs", openapi_url="/api/openapi.json", redoc_url=None,
               description="Decision-time analysis of GB operationally metered wind. Error = actual − forecast.")
 app.add_middleware(CORSMiddleware, allow_origins=os.getenv("CORS_ORIGINS", "http://localhost:5173,http://127.0.0.1:5173").split(","),
                    allow_methods=["GET"], allow_headers=["Content-Type"])
@@ -25,7 +26,11 @@ app.add_middleware(CORSMiddleware, allow_origins=os.getenv("CORS_ORIGINS", "http
 async def request_context(request, call_next):
     request_id = str(uuid4())
     started = perf_counter()
-    response = await call_next(request)
+    try:
+        response = await call_next(request)
+    except Exception:
+        LOG.exception("request_failed request_id=%s path=%s", request_id, request.url.path)
+        raise
     response.headers["X-Request-ID"] = request_id
     response.headers["X-Content-Type-Options"] = "nosniff"
     LOG.info("request_id=%s method=%s path=%s status=%s elapsed_ms=%.1f", request_id,

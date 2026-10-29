@@ -67,8 +67,18 @@ def test_cold_start_has_no_invented_band(client):
 
 
 def test_missing_database_is_503_not_fake_data(monkeypatch):
-    app.dependency_overrides.clear()
+    previous = app.dependency_overrides.pop(dataset_dependency, None)
     monkeypatch.setattr("backend.app.main.get_dataset", lambda: (_ for _ in ()).throw(ValueError("missing")))
-    with TestClient(app) as client:
-        assert client.get("/ready").status_code == 503
-        assert client.get("/health").status_code == 200
+    try:
+        with TestClient(app) as client:
+            assert client.get("/ready").status_code == 503
+            assert client.get("/health").status_code == 200
+    finally:
+        if previous is not None:
+            app.dependency_overrides[dataset_dependency] = previous
+
+
+def test_api_documentation_is_under_proxied_api_path(client):
+    assert client.get("/api/docs").status_code == 200
+    contract = client.get("/api/openapi.json").json()
+    assert "/api/evolution" in contract["paths"]
