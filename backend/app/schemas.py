@@ -1,5 +1,17 @@
 """Explicit response contracts; analytics do not leak through untyped route dictionaries."""
 from pydantic import BaseModel
+from typing import Literal
+
+
+class SourceStatus(BaseModel):
+    mode: Literal["live", "cached", "snapshot"]
+    storage: Literal["persistent", "ephemeral"]
+    last_attempt_at: str | None
+    last_success_at: str | None
+    next_refresh_at: str | None
+    error: str | None
+    ttl_seconds: int = 3600
+    cooldown_seconds: int = 60
 
 
 class Metrics(BaseModel):
@@ -36,6 +48,7 @@ class Provenance(BaseModel):
     decision_scope: str = "1–31 January 2026; delivery 2 January–1 February"
     source_retrieved_at: str | None = None
     source_hash: str | None = None
+    source_mode: Literal["live", "cached", "snapshot"] = "snapshot"
 
 
 class Point(BaseModel):
