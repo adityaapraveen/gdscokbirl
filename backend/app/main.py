@@ -5,21 +5,24 @@ from time import perf_counter
 from typing import Annotated
 from uuid import uuid4
 
-from fastapi import Depends, FastAPI, HTTPException, Query
+from fastapi import Depends, FastAPI, HTTPException, Query, Response
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.middleware.gzip import GZipMiddleware
 from sqlalchemy.exc import SQLAlchemyError
 
 from .analytics import Dataset, LONDON, aware
 from .repository import get_dataset
-from .schemas import Accuracy, DataQuality, Evolution, Overview
-from . import services
+from .responses import render_view
+from .schemas import Accuracy, DataQuality, Evolution, Overview, SourceStatus
+from . import sync
 
 LOG = logging.getLogger("windlens")
 logging.basicConfig(level=logging.INFO, format="%(message)s")
 app = FastAPI(title="WindLens API", version="1.0.0", docs_url="/api/docs", openapi_url="/api/openapi.json", redoc_url=None,
               description="Decision-time analysis of GB operationally metered wind. Error = actual − forecast.")
 app.add_middleware(CORSMiddleware, allow_origins=os.getenv("CORS_ORIGINS", "http://localhost:5173,http://127.0.0.1:5173").split(","),
-                   allow_methods=["GET"], allow_headers=["Content-Type"])
+                   allow_methods=["GET", "POST"], allow_headers=["Content-Type"])
+app.add_middleware(GZipMiddleware, minimum_size=1000, compresslevel=5)
 
 
 @app.middleware("http")
@@ -33,6 +36,10 @@ async def request_context(request, call_next):
         raise
     response.headers["X-Request-ID"] = request_id
     response.headers["X-Content-Type-Options"] = "nosniff"
+    if request.url.path.startswith("/api/"):
+        # Server-side generation-aware caches provide speed without browsers
+        # holding an obsolete response after source refresh or replay changes.
+        response.headers["Cache-Control"] = "no-store"
     LOG.info("request_id=%s method=%s path=%s status=%s elapsed_ms=%.1f", request_id,
              request.method, request.url.path, response.status_code, (perf_counter() - started) * 1000)
     return response
@@ -72,7 +79,7 @@ def ready(dataset: Data):
 @app.get("/api/overview", response_model=Overview)
 def overview(dataset: Data, cutoff: Cutoff, delivery_date: date = date(2026, 1, 22), reveal: bool = False):
     validate_delivery(delivery_date)
-    return services.overview(dataset, delivery_date, cutoff, reveal)
+    return Response(render_view("overview", dataset, delivery_date, cutoff, reveal), media_type="application/json")
 
 
 @app.get("/api/evolution", response_model=Evolution)
@@ -84,16 +91,28 @@ def evolution(dataset: Data, cutoff: Cutoff, delivery_time: datetime = datetime.
     validate_delivery(delivery_time.astimezone(LONDON).date())
     if delivery_time.minute or delivery_time.second or delivery_time.microsecond:
         raise HTTPException(422, "WINDFOR is hourly. Select a native whole-hour delivery timestamp.")
-    return services.evolution(dataset, delivery_time, cutoff, reveal)
+    return Response(render_view("evolution", dataset, delivery_time, cutoff, reveal), media_type="application/json")
 
 
 @app.get("/api/accuracy", response_model=Accuracy)
 def accuracy(dataset: Data, cutoff: Cutoff, date_from: date = date(2026, 1, 1), date_to: date = date(2026, 1, 31)):
     if not date(2026, 1, 1) <= date_from <= date_to <= date(2026, 1, 31):
         raise HTTPException(422, "Select an ordered range of decision dates within January 2026.")
-    return services.accuracy(dataset, date_from, date_to, cutoff)
+    return Response(render_view("accuracy", dataset, date_from, date_to, cutoff), media_type="application/json")
 
 
 @app.get("/api/data-quality", response_model=DataQuality)
 def data_quality(dataset: Data, cutoff: Cutoff):
-    return services.data_quality(dataset, cutoff)
+    return Response(render_view("data-quality", dataset, cutoff), media_type="application/json")
+
+
+@app.get("/api/source-status", response_model=SourceStatus)
+def source_status(response: Response, dataset: Data):
+    response.headers["Cache-Control"] = "no-store"
+    return sync.source_status()
+
+
+@app.post("/api/source/refresh", response_model=SourceStatus)
+def refresh_source(response: Response, dataset: Data, force: bool = False):
+    response.headers["Cache-Control"] = "no-store"
+    return sync.refresh_source(force)

@@ -123,6 +123,7 @@ class Dataset:
         complete = {day: errors for day, errors in grouped.items() if len(errors) == len(delivery_grid(day))}
         return tuple(error for errors in complete.values() for error in errors), tuple(day.isoformat() for day in sorted(complete))
 
+    @lru_cache(maxsize=512)
     def calibration(self, cutoff: datetime, local_cutoff: time) -> dict:
         errors, dates = self.historical_pool(cutoff, local_cutoff)
         enough = len(dates) >= 7 and len(errors) >= 30
@@ -137,9 +138,10 @@ class Dataset:
             "reason": None if enough else "At least seven complete historical days and 30 matched observations are required."}
 
     def revisions(self, target: int, cutoff: datetime) -> dict:
-        eligible = [row for row in self.forecasts.get(target, []) if row.publish_ts <= aware(cutoff).timestamp()]
-        return {"latest_revision_mw": eligible[-1].generation_mw - eligible[-2].generation_mw if len(eligible) > 1 else None,
-                "change_from_first_mw": eligible[-1].generation_mw - eligible[0].generation_mw if len(eligible) > 1 else None}
+        versions = self.forecasts.get(target, [])
+        index = bisect_right(versions, aware(cutoff).timestamp(), key=lambda row: row.publish_ts)
+        return {"latest_revision_mw": versions[index - 1].generation_mw - versions[index - 2].generation_mw if index > 1 else None,
+                "change_from_first_mw": versions[index - 1].generation_mw - versions[0].generation_mw if index > 1 else None}
 
 
 def empirical_range(forecast_mw: float, calibration: dict) -> dict:

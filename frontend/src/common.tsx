@@ -119,6 +119,22 @@ export function ApiState({
     </div>
   );
 }
+export function ApiRefreshNotice({
+  error,
+  retry,
+}: {
+  error: string | null;
+  retry: () => void;
+}) {
+  if (!error) return null;
+  return (
+    <div className="context-banner analysis-refresh-error" role="alert">
+      <AlertCircle size={17} />
+      <span>Showing the previous analysis because its update failed. {error}</span>
+      <button className="button" onClick={retry}>Retry analysis</button>
+    </div>
+  );
+}
 export function ProvenanceDetails({ data }: { data: Provenance }) {
   return (
     <details className="provenance">
@@ -140,6 +156,12 @@ export function ProvenanceDetails({ data }: { data: Provenance }) {
             Resolution: data.units,
             Uncertainty: data.uncertainty,
             "Source retrieved": stamp(data.source_retrieved_at),
+            "Source mode":
+              data.source_mode === "live"
+                ? "Fetched from Elexon API"
+                : data.source_mode === "cached"
+                  ? "Stored Elexon API cache"
+                  : "Stored startup snapshot",
           }).map(([label, value]) => (
             <div key={label}>
               <dt>{label}</dt>
@@ -148,7 +170,7 @@ export function ProvenanceDetails({ data }: { data: Provenance }) {
           ))}
         </dl>
         <p className="mono">
-          Snapshot SHA-256: {data.source_hash || "Not recorded"}
+          Source batch SHA-256: {data.source_hash || "Not recorded"}
         </p>
         <div className="source-links">
           <a

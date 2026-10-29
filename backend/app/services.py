@@ -1,5 +1,5 @@
 """Compose domain calculations into views; routes only validate inputs and serialize."""
-from datetime import date, datetime, time, timedelta
+from datetime import UTC, date, datetime, time, timedelta
 from math import ceil, floor, isclose
 from statistics import mean
 
@@ -8,8 +8,14 @@ from .schemas import Provenance
 
 
 def provenance(dataset: Dataset) -> dict:
+    mode = dataset.metadata.get("source_mode", "snapshot")
+    retrieved_at = dataset.metadata.get("retrieved_at")
+    if mode == "live" and retrieved_at:
+        if (datetime.now(UTC) - datetime.fromisoformat(retrieved_at)).total_seconds() >= 3600:
+            mode = "cached"
     return Provenance(source_retrieved_at=dataset.metadata.get("retrieved_at"),
-                      source_hash=dataset.metadata.get("source_hash")).model_dump()
+                      source_hash=dataset.metadata.get("source_hash"),
+                      source_mode=mode).model_dump()
 
 
 def average(values):

@@ -2,7 +2,7 @@
 from datetime import UTC, datetime
 from pathlib import Path
 
-from sqlalchemy import BigInteger, Float, String, Text, create_engine, select
+from sqlalchemy import BigInteger, Float, Integer, String, Text, create_engine, select
 from sqlalchemy.orm import DeclarativeBase, Mapped, Session, mapped_column
 
 from .config import DATABASE_URL
@@ -32,6 +32,15 @@ class Ingestion(Base):
     source_hash: Mapped[str] = mapped_column(String(64), primary_key=True)
     ingested_at: Mapped[str] = mapped_column(String(40))
     metadata_json: Mapped[str] = mapped_column(Text)
+
+
+class SourceSync(Base):
+    """Freshness is separate from content identity: unchanged data can be checked again."""
+    __tablename__ = "source_sync"
+    id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    last_attempt_at: Mapped[str | None] = mapped_column(String(40), nullable=True)
+    last_success_at: Mapped[str | None] = mapped_column(String(40), nullable=True)
+    error: Mapped[str | None] = mapped_column(Text, nullable=True)
 
 
 def make_engine(url: str = DATABASE_URL):

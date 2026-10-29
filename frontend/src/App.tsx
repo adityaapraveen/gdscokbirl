@@ -17,6 +17,8 @@ import {
   QualityPage,
 } from "./pages";
 import { dayLabel } from "./common";
+import type { SourceStatus } from "./api";
+import { SourceStatusBar, sourceLabel } from "./source";
 
 const navigation = [
   {
@@ -59,6 +61,7 @@ type Page = (typeof navigation)[number]["id"];
 
 export default function App() {
   const [page, setPage] = useState<Page>("overview");
+  const [source, setSource] = useState<SourceStatus | null>(null);
   const [delivery, setDelivery] = useState("2026-01-22");
   const [cutoff, setCutoff] = useState("09:20");
   const [hour, setHour] = useState("18");
@@ -119,7 +122,7 @@ export default function App() {
         <div className="sidebar-bottom">
           <div className="source-dot" />
           <div>
-            Elexon source snapshot<small>GB operationally metered wind</small>
+            {sourceLabel(source?.mode)}<small>GB operationally metered wind</small>
           </div>
           <a
             href="https://github.com/adityaapraveen/gdscokbirl"
@@ -157,6 +160,7 @@ export default function App() {
               <strong>Day-ahead</strong>
             </span>
           </div>
+          <SourceStatusBar onStatus={setSource} />
           <section className="controls" aria-label="Analysis controls">
             <div className="control-fields">
               {decisionPage && (

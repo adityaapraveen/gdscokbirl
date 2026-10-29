@@ -21,6 +21,7 @@ export type Calibration = {
   reason: string | null;
 };
 export type Provenance = {
+  source_mode?: "live" | "cached" | "snapshot";
   source_actuals: string;
   source_forecasts: string;
   population: string;
@@ -128,7 +129,40 @@ export type QualityData = {
   provenance: Provenance;
 };
 
-const base = import.meta.env.VITE_API_BASE_URL || "";
+export type SourceStatus = {
+  mode: "live" | "cached" | "snapshot";
+  storage: "persistent" | "ephemeral";
+  last_attempt_at: string | null;
+  last_success_at: string | null;
+  next_refresh_at: string | null;
+  error: string | null;
+  ttl_seconds: number;
+  cooldown_seconds: number;
+};
+
+export const apiBaseUrl = import.meta.env.VITE_API_BASE_URL || "";
+export const dataRefreshEvent = "windlens:data-refreshed";
+
+export async function requestApi<T>(
+  path: string,
+  options: RequestInit = {},
+): Promise<T> {
+  const response = await fetch(`${apiBaseUrl}${path}`, {
+    ...options,
+    cache: "no-store",
+  });
+  const body = await response.json().catch(() => null);
+  if (!response.ok) {
+    throw new Error(
+      typeof body?.detail === "string"
+        ? body.detail
+        : `Unable to complete the request (HTTP ${response.status}).`,
+    );
+  }
+  if (body == null) throw new Error("The API returned an empty response.");
+  return body as T;
+}
+
 export function useApi<T>(path: string) {
   const [retry, setRetry] = useState(0);
   const [state, setState] = useState<{
@@ -137,26 +171,29 @@ export function useApi<T>(path: string) {
     error: string | null;
   }>({ path: "", data: null, error: null });
   useEffect(() => {
+    const refresh = () => setRetry((value) => value + 1);
+    window.addEventListener(dataRefreshEvent, refresh);
+    return () => window.removeEventListener(dataRefreshEvent, refresh);
+  }, []);
+  useEffect(() => {
     const abort = new AbortController();
-    setState({ path, data: null, error: null });
-    fetch(`${base}${path}`, { signal: abort.signal })
-      .then(async (response) => {
-        const body = await response.json();
-        if (!response.ok)
-          throw new Error(
-            typeof body.detail === "string"
-              ? body.detail
-              : "The selected inputs are invalid.",
-          );
+    setState((previous) => ({
+      path,
+      data: previous.path === path ? previous.data : null,
+      error: null,
+    }));
+    requestApi<T>(path, { signal: abort.signal })
+      .then((body) => {
+        if (abort.signal.aborted) return;
         setState({ path, data: body, error: null });
       })
       .catch((error) => {
-        if (error.name !== "AbortError")
-          setState({
+        if (!abort.signal.aborted && error.name !== "AbortError")
+          setState((previous) => ({
             path,
-            data: null,
+            data: previous.path === path ? previous.data : null,
             error: error.message || "Unable to reach the API.",
-          });
+          }));
       });
     return () => abort.abort();
   }, [path, retry]);
