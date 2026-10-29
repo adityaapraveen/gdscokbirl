@@ -18,6 +18,7 @@ import type {
 import { useApi } from "./api";
 import {
   ApiState,
+  ApiRefreshNotice,
   Metric,
   Panel,
   ProvenanceDetails,
@@ -54,6 +55,7 @@ export function OverviewPage({
   const history = data.calibration;
   return (
     <>
+      <ApiRefreshNotice error={request.error} retry={request.retry} />
       <div className="decision-strip">
         <span>
           <Clock3 size={15} /> Decision:{" "}
@@ -312,6 +314,7 @@ export function EvolutionPage({
   const data = request.data;
   return (
     <>
+      <ApiRefreshNotice error={request.error} retry={request.retry} />
       <div className="section-toolbar">
         <div className="replay-label">
           <ShieldCheck size={18} />
@@ -504,6 +507,7 @@ export function AccuracyPage({ cutoff }: { cutoff: string }) {
   const data = request.data;
   return (
     <>
+      <ApiRefreshNotice error={request.error} retry={request.retry} />
       <div className="context-banner">
         <Info size={16} />
         <span>
@@ -645,6 +649,7 @@ export function QualityPage({ cutoff }: { cutoff: string }) {
     data.missing_actual_periods.length === 0 && data.join_coverage === 1;
   return (
     <>
+      <ApiRefreshNotice error={request.error} retry={request.retry} />
       <div className={`data-status ${complete ? "" : "partial"}`}>
         <CheckCircle2 size={25} />
         <div>
@@ -660,7 +665,13 @@ export function QualityPage({ cutoff }: { cutoff: string }) {
             coverage
           </p>
         </div>
-        <span className="pill green">VERIFIED SNAPSHOT</span>
+        <span className="pill green">
+          {data.provenance.source_mode === "live"
+            ? "ELEXON API DATA"
+            : data.provenance.source_mode === "cached"
+              ? "STORED API CACHE"
+              : "STARTUP SNAPSHOT"}
+        </span>
       </div>
       <div className="two-columns">
         <Panel
@@ -767,7 +778,11 @@ export function QualityPage({ cutoff }: { cutoff: string }) {
           <div>
             <span>Source retrieved</span>
             <strong className="small">{stamp(data.source_retrieved_at)}</strong>
-            <small>Fixed historical snapshot; no live request on refresh</small>
+            <small>
+              {data.provenance.source_mode === "snapshot"
+                ? "Startup data is available while the Elexon API refreshes"
+                : "Historical January data retrieved from the Elexon API"}
+            </small>
           </div>
           <div>
             <span>Last database import</span>
