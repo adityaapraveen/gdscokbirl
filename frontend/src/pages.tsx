@@ -1,68 +1,789 @@
-import { ArrowDownRight, ArrowRight, Check, CheckCircle2, Clock3, FileCheck2, Info, ShieldCheck, Wind } from 'lucide-react'
-import type { AccuracyData, EvolutionData, OverviewData, QualityData } from './api'
-import { useApi } from './api'
-import { ApiState, Metric, Panel, ProvenanceDetails, clock, dayLabel, gw, number, signed, stamp } from './common'
-import { ErrorBuckets, EvolutionChart, Histogram, Key, ScatterPlot, WindChart } from './charts'
+import {
+  ArrowDownRight,
+  ArrowRight,
+  Check,
+  CheckCircle2,
+  Clock3,
+  FileCheck2,
+  Info,
+  ShieldCheck,
+  Wind,
+} from "lucide-react";
+import type {
+  AccuracyData,
+  EvolutionData,
+  OverviewData,
+  QualityData,
+} from "./api";
+import { useApi } from "./api";
+import {
+  ApiState,
+  Metric,
+  Panel,
+  ProvenanceDetails,
+  clock,
+  dayLabel,
+  gw,
+  number,
+  signed,
+  stamp,
+} from "./common";
+import {
+  ErrorBuckets,
+  EvolutionChart,
+  Histogram,
+  Key,
+  ScatterPlot,
+  WindChart,
+} from "./charts";
 
-type DecisionProps = {delivery:string;cutoff:string;reveal:boolean}
+type DecisionProps = { delivery: string; cutoff: string; reveal: boolean };
 
-export function OverviewPage({delivery,cutoff,reveal,onEvolution}:{onEvolution:(hour:string)=>void}&DecisionProps) {
-  const request = useApi<OverviewData>(`/api/overview?delivery_date=${delivery}&cutoff=${cutoff}&reveal=${reveal}`)
-  if(!request.data) return <ApiState error={request.error} retry={request.retry}/>
-  const data = request.data
-  const history = data.calibration
-  return <>
-    <div className="decision-strip"><span><Clock3 size={15}/> Decision: <strong>{stamp(data.decision_cutoff)}</strong></span><span>Latest eligible publication <strong>{data.latest_eligible_publication?`${clock(data.latest_eligible_publication)} GMT`:'Unavailable'}</strong></span><span className="coverage"><i/>{data.eligible_native_periods}/{data.expected_native_periods} native periods</span></div>
-    <div className="metrics six"><Metric label="Mean wind forecast" value={gw(data.expected_wind_mw)} unit="GW" note="Mean of native hourly forecasts" hint="Source forecast available at the cutoff. This is a mean power value, not total energy."/><Metric label="Historical MAE" value={number(history.metrics.mae_mw)} unit="MW" note={`${number(history.sample_count)} prior matched observations`} hint="Mean absolute error from complete earlier delivery days, using outcomes available by this cutoff."/><Metric label="Historical bias" value={signed(history.metrics.bias_mw)} unit="MW" note="Actual minus forecast" hint="Negative means wind was overforecast on average."/><Metric label="P90 absolute error" value={number(history.metrics.p90_absolute_error_mw)} unit="MW" note="90th percentile of prior misses"/><Metric label="Downside exposure" value={gw(data.mean_downside_mw)} unit="GW" note="Mean forecast minus P10 estimate" tone="amber" hint="Historical downside context, not an instruction to procure this quantity."/><Metric label="Forecast stability" value={data.stability} note={data.latest_revision_mw==null?'No comparable revision':`${signed(data.latest_revision_mw)} MW latest mean revision`} hint={data.stability_method}/></div>
-    <div className="overview-main"><Panel title="Delivery-day wind outlook" subtitle={`${dayLabel(delivery)} · native hourly timestamps · GB operationally metered wind`} aside={<span className="small-badge">{reveal?'OUTCOME REVEALED':'AS OF DECISION'}</span>}><Key actual={reveal} band={history.available}/><WindChart points={data.curve} reveal={reveal}/><div className="chart-footnote"><Info size={14}/>{history.available?`Historical empirical range: ${history.day_count} earlier complete days. This range does not guarantee future coverage.`:history.reason}</div></Panel>
-      <aside className="brief"><div className="brief-kicker"><FileCheck2 size={16}/> PROCUREMENT BRIEF</div><h2>The outlook at<br/>decision time.</h2><p>{data.brief}</p><div className="brief-divider"/><div className="brief-data"><span>Change from first vintage</span><strong>{signed(data.change_from_first_mw)} <small>MW</small></strong></div><div className="brief-data"><span>Calibration window</span><strong className="small">{history.date_from&&history.date_to?`${dayLabel(history.date_from).replace(' 2026','')} – ${dayLabel(history.date_to).replace(' 2026','')}`:'No prior complete days'}</strong></div><div className="brief-caption">Use downside exposure as an input to procurement sizing. Demand, portfolio position and prices are outside this analysis.</div></aside>
+export function OverviewPage({
+  delivery,
+  cutoff,
+  reveal,
+  onEvolution,
+}: { onEvolution: (hour: string) => void } & DecisionProps) {
+  const request = useApi<OverviewData>(
+    `/api/overview?delivery_date=${delivery}&cutoff=${cutoff}&reveal=${reveal}`,
+  );
+  if (!request.data)
+    return <ApiState error={request.error} retry={request.retry} />;
+  const data = request.data;
+  const history = data.calibration;
+  return (
+    <>
+      <div className="decision-strip">
+        <span>
+          <Clock3 size={15} /> Decision:{" "}
+          <strong>{stamp(data.decision_cutoff)}</strong>
+        </span>
+        <span>
+          Latest eligible publication{" "}
+          <strong>
+            {data.latest_eligible_publication
+              ? `${clock(data.latest_eligible_publication)} GMT`
+              : "Unavailable"}
+          </strong>
+        </span>
+        <span className="coverage">
+          <i />
+          {data.eligible_native_periods}/{data.expected_native_periods} native
+          periods
+        </span>
+      </div>
+      <div className="metrics six">
+        <Metric
+          label="Mean wind forecast"
+          value={gw(data.expected_wind_mw)}
+          unit="GW"
+          note="Mean of native hourly forecasts"
+          hint="Source forecast available at the cutoff. This is a mean power value, not total energy."
+        />
+        <Metric
+          label="Historical MAE"
+          value={number(history.metrics.mae_mw)}
+          unit="MW"
+          note={`${number(history.sample_count)} prior matched observations`}
+          hint="Mean absolute error from complete earlier delivery days, using outcomes available by this cutoff."
+        />
+        <Metric
+          label="Historical bias"
+          value={signed(history.metrics.bias_mw)}
+          unit="MW"
+          note="Actual minus forecast"
+          hint="Negative means wind was overforecast on average."
+        />
+        <Metric
+          label="P90 absolute error"
+          value={number(history.metrics.p90_absolute_error_mw)}
+          unit="MW"
+          note="90th percentile of prior misses"
+        />
+        <Metric
+          label="Downside exposure"
+          value={gw(data.mean_downside_mw)}
+          unit="GW"
+          note="Mean forecast minus P10 estimate"
+          tone="amber"
+          hint="Historical downside context, not an instruction to procure this quantity."
+        />
+        <Metric
+          label="Forecast stability"
+          value={data.stability}
+          note={
+            data.latest_revision_mw == null
+              ? "No comparable revision"
+              : `${signed(data.latest_revision_mw)} MW latest mean revision`
+          }
+          hint={data.stability_method}
+        />
+      </div>
+      <div className="overview-main">
+        <Panel
+          title="Delivery-day wind outlook"
+          subtitle={`${dayLabel(delivery)} · native hourly timestamps · GB operationally metered wind`}
+          aside={
+            <span className="small-badge">
+              {reveal ? "OUTCOME REVEALED" : "AS OF DECISION"}
+            </span>
+          }
+        >
+          <Key actual={reveal} band={history.available} />
+          <WindChart points={data.curve} reveal={reveal} />
+          <div className="chart-footnote">
+            <Info size={14} />
+            {history.available
+              ? `Historical empirical range: ${history.day_count} earlier complete days. This range does not guarantee future coverage.`
+              : history.reason}
+          </div>
+        </Panel>
+        <aside className="brief">
+          <div className="brief-kicker">
+            <FileCheck2 size={16} /> PROCUREMENT BRIEF
+          </div>
+          <h2>
+            The outlook at
+            <br />
+            decision time.
+          </h2>
+          <p>{data.brief}</p>
+          <div className="brief-divider" />
+          <div className="brief-data">
+            <span>Change from first vintage</span>
+            <strong>
+              {signed(data.change_from_first_mw)} <small>MW</small>
+            </strong>
+          </div>
+          <div className="brief-data">
+            <span>Calibration window</span>
+            <strong className="small">
+              {history.date_from && history.date_to
+                ? `${dayLabel(history.date_from).replace(" 2026", "")} – ${dayLabel(history.date_to).replace(" 2026", "")}`
+                : "No prior complete days"}
+            </strong>
+          </div>
+          <div className="brief-caption">
+            Use downside exposure as an input to procurement sizing. Demand,
+            portfolio position and prices are outside this analysis.
+          </div>
+        </aside>
+      </div>
+      <div className="two-columns">
+        <Panel
+          title="Periods with the largest downside exposure"
+          subtitle="Point forecast relative to the historical P10 wind estimate"
+          aside={<ArrowDownRight size={19} className="muted" />}
+        >
+          {data.high_risk_periods.length ? (
+            <>
+              <div className="table-wrap">
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Delivery time</th>
+                      <th>Forecast</th>
+                      <th>P10 estimate</th>
+                      <th>Exposure</th>
+                      <th>
+                        <span className="sr-only">Explore</span>
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {data.high_risk_periods.map((point) => (
+                      <tr key={point.delivery_time}>
+                        <td className="strong">
+                          {clock(point.delivery_time)} GMT
+                        </td>
+                        <td>{gw(point.forecast_mw)} GW</td>
+                        <td>{gw(point.lower_mw)} GW</td>
+                        <td className="risk-value">
+                          {gw(point.downside_mw)} GW
+                        </td>
+                        <td>
+                          <button
+                            className="icon-button"
+                            onClick={() =>
+                              onEvolution(
+                                clock(point.delivery_time).slice(0, 2),
+                              )
+                            }
+                            aria-label={`Explore ${clock(point.delivery_time)} forecast evolution`}
+                          >
+                            <ArrowRight size={15} />
+                          </button>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+              {data.highest_exposure_tie_count > 1 && (
+                <p className="panel-note">
+                  {data.highest_exposure_tie_count} periods share the highest
+                  exposure; up to five are shown. The pooled model does not
+                  distinguish their uncertainty.
+                </p>
+              )}
+            </>
+          ) : (
+            <div className="empty-inline">
+              <Info size={19} />
+              <p>
+                Exposure will appear once seven complete historical days are
+                available. No range has been invented for this decision.
+              </p>
+            </div>
+          )}
+        </Panel>
+        <Panel
+          title="An auditable decision"
+          subtitle="Follow the information used in this view"
+        >
+          <ol className="decision-trace">
+            <li>
+              <span className="trace-icon">
+                <Check size={14} />
+              </span>
+              <div>
+                <strong>Fix the procurement cutoff</strong>
+                <p>{stamp(data.decision_cutoff)}</p>
+              </div>
+            </li>
+            <li>
+              <span className="trace-icon">
+                <Check size={14} />
+              </span>
+              <div>
+                <strong>Select the latest eligible forecast</strong>
+                <p>Only publications at or before the cutoff.</p>
+              </div>
+            </li>
+            <li>
+              <span className="trace-icon">
+                <Check size={14} />
+              </span>
+              <div>
+                <strong>Learn from outcomes already published</strong>
+                <p>
+                  {history.day_count} complete days · {history.sample_count}{" "}
+                  observations.
+                </p>
+              </div>
+            </li>
+            <li>
+              <span className={`trace-icon ${reveal ? "" : "unrevealed"}`}>
+                {reveal ? <Check size={14} /> : <Clock3 size={14} />}
+              </span>
+              <div>
+                <strong>
+                  {reveal ? "Actual outcome revealed" : "Actual outcome hidden"}
+                </strong>
+                <p>
+                  {reveal
+                    ? "Actuals appear as a dashed line on the chart."
+                    : "Reveal the outcome when you are ready to evaluate the decision."}
+                </p>
+              </div>
+            </li>
+          </ol>
+        </Panel>
+      </div>
+      <ProvenanceDetails data={data.provenance} />
+    </>
+  );
+}
+
+export function EvolutionPage({
+  delivery,
+  cutoff,
+  reveal,
+  hour,
+  setHour,
+}: { hour: string; setHour: (value: string) => void } & DecisionProps) {
+  const target = `${delivery}T${hour}:00:00Z`;
+  const request = useApi<EvolutionData>(
+    `/api/evolution?delivery_time=${encodeURIComponent(target)}&cutoff=${cutoff}&reveal=${reveal}`,
+  );
+  if (!request.data)
+    return <ApiState error={request.error} retry={request.retry} />;
+  const data = request.data;
+  return (
+    <>
+      <div className="section-toolbar">
+        <div className="replay-label">
+          <ShieldCheck size={18} />
+          <span>
+            {reveal ? "Outcome revealed" : "Decision replay"}
+            <small>
+              Information available at {stamp(data.decision_cutoff)}
+            </small>
+          </span>
+        </div>
+        <label className="field compact">
+          <span>Delivery hour · GMT</span>
+          <select
+            value={hour}
+            onChange={(event) => setHour(event.target.value)}
+          >
+            {Array.from({ length: 24 }, (_, i) =>
+              String(i).padStart(2, "0"),
+            ).map((value) => (
+              <option key={value} value={value}>
+                {value}:00
+              </option>
+            ))}
+          </select>
+        </label>
+      </div>
+      <div className="metrics four">
+        <Metric
+          label="Decision-time forecast"
+          value={gw(data.forecast_mw)}
+          unit="GW"
+          note={
+            data.selected_publish_time
+              ? `Published ${stamp(data.selected_publish_time)}`
+              : "No eligible forecast before cutoff"
+          }
+        />
+        <Metric
+          label="Historical P10–P90"
+          value={
+            data.lower_mw == null
+              ? "—"
+              : `${gw(data.lower_mw)}–${gw(data.upper_mw)}`
+          }
+          unit="GW"
+          note={
+            data.calibration.available
+              ? `${data.calibration.sample_count} prior observations`
+              : "Insufficient prior history"
+          }
+        />
+        <Metric
+          label="Actual wind generation"
+          value={reveal ? gw(data.actual_mw) : "Hidden"}
+          unit={reveal ? "GW" : undefined}
+          note={
+            reveal
+              ? "Realised half-hour average at this timestamp"
+              : "Reveal the outcome to compare"
+          }
+        />
+        <Metric
+          label="Decision-time error"
+          value={reveal ? signed(data.error_mw) : "Hidden"}
+          unit={reveal ? "MW" : undefined}
+          note={
+            data.inside_range == null
+              ? "Actual minus decision-time forecast"
+              : data.inside_range
+                ? "Inside the historical empirical range"
+                : "Outside the historical empirical range"
+          }
+          tone={data.inside_range === false ? "amber" : "neutral"}
+        />
+      </div>
+      <Panel
+        title="How the forecast evolved"
+        subtitle={`Delivery ${dayLabel(delivery)}, ${hour}:00 GMT · each point is a published version`}
+        aside={
+          <span className="small-badge">
+            {data.versions.length} VINTAGES VISIBLE
+          </span>
+        }
+      >
+        <div className="chart-key">
+          <span>
+            <i className="key-line" />
+            Available before cutoff
+          </span>
+          {reveal && (
+            <span>
+              <i className="key-future" />
+              Later publication
+            </span>
+          )}
+          <span>
+            <i className="key-cutoff" />
+            Decision cutoff
+          </span>
+        </div>
+        {data.versions.length ? (
+          <EvolutionChart data={data} />
+        ) : (
+          <div className="empty-inline">
+            <Info />
+            <p>
+              No forecast was available before the selected decision cutoff.
+            </p>
+          </div>
+        )}
+        <div className="chart-footnote">
+          <Info size={14} />
+          {reveal
+            ? "Later forecasts are shown for comparison. They are excluded from the decision-time forecast and its error."
+            : "Future forecast versions and actual generation are omitted from the replay response until reveal."}
+        </div>
+      </Panel>
+      <div className="two-columns">
+        <Panel
+          title="Forecast publication ledger"
+          subtitle="Source values, with the selected decision-time vintage highlighted"
+        >
+          <div className="table-wrap ledger">
+            <table>
+              <thead>
+                <tr>
+                  <th>Publication · GMT</th>
+                  <th>Forecast</th>
+                  <th>Decision eligibility</th>
+                </tr>
+              </thead>
+              <tbody>
+                {data.versions.map((version) => (
+                  <tr
+                    key={version.publish_time}
+                    className={version.selected ? "selected-row" : ""}
+                  >
+                    <td>{stamp(version.publish_time)}</td>
+                    <td className="strong">{gw(version.forecast_mw)} GW</td>
+                    <td>
+                      <span
+                        className={`pill ${version.selected ? "green" : !version.eligible ? "grey" : ""}`}
+                      >
+                        {version.selected
+                          ? "Selected"
+                          : version.eligible
+                            ? "Eligible"
+                            : "After cutoff"}
+                      </span>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </Panel>
+        <Panel
+          title="Read this replay"
+          subtitle="A forecast vintage is a version published at a specific time"
+        >
+          <div className="explanation">
+            <h3>Later information changes the story.</h3>
+            <p>
+              The selected point is the latest forecast the analyst could have
+              used at the cutoff. Later revisions may be closer to the outcome,
+              but cannot be credited to that decision.
+            </p>
+            <h3>Range does not mean certainty.</h3>
+            <p>
+              {data.calibration.available
+                ? `The historical empirical range spans ${gw(data.lower_mw)}–${gw(data.upper_mw)} GW, based on ${data.calibration.day_count} complete earlier days.`
+                : "There is not enough prior history to estimate an empirical range for this decision."}
+            </p>
+            <p className="muted">
+              Forecasts are hourly. The matched actual is the half-hour average
+              starting at the same timestamp.
+            </p>
+          </div>
+        </Panel>
+      </div>
+      <ProvenanceDetails data={data.provenance} />
+    </>
+  );
+}
+
+export function AccuracyPage({ cutoff }: { cutoff: string }) {
+  const request = useApi<AccuracyData>(`/api/accuracy?cutoff=${cutoff}`);
+  if (!request.data)
+    return <ApiState error={request.error} retry={request.retry} />;
+  const data = request.data;
+  return (
+    <>
+      <div className="context-banner">
+        <Info size={16} />
+        <span>
+          <strong>Retrospective evaluation</strong> · January decision dates,
+          evaluated against realised outcomes. These full-month results are not
+          available inside an early-January replay.
+        </span>
+      </div>
+      <div className="metrics four">
+        <Metric
+          label="Mean absolute error"
+          value={number(data.metrics.mae_mw)}
+          unit="MW"
+          note="Typical absolute miss"
+          hint="Mean of |actual − forecast|."
+        />
+        <Metric
+          label="Root mean squared error"
+          value={number(data.metrics.rmse_mw)}
+          unit="MW"
+          note="Larger misses carry more weight"
+        />
+        <Metric
+          label="Mean forecast bias"
+          value={signed(data.metrics.bias_mw)}
+          unit="MW"
+          note="Negative = average overforecast"
+        />
+        <Metric
+          label="P90 absolute error"
+          value={number(data.metrics.p90_absolute_error_mw)}
+          unit="MW"
+          note="90th percentile of absolute misses"
+        />
+      </div>
+      <Panel
+        title="Decision-time forecast vs actual"
+        subtitle={`${number(data.matched_periods)} native matches · decisions 1–31 January · ${cutoff} D-1 cutoff`}
+        aside={
+          <span className="pill green">
+            {number(data.join_coverage * 100, 1)}% join coverage
+          </span>
+        }
+      >
+        <Key actual band={false} />
+        <WindChart points={data.curve} reveal long band={false} />
+      </Panel>
+      <div className="two-columns">
+        <Panel
+          title="Forecast vs actual"
+          subtitle="Points below the diagonal indicate overforecasting"
+        >
+          <ScatterPlot points={data.curve} />
+        </Panel>
+        <Panel
+          title="Distribution of forecast errors"
+          subtitle="Negative errors mean less realised wind than forecast"
+        >
+          <Histogram data={data.histogram} />
+        </Panel>
+      </div>
+      <div className="two-columns">
+        <Panel
+          title="Error by delivery time"
+          subtitle="Mean absolute error · four-hour London time buckets"
+        >
+          <ErrorBuckets
+            buckets={data.time_of_day}
+            axisLabel="Delivery time · GMT"
+          />
+        </Panel>
+        <Panel
+          title="Error by forecast lead time"
+          subtitle="Delivery time minus selected forecast publication time"
+        >
+          <ErrorBuckets
+            buckets={data.lead_time}
+            axisLabel="Forecast lead time (hours)"
+          />
+          <p className="panel-note">
+            Only populated buckets are shown. Every delivery contributes one
+            decision-time forecast; later vintages are excluded.
+          </p>
+        </Panel>
+      </div>
+      <div className="validation-strip">
+        <ShieldCheck size={25} />
+        <div>
+          <strong>
+            {number(
+              data.interval_coverage == null
+                ? null
+                : data.interval_coverage * 100,
+              1,
+            )}
+            % empirical interval coverage
+          </strong>
+          <p>
+            {number(data.interval_evaluation_count)} chronological evaluations
+            after the seven-day warmup. P10–P90 nominal coverage is 80%; this
+            observed result does not guarantee future coverage.
+          </p>
+        </div>
+        <div className="interval-width">
+          <span>Mean interval width</span>
+          <strong>{gw(data.mean_interval_width_mw)} GW</strong>
+        </div>
+      </div>
+      <ProvenanceDetails data={data.provenance} />
+    </>
+  );
+}
+
+function QualityRow({
+  label,
+  value,
+  note,
+}: {
+  label: string;
+  value: string;
+  note?: string;
+}) {
+  return (
+    <div className="quality-row">
+      <span>
+        {label}
+        {note && <small>{note}</small>}
+      </span>
+      <strong>{value}</strong>
     </div>
-    <div className="two-columns"><Panel title="Periods with the largest downside exposure" subtitle="Point forecast relative to the historical P10 wind estimate" aside={<ArrowDownRight size={19} className="muted"/>}>{data.high_risk_periods.length?<><div className="table-wrap"><table><thead><tr><th>Delivery time</th><th>Forecast</th><th>P10 estimate</th><th>Exposure</th><th><span className="sr-only">Explore</span></th></tr></thead><tbody>{data.high_risk_periods.map(point=><tr key={point.delivery_time}><td className="strong">{clock(point.delivery_time)} GMT</td><td>{gw(point.forecast_mw)} GW</td><td>{gw(point.lower_mw)} GW</td><td className="risk-value">{gw(point.downside_mw)} GW</td><td><button className="icon-button" onClick={()=>onEvolution(clock(point.delivery_time).slice(0,2))} aria-label={`Explore ${clock(point.delivery_time)} forecast evolution`}><ArrowRight size={15}/></button></td></tr>)}</tbody></table></div>{data.highest_exposure_tie_count>1 && <p className="panel-note">{data.highest_exposure_tie_count} periods share the highest exposure; up to five are shown. The pooled model does not distinguish their uncertainty.</p>}</>:<div className="empty-inline"><Info size={19}/><p>Exposure will appear once seven complete historical days are available. No range has been invented for this decision.</p></div>}</Panel>
-      <Panel title="An auditable decision" subtitle="Follow the information used in this view"><ol className="decision-trace"><li><span className="trace-icon"><Check size={14}/></span><div><strong>Fix the procurement cutoff</strong><p>{stamp(data.decision_cutoff)}</p></div></li><li><span className="trace-icon"><Check size={14}/></span><div><strong>Select the latest eligible forecast</strong><p>Only publications at or before the cutoff.</p></div></li><li><span className="trace-icon"><Check size={14}/></span><div><strong>Learn from outcomes already published</strong><p>{history.day_count} complete days · {history.sample_count} observations.</p></div></li><li><span className={`trace-icon ${reveal?'':'unrevealed'}`}>{reveal?<Check size={14}/>:<Clock3 size={14}/>}</span><div><strong>{reveal?'Actual outcome revealed':'Actual outcome hidden'}</strong><p>{reveal?'Actuals appear as a dashed line on the chart.':'Reveal the outcome when you are ready to evaluate the decision.'}</p></div></li></ol></Panel></div>
-    <ProvenanceDetails data={data.provenance}/>
-  </>
+  );
 }
-
-export function EvolutionPage({delivery,cutoff,reveal,hour,setHour}:{hour:string;setHour:(value:string)=>void}&DecisionProps) {
-  const target = `${delivery}T${hour}:00:00Z`
-  const request = useApi<EvolutionData>(`/api/evolution?delivery_time=${encodeURIComponent(target)}&cutoff=${cutoff}&reveal=${reveal}`)
-  if(!request.data) return <ApiState error={request.error} retry={request.retry}/>
-  const data=request.data
-  return <>
-    <div className="section-toolbar"><div className="replay-label"><ShieldCheck size={18}/><span>{reveal?'Outcome revealed':'Decision replay'}<small>Information available at {stamp(data.decision_cutoff)}</small></span></div><label className="field compact"><span>Delivery hour · GMT</span><select value={hour} onChange={event=>setHour(event.target.value)}>{Array.from({length:24},(_,i)=>String(i).padStart(2,'0')).map(value=><option key={value} value={value}>{value}:00</option>)}</select></label></div>
-    <div className="metrics four"><Metric label="Decision-time forecast" value={gw(data.forecast_mw)} unit="GW" note={data.selected_publish_time?`Published ${stamp(data.selected_publish_time)}`:'No eligible forecast before cutoff'}/><Metric label="Historical P10–P90" value={data.lower_mw==null?'—':`${gw(data.lower_mw)}–${gw(data.upper_mw)}`} unit="GW" note={data.calibration.available?`${data.calibration.sample_count} prior observations`:'Insufficient prior history'}/><Metric label="Actual wind generation" value={reveal?gw(data.actual_mw):'Hidden'} unit={reveal?'GW':undefined} note={reveal?'Realised half-hour average at this timestamp':'Reveal the outcome to compare'}/><Metric label="Decision-time error" value={reveal?signed(data.error_mw):'Hidden'} unit={reveal?'MW':undefined} note={data.inside_range==null?'Actual minus decision-time forecast':data.inside_range?'Inside the historical empirical range':'Outside the historical empirical range'} tone={data.inside_range===false?'amber':'neutral'}/></div>
-    <Panel title="How the forecast evolved" subtitle={`Delivery ${dayLabel(delivery)}, ${hour}:00 GMT · each point is a published version`} aside={<span className="small-badge">{data.versions.length} VINTAGES VISIBLE</span>}><div className="chart-key"><span><i className="key-line"/>Available before cutoff</span>{reveal&&<span><i className="key-future"/>Later publication</span>}<span><i className="key-cutoff"/>Decision cutoff</span></div>{data.versions.length?<EvolutionChart data={data}/>:<div className="empty-inline"><Info/><p>No forecast was available before the selected decision cutoff.</p></div>}<div className="chart-footnote"><Info size={14}/>{reveal?'Later forecasts are shown for comparison. They are excluded from the decision-time forecast and its error.':'Future forecast versions and actual generation are omitted from the replay response until reveal.'}</div></Panel>
-    <div className="two-columns"><Panel title="Forecast publication ledger" subtitle="Source values, with the selected decision-time vintage highlighted"><div className="table-wrap ledger"><table><thead><tr><th>Publication · GMT</th><th>Forecast</th><th>Decision eligibility</th></tr></thead><tbody>{data.versions.map(version=><tr key={version.publish_time} className={version.selected?'selected-row':''}><td>{stamp(version.publish_time)}</td><td className="strong">{gw(version.forecast_mw)} GW</td><td><span className={`pill ${version.selected?'green':!version.eligible?'grey':''}`}>{version.selected?'Selected':version.eligible?'Eligible':'After cutoff'}</span></td></tr>)}</tbody></table></div></Panel><Panel title="Read this replay" subtitle="A forecast vintage is a version published at a specific time"><div className="explanation"><h3>Later information changes the story.</h3><p>The selected point is the latest forecast the analyst could have used at the cutoff. Later revisions may be closer to the outcome, but cannot be credited to that decision.</p><h3>Range does not mean certainty.</h3><p>{data.calibration.available?`The historical empirical range spans ${gw(data.lower_mw)}–${gw(data.upper_mw)} GW, based on ${data.calibration.day_count} complete earlier days.`:'There is not enough prior history to estimate an empirical range for this decision.'}</p><p className="muted">Forecasts are hourly. The matched actual is the half-hour average starting at the same timestamp.</p></div></Panel></div><ProvenanceDetails data={data.provenance}/>
-  </>
-}
-
-export function AccuracyPage({cutoff}:{cutoff:string}) {
-  const request=useApi<AccuracyData>(`/api/accuracy?cutoff=${cutoff}`)
-  if(!request.data) return <ApiState error={request.error} retry={request.retry}/>
-  const data=request.data
-  return <>
-    <div className="context-banner"><Info size={16}/><span><strong>Retrospective evaluation</strong> · January decision dates, evaluated against realised outcomes. These full-month results are not available inside an early-January replay.</span></div>
-    <div className="metrics four"><Metric label="Mean absolute error" value={number(data.metrics.mae_mw)} unit="MW" note="Typical absolute miss" hint="Mean of |actual − forecast|."/><Metric label="Root mean squared error" value={number(data.metrics.rmse_mw)} unit="MW" note="Larger misses carry more weight"/><Metric label="Mean forecast bias" value={signed(data.metrics.bias_mw)} unit="MW" note="Negative = average overforecast"/><Metric label="P90 absolute error" value={number(data.metrics.p90_absolute_error_mw)} unit="MW" note="90th percentile of absolute misses"/></div>
-    <Panel title="Decision-time forecast vs actual" subtitle={`${number(data.matched_periods)} native matches · decisions 1–31 January · ${cutoff} D-1 cutoff`} aside={<span className="pill green">{number(data.join_coverage*100,1)}% join coverage</span>}><Key actual band={false}/><WindChart points={data.curve} reveal long band={false}/></Panel>
-    <div className="two-columns"><Panel title="Forecast vs actual" subtitle="Points below the diagonal indicate overforecasting"><ScatterPlot points={data.curve}/></Panel><Panel title="Distribution of forecast errors" subtitle="Negative errors mean less realised wind than forecast"><Histogram data={data.histogram}/></Panel></div>
-    <div className="two-columns"><Panel title="Error by delivery time" subtitle="Mean absolute error · four-hour London time buckets"><ErrorBuckets buckets={data.time_of_day} axisLabel="Delivery time · GMT"/></Panel><Panel title="Error by forecast lead time" subtitle="Delivery time minus selected forecast publication time"><ErrorBuckets buckets={data.lead_time} axisLabel="Forecast lead time (hours)"/><p className="panel-note">Only populated buckets are shown. Every delivery contributes one decision-time forecast; later vintages are excluded.</p></Panel></div>
-    <div className="validation-strip"><ShieldCheck size={25}/><div><strong>{number(data.interval_coverage==null?null:data.interval_coverage*100,1)}% empirical interval coverage</strong><p>{number(data.interval_evaluation_count)} chronological evaluations after the seven-day warmup. P10–P90 nominal coverage is 80%; this observed result does not guarantee future coverage.</p></div><div className="interval-width"><span>Mean interval width</span><strong>{gw(data.mean_interval_width_mw)} GW</strong></div></div><ProvenanceDetails data={data.provenance}/>
-  </>
-}
-
-function QualityRow({label,value,note}:{label:string;value:string;note?:string}) {
-  return <div className="quality-row"><span>{label}{note&&<small>{note}</small>}</span><strong>{value}</strong></div>
-}
-export function QualityPage({cutoff}:{cutoff:string}) {
-  const request=useApi<QualityData>(`/api/data-quality?cutoff=${cutoff}`)
-  if(!request.data) return <ApiState error={request.error} retry={request.retry}/>
-  const data=request.data
-  const complete=data.missing_actual_periods.length===0&&data.join_coverage===1
-  return <>
-    <div className={`data-status ${complete?'':'partial'}`}><CheckCircle2 size={25}/><div><h2>{complete?'All native decision-time pairs are present':'The dataset is partial'}</h2><p>{number(data.actual_half_hours)} actual half-hours · {number(data.eligible_native_forecasts)} eligible native hourly forecasts · {number(data.join_coverage*100,1)}% native join coverage</p></div><span className="pill green">VERIFIED SNAPSHOT</span></div>
-    <div className="two-columns"><Panel title="FUELHH · Actual generation" subtitle="WIND only · half-hour average MW" aside={<Wind size={20} className="muted"/>}><div className="quality-rows"><QualityRow label="Source rows retrieved" value={number(data.raw_actual_rows)}/><QualityRow label="Stored actual publication records" value={number(data.stored_actual_records)}/><QualityRow label="Expected half-hour periods" value={number(data.expected_half_hours)}/><QualityRow label="Actual periods received" value={number(data.actual_half_hours)}/><QualityRow label="Missing actual periods" value={number(data.missing_actual_periods.length)}/><QualityRow label="Earliest delivery" value={stamp(data.earliest_delivery)}/><QualityRow label="Latest delivery" value={stamp(data.latest_delivery)}/></div></Panel><Panel title="WINDFOR · Forecast generation" subtitle="All source publication versions · native hourly timestamps" aside={<Clock3 size={20} className="muted"/>}><div className="quality-rows"><QualityRow label="Source rows retrieved" value={number(data.raw_forecast_rows)} note="Includes supporting publication windows"/><QualityRow label="Stored records within delivery scope" value={number(data.stored_forecast_records)}/><QualityRow label="Expected native delivery timestamps" value={number(data.expected_native_forecasts)}/><QualityRow label="Eligible forecasts at cutoff" value={number(data.eligible_native_forecasts)}/><QualityRow label="Native forecasts without actuals" value={number(data.native_forecasts_without_actuals)}/><QualityRow label="Native actuals without eligible forecasts" value={number(data.actuals_without_native_forecast)}/><QualityRow label="Half-hours without native forecast" value={number(data.half_hours_without_native_forecast)} note="Resolution mismatch, not missing actual data"/></div></Panel></div>
-    <div className="context-banner"><Info size={18}/><span><strong>Hourly forecasts are not half-hourly measurements.</strong> The unmatched :30 timestamps are expected. Headline accuracy uses native timestamps; no interpolated forecasts are presented as source data.</span></div>
-    <Panel title="Ingestion & integrity" subtitle="Reproducible source data, validated before it enters the database"><div className="integrity-grid"><div><span>Duplicate source keys</span><strong>{number(data.duplicate_source_rows)}</strong><small>Identical repeats counted; conflicts reject the batch</small></div><div><span>Rejected source rows</span><strong>{number(data.rejected_source_rows)}</strong><small>Nulls and invalid generation are never replaced by zero</small></div><div><span>Source retrieved</span><strong className="small">{stamp(data.source_retrieved_at)}</strong><small>Fixed historical snapshot; no live request on refresh</small></div><div><span>Last database import</span><strong className="small">{stamp(data.last_ingestion_time)}</strong><small>Source timestamps and import time are tracked separately</small></div></div>{data.missing_actual_periods.length>0 && <p className="panel-note">Missing: {data.missing_actual_periods.join(', ')}</p>}</Panel>
-    <ProvenanceDetails data={data.provenance}/>
-  </>
+export function QualityPage({ cutoff }: { cutoff: string }) {
+  const request = useApi<QualityData>(`/api/data-quality?cutoff=${cutoff}`);
+  if (!request.data)
+    return <ApiState error={request.error} retry={request.retry} />;
+  const data = request.data;
+  const complete =
+    data.missing_actual_periods.length === 0 && data.join_coverage === 1;
+  return (
+    <>
+      <div className={`data-status ${complete ? "" : "partial"}`}>
+        <CheckCircle2 size={25} />
+        <div>
+          <h2>
+            {complete
+              ? "All native decision-time pairs are present"
+              : "The dataset is partial"}
+          </h2>
+          <p>
+            {number(data.actual_half_hours)} actual half-hours ·{" "}
+            {number(data.eligible_native_forecasts)} eligible native hourly
+            forecasts · {number(data.join_coverage * 100, 1)}% native join
+            coverage
+          </p>
+        </div>
+        <span className="pill green">VERIFIED SNAPSHOT</span>
+      </div>
+      <div className="two-columns">
+        <Panel
+          title="FUELHH · Actual generation"
+          subtitle="WIND only · half-hour average MW"
+          aside={<Wind size={20} className="muted" />}
+        >
+          <div className="quality-rows">
+            <QualityRow
+              label="Source rows retrieved"
+              value={number(data.raw_actual_rows)}
+            />
+            <QualityRow
+              label="Stored actual publication records"
+              value={number(data.stored_actual_records)}
+            />
+            <QualityRow
+              label="Expected half-hour periods"
+              value={number(data.expected_half_hours)}
+            />
+            <QualityRow
+              label="Actual periods received"
+              value={number(data.actual_half_hours)}
+            />
+            <QualityRow
+              label="Missing actual periods"
+              value={number(data.missing_actual_periods.length)}
+            />
+            <QualityRow
+              label="Earliest delivery"
+              value={stamp(data.earliest_delivery)}
+            />
+            <QualityRow
+              label="Latest delivery"
+              value={stamp(data.latest_delivery)}
+            />
+          </div>
+        </Panel>
+        <Panel
+          title="WINDFOR · Forecast generation"
+          subtitle="All source publication versions · native hourly timestamps"
+          aside={<Clock3 size={20} className="muted" />}
+        >
+          <div className="quality-rows">
+            <QualityRow
+              label="Source rows retrieved"
+              value={number(data.raw_forecast_rows)}
+              note="Includes supporting publication windows"
+            />
+            <QualityRow
+              label="Stored records within delivery scope"
+              value={number(data.stored_forecast_records)}
+            />
+            <QualityRow
+              label="Expected native delivery timestamps"
+              value={number(data.expected_native_forecasts)}
+            />
+            <QualityRow
+              label="Eligible forecasts at cutoff"
+              value={number(data.eligible_native_forecasts)}
+            />
+            <QualityRow
+              label="Native forecasts without actuals"
+              value={number(data.native_forecasts_without_actuals)}
+            />
+            <QualityRow
+              label="Native actuals without eligible forecasts"
+              value={number(data.actuals_without_native_forecast)}
+            />
+            <QualityRow
+              label="Half-hours without native forecast"
+              value={number(data.half_hours_without_native_forecast)}
+              note="Resolution mismatch, not missing actual data"
+            />
+          </div>
+        </Panel>
+      </div>
+      <div className="context-banner">
+        <Info size={18} />
+        <span>
+          <strong>Hourly forecasts are not half-hourly measurements.</strong>{" "}
+          The unmatched :30 timestamps are expected. Headline accuracy uses
+          native timestamps; no interpolated forecasts are presented as source
+          data.
+        </span>
+      </div>
+      <Panel
+        title="Ingestion & integrity"
+        subtitle="Reproducible source data, validated before it enters the database"
+      >
+        <div className="integrity-grid">
+          <div>
+            <span>Duplicate source keys</span>
+            <strong>{number(data.duplicate_source_rows)}</strong>
+            <small>Identical repeats counted; conflicts reject the batch</small>
+          </div>
+          <div>
+            <span>Rejected source rows</span>
+            <strong>{number(data.rejected_source_rows)}</strong>
+            <small>
+              Nulls and invalid generation are never replaced by zero
+            </small>
+          </div>
+          <div>
+            <span>Source retrieved</span>
+            <strong className="small">{stamp(data.source_retrieved_at)}</strong>
+            <small>Fixed historical snapshot; no live request on refresh</small>
+          </div>
+          <div>
+            <span>Last database import</span>
+            <strong className="small">{stamp(data.last_ingestion_time)}</strong>
+            <small>
+              Source timestamps and import time are tracked separately
+            </small>
+          </div>
+        </div>
+        {data.missing_actual_periods.length > 0 && (
+          <p className="panel-note">
+            Missing: {data.missing_actual_periods.join(", ")}
+          </p>
+        )}
+      </Panel>
+      <ProvenanceDetails data={data.provenance} />
+    </>
+  );
 }
