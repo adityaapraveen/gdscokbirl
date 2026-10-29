@@ -2,6 +2,8 @@
 
 Research date: 29 October 2026. The supplied challenge document and the longer product brief were reviewed separately. The document defines the assessment constraints; the brief proposes additional product features. Nothing has been submitted to the hiring company.
 
+Implementation follow-up: the application is now built. The final pilot uses SQLite and a bundled, checksum-verified snapshot for reproducible Docker/Vercel operation. PostgreSQL was considered in the original plan below; the final decision and its limits are explained in README.
+
 ## Findings that change the design
 
 ### 1. Scope decisions by January rather than deliveries
@@ -104,8 +106,8 @@ Use [Vercel's supported FastAPI deployment](https://vercel.com/docs/frameworks/b
 
 The four-page product brief is a useful direction, but the challenge's 16-hour limit means correctness comes first. A proposed time budget, including work already spent: research/data audit 2h; ingestion/database 2h; as-of analytics and tests 3h; typed API 1h; overview/accuracy UI 3h; evolution and simple replay 1.5h; Docker/deployment 1.5h; README/video preparation 2h. If the core runs late, omit categorical confidence, the morning brief and conditional risk rankings before cutting tests, deployment or the required demo.
 
-Next module: build ingestion and persistence, prove idempotency, then implement and test decision-time selection before starting UI styling. The mentoring preference in this chat leaves application implementation mode open; no full application solution has been generated in this research module.
+The implementation followed ingestion/persistence, tested decision-time analytics, typed API, then UI. The user subsequently authorized the complete build. See README for running the application and the final implementation choices.
 
 Required later checks include cutoff equality/future exclusion, missing forecasts, actual publication availability, error signs, quantiles, duplicate conflicts, DST days, replay payload leakage, ingestion rollback, and clean Docker startup. Restrict CORS to intended origins, validate date/cutoff inputs, keep database secrets in environment variables, expose read-only public analytics, and keep ingestion inaccessible from public request routes. Record structured ingestion errors and readiness separately from process liveness.
 
-Deployment, screenshots, the candidate's two-part unlisted video (maximum ten minutes), README URLs, anonymous-access checks and submission are outstanding. They are document requirements, not actions already completed or authority to submit on the candidate's behalf.
+For the current delivery status, see README and `docs/VERIFICATION.md`. The candidate's two-part unlisted video and hiring-form submission remain separate tasks; the application does not submit on the candidate's behalf.
