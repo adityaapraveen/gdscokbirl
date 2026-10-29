@@ -1,5 +1,4 @@
 """Explicit response contracts; analytics do not leak through untyped route dictionaries."""
-from typing import Literal
 from pydantic import BaseModel
 
 

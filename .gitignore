@@ -12,3 +12,7 @@ dist/
 *.sqlite
 *.sqlite3
 .DS_Store
+.vercel/
+*.tsbuildinfo
+.vercel
+.local-only/

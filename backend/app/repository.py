@@ -1,6 +1,5 @@
 """Database reads and the serverless adapter for the fixed historical snapshot."""
 from functools import lru_cache
-import hashlib
 import json
 import os
 from pathlib import Path
@@ -10,7 +9,6 @@ from sqlalchemy import select
 from sqlalchemy.orm import Session
 
 from .analytics import Dataset, Vintage
-from .config import SNAPSHOT
 from .ingest import import_payload, load_snapshot
 from .storage import Actual, Forecast, Ingestion, make_engine
 

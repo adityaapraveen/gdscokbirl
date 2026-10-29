@@ -13,7 +13,8 @@ def main():
         "retrieved_at": max(request["retrieved_at"] for request in audit["requests"]),
         "raw_actual_rows": audit["actuals"]["retrieved_rows"],
         "raw_forecast_rows": audit["forecasts"]["retrieved_rows"],
-        "rejected_rows": 0, "duplicate_source_rows": 0,
+        "rejected_rows": sum(audit[name]["rejected_rows"] for name in ("actuals", "forecasts")),
+        "duplicate_source_rows": sum(audit[name]["repeated_keys"] for name in ("actuals", "forecasts")),
         "requests": audit["requests"],
     }}
     seen = set()
