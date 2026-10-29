@@ -1,0 +1,51 @@
+{
+  "scope": {
+    "decision_date_from": "2026-01-01",
+    "decision_date_to": "2026-01-31",
+    "cutoff_local": "09:20:00",
+    "timezone": "Europe/London",
+    "delivery_date_from": "2026-01-02",
+    "delivery_date_to": "2026-02-01"
+  },
+  "audit_generated_at": "2026-10-29T15:37:49.539917+00:00",
+  "point_forecast_native_matches": {
+    "sample_count": 744,
+    "mae_mw": 2022.470430107527,
+    "rmse_mw": 2497.407157584179,
+    "bias_mw": -1745.9381720430108,
+    "p90_absolute_error_mw": 4154.400000000001
+  },
+  "methodology": {
+    "minimum_completed_history_days": 7,
+    "minimum_cohort_rows": 30,
+    "quantile_method": "linear at (n-1)*p",
+    "interval": "P10-P90 signed errors; lower floor zero",
+    "training": "Earlier complete delivery days; actual publishTime <= replay cutoff",
+    "evaluation": "Identical native timestamp observations across candidate methods",
+    "limitation": "Exploratory single-month comparison, not an independent final holdout"
+  },
+  "methods": {
+    "pooled": {
+      "evaluation_count": 532,
+      "evaluation_first": "2026-01-10T02:00:00+00:00",
+      "evaluation_last": "2026-02-01T23:00:00+00:00",
+      "coverage": 0.7894736842105263,
+      "below_p10_rate": 0.13909774436090225,
+      "mean_interval_width_mw": 4876.496052631579,
+      "mean_winkler80_mw": 7403.896428571428,
+      "training_count_min": 168,
+      "training_count_max": 696
+    },
+    "lead_6h": {
+      "evaluation_count": 532,
+      "evaluation_first": "2026-01-10T02:00:00+00:00",
+      "evaluation_last": "2026-02-01T23:00:00+00:00",
+      "coverage": 0.7631578947368421,
+      "below_p10_rate": 0.14097744360902256,
+      "mean_interval_width_mw": 4682.177443609023,
+      "mean_winkler80_mw": 7832.062781954887,
+      "training_count_min": 30,
+      "training_count_max": 174
+    }
+  }
+}
