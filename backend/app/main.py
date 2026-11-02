@@ -15,6 +15,7 @@ from .repository import get_dataset
 from .responses import render_view
 from .schemas import Accuracy, DataQuality, Evolution, Overview, SourceStatus
 from . import sync
+from . import procurement, renewable_sync
 
 LOG = logging.getLogger("windlens")
 logging.basicConfig(level=logging.INFO, format="%(message)s")
@@ -116,3 +117,43 @@ def source_status(response: Response, dataset: Data):
 def refresh_source(response: Response, dataset: Data, force: bool = False):
     response.headers["Cache-Control"] = "no-store"
     return sync.refresh_source(force)
+
+
+@app.get("/api/procurement/forecast", response_model=procurement.ProcurementForecast)
+def procurement_forecast(delivery_date: date = date(2026, 1, 22), cutoff: procurement.Cutoff = "09:20",
+                         method: procurement.Method = "selected"):
+    try:
+        return procurement.forecast(delivery_date, cutoff, method)
+    except ValueError as exc:
+        raise HTTPException(422, str(exc)) from exc
+    except (SQLAlchemyError, OSError) as exc:
+        raise HTTPException(503, "Renewable data or model artifact unavailable.") from exc
+
+
+@app.post("/api/procurement/calculate", response_model=procurement.ProcurementResult)
+def procurement_calculate(body: procurement.ProcurementRequest):
+    try:
+        return procurement.calculate(body)
+    except ValueError as exc:
+        raise HTTPException(422, str(exc)) from exc
+    except (SQLAlchemyError, OSError) as exc:
+        raise HTTPException(503, "Renewable data or model artifact unavailable.") from exc
+
+
+@app.post("/api/procurement/refresh", response_model=procurement.RenewableStatus)
+def procurement_refresh(delivery_date: date = date(2026, 1, 22), force: bool = False):
+    try:
+        status = renewable_sync.refresh(delivery_date, force)
+        procurement._forecast.cache_clear()
+        return status
+    except ValueError as exc:
+        raise HTTPException(422, str(exc)) from exc
+    except (SQLAlchemyError, OSError) as exc:
+        raise HTTPException(503, "Renewable refresh storage unavailable; previous data retained.") from exc
+
+
+@app.get("/api/procurement/models")
+def procurement_models():
+    from .forecast_model import load_models
+    model = load_models()
+    return {"model_id": model["artifact_hash"][:16], "report": model["report"]}

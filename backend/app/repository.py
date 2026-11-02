@@ -5,13 +5,17 @@ import json
 import os
 from pathlib import Path
 import tempfile
+from threading import Lock
 
 from sqlalchemy import select
 from sqlalchemy.orm import Session
 
 from .analytics import Dataset, Vintage
+from .config import SNAPSHOT
 from .ingest import import_payload, load_snapshot
 from .storage import Actual, Forecast, Ingestion, SourceSync, make_engine
+
+_database_init_lock = Lock()
 
 
 def read_dataset(engine) -> Dataset:
@@ -39,19 +43,25 @@ def get_database_url() -> str:
     if os.getenv("VERCEL") and not os.getenv("DATABASE_URL"):
         # /tmp is a disposable materialisation, never the authoritative data store.
         # Atomic replacement avoids exposing a partially imported DB to another worker.
-        payload, digest = load_snapshot()
+        digest = SNAPSHOT.with_suffix(".sha256").read_text().strip()
+        if len(digest) != 64 or any(char not in "0123456789abcdef" for char in digest):
+            raise ValueError("Invalid snapshot checksum")
         target = Path(tempfile.gettempdir()) / f"windlens-{digest}.sqlite"
-        if not target.exists():
-            handle, filename = tempfile.mkstemp(prefix="windlens-", suffix=".sqlite")
-            os.close(handle)
-            temporary = make_engine(f"sqlite:///{filename}")
-            try:
-                import_payload(temporary, payload, digest)
-                temporary.dispose()
-                os.replace(filename, target)
-            finally:
-                temporary.dispose()
-                Path(filename).unlink(missing_ok=True)
+        with _database_init_lock:
+            if not target.exists():
+                payload, verified = load_snapshot()
+                if verified != digest:
+                    raise ValueError("Snapshot changed during initialization")
+                handle, filename = tempfile.mkstemp(prefix="windlens-", suffix=".sqlite")
+                os.close(handle)
+                temporary = make_engine(f"sqlite:///{filename}")
+                try:
+                    import_payload(temporary, payload, digest)
+                    temporary.dispose()
+                    os.replace(filename, target)
+                finally:
+                    temporary.dispose()
+                    Path(filename).unlink(missing_ok=True)
         return f"sqlite:///{target}"
     from .config import DATABASE_URL
     return DATABASE_URL
