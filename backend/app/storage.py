@@ -43,6 +43,24 @@ class SourceSync(Base):
     error: Mapped[str | None] = mapped_column(Text, nullable=True)
 
 
+class RenewableObservation(Base):
+    __tablename__ = "renewable_observations"
+    source: Mapped[str] = mapped_column(String(12), primary_key=True)
+    kind: Mapped[str] = mapped_column(String(8), primary_key=True)
+    start_ts: Mapped[int] = mapped_column(BigInteger, primary_key=True)
+    publish_ts: Mapped[float] = mapped_column(Float, primary_key=True)
+    generation_mw: Mapped[float] = mapped_column(Float)
+
+
+class RenewableCheck(Base):
+    __tablename__ = "renewable_checks"
+    scope: Mapped[str] = mapped_column(String(32), primary_key=True)
+    last_attempt_at: Mapped[str | None] = mapped_column(String(40), nullable=True)
+    last_success_at: Mapped[str | None] = mapped_column(String(40), nullable=True)
+    error: Mapped[str | None] = mapped_column(Text, nullable=True)
+    source_hash: Mapped[str | None] = mapped_column(String(64), nullable=True)
+
+
 def make_engine(url: str = DATABASE_URL):
     if url.startswith("sqlite:///") and ":memory:" not in url:
         Path(url.removeprefix("sqlite:///")).parent.mkdir(parents=True, exist_ok=True)

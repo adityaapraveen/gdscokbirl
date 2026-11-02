@@ -54,3 +54,11 @@ Date: 29 October 2026. This record distinguishes local, container, browser and d
 ## Remaining candidate work
 
 Record and upload the required unlisted video, add its real URL to README, verify all three submission URLs in a private browser session, and submit the hiring form yourself. PostgreSQL integration and out-of-month forecast calibration are not claimed as verified.
+
+## Procurement · 2 November 2026
+
+- All 106 backend tests and the TypeScript/Vite build pass; one existing test-client deprecation warning remains.
+- Docker builds and serves the four-source procurement API without native LightGBM dependencies.
+- Live Elexon refresh for 3 November delivery succeeded in 3.33 seconds and returned 24 forecast hours.
+- Browser inputs of 2,400 MWh demand, 1,440 contracted and 600 purchased yield 360 MWh to buy with zero renewable allocation.
+- Increasing demand in one hour by 10 MWh changes the result to 370 MWh; daily/hourly entry conversion preserves the profile.
