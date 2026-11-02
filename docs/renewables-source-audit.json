@@ -1,0 +1,943 @@
+{
+  "requests": [
+    {
+      "url": "https://data.elexon.co.uk/bmrs/api/v1/datasets/FUELHH/stream?settlementDateFrom=2023-01-01&settlementDateTo=2023-01-31&fuelType=WIND&fuelType=NPSHYD&fuelType=BIOMASS",
+      "sha256": "a8b45c9e94b49a6984533654a49d5fae49efd27e86560dd51e3a4cda0a849c38",
+      "retrieved_at": "2026-11-02T07:06:59.704294+00:00",
+      "row_count": 4464
+    },
+    {
+      "url": "https://data.elexon.co.uk/bmrs/api/v1/datasets/WINDFOR/stream?publishDateTimeFrom=2023-01-01T00%3A00%3A00Z&publishDateTimeTo=2023-02-01T00%3A00%3A00Z",
+      "sha256": "7778a10347d1df08ff87072408e9201436262f0e75eb8b61a5bf37cd2c53ee7e",
+      "retrieved_at": "2026-11-02T07:06:59.855512+00:00",
+      "row_count": 12152
+    },
+    {
+      "url": "https://data.elexon.co.uk/bmrs/api/v1/datasets/DGWS/stream?publishDateTimeFrom=2023-01-01T00%3A00%3A00Z&publishDateTimeTo=2023-02-01T00%3A00%3A00Z",
+      "sha256": "b84b544701a095f1bc00ae87167f0ee6a587aaca544a2837f0ee03bb12c2b854",
+      "retrieved_at": "2026-11-02T07:06:59.625593+00:00",
+      "row_count": 4320
+    },
+    {
+      "url": "https://data.elexon.co.uk/bmrs/api/v1/datasets/AGWS/stream?publishDateTimeFrom=2023-01-01T00%3A00%3A00Z&publishDateTimeTo=2023-02-01T00%3A00%3A00Z",
+      "sha256": "6cee04848e6fa2ba2267ad4865cc7396e26c5c67c94ad37aaa3bf6ea34e9685a",
+      "retrieved_at": "2026-11-02T07:07:00.696562+00:00",
+      "row_count": 4461
+    },
+    {
+      "url": "https://data.elexon.co.uk/bmrs/api/v1/datasets/FUELHH/stream?settlementDateFrom=2023-02-01&settlementDateTo=2023-02-28&fuelType=WIND&fuelType=NPSHYD&fuelType=BIOMASS",
+      "sha256": "2fbfe3ab7478c3cf59f752907ee033c42218acf0ac6a4b9a095e0a96a808cf9a",
+      "retrieved_at": "2026-11-02T07:07:00.876338+00:00",
+      "row_count": 4032
+    },
+    {
+      "url": "https://data.elexon.co.uk/bmrs/api/v1/datasets/WINDFOR/stream?publishDateTimeFrom=2023-02-01T00%3A00%3A00Z&publishDateTimeTo=2023-03-01T00%3A00%3A00Z",
+      "sha256": "ad0bb99d0b6420caa3c9137840ecb844970f397e3aaf956f9b894f41fb5555b6",
+      "retrieved_at": "2026-11-02T07:07:01.962803+00:00",
+      "row_count": 10976
+    },
+    {
+      "url": "https://data.elexon.co.uk/bmrs/api/v1/datasets/DGWS/stream?publishDateTimeFrom=2023-02-01T00%3A00%3A00Z&publishDateTimeTo=2023-03-01T00%3A00%3A00Z",
+      "sha256": "f2439340bd5040b96d2f46bf0d1443d95203f14fa8fba7cea3f46011840b867d",
+      "retrieved_at": "2026-11-02T07:07:01.762110+00:00",
+      "row_count": 4032
+    },
+    {
+      "url": "https://data.elexon.co.uk/bmrs/api/v1/datasets/AGWS/stream?publishDateTimeFrom=2023-02-01T00%3A00%3A00Z&publishDateTimeTo=2023-03-01T00%3A00%3A00Z",
+      "sha256": "a8d66faebda1f9121a84a72b9399194935a0fae6d825c2acdce16d996cb4093c",
+      "retrieved_at": "2026-11-02T07:07:02.058009+00:00",
+      "row_count": 3996
+    },
+    {
+      "url": "https://data.elexon.co.uk/bmrs/api/v1/datasets/FUELHH/stream?settlementDateFrom=2023-03-01&settlementDateTo=2023-03-31&fuelType=WIND&fuelType=NPSHYD&fuelType=BIOMASS",
+      "sha256": "97a9ef99b5a1a3dddfc77354dde18be736a1d1505a44a7e21c905eda33dacff5",
+      "retrieved_at": "2026-11-02T07:07:02.878795+00:00",
+      "row_count": 4458
+    },
+    {
+      "url": "https://data.elexon.co.uk/bmrs/api/v1/datasets/WINDFOR/stream?publishDateTimeFrom=2023-03-01T00%3A00%3A00Z&publishDateTimeTo=2023-04-01T00%3A00%3A00Z",
+      "sha256": "6412a664654351c278071c7f677edfc6979680288be7556acd213177715b3c8e",
+      "retrieved_at": "2026-11-02T07:07:03.409248+00:00",
+      "row_count": 12136
+    },
+    {
+      "url": "https://data.elexon.co.uk/bmrs/api/v1/datasets/DGWS/stream?publishDateTimeFrom=2023-03-01T00%3A00%3A00Z&publishDateTimeTo=2023-04-01T00%3A00%3A00Z",
+      "sha256": "ddfb7513ebf03a1bfc06ff07b9618ccb7872291898ffc9f6db1020f19ac83cf6",
+      "retrieved_at": "2026-11-02T07:07:03.219488+00:00",
+      "row_count": 4464
+    },
+    {
+      "url": "https://data.elexon.co.uk/bmrs/api/v1/datasets/AGWS/stream?publishDateTimeFrom=2023-03-01T00%3A00%3A00Z&publishDateTimeTo=2023-04-01T00%3A00%3A00Z",
+      "sha256": "c411db23a07cca975fc5086ebec77f392eb3dd95d84f15c792fa3efd6b0e8f89",
+      "retrieved_at": "2026-11-02T07:07:04.620596+00:00",
+      "row_count": 4470
+    },
+    {
+      "url": "https://data.elexon.co.uk/bmrs/api/v1/datasets/FUELHH/stream?settlementDateFrom=2023-04-01&settlementDateTo=2023-04-30&fuelType=WIND&fuelType=NPSHYD&fuelType=BIOMASS",
+      "sha256": "a219f9ecd916462aa6d90a2ffe07ae895552b25a9b7032e5b42d67e6ec3f3ba4",
+      "retrieved_at": "2026-11-02T07:07:04.289967+00:00",
+      "row_count": 4320
+    },
+    {
+      "url": "https://data.elexon.co.uk/bmrs/api/v1/datasets/WINDFOR/stream?publishDateTimeFrom=2023-04-01T00%3A00%3A00Z&publishDateTimeTo=2023-05-01T00%3A00%3A00Z",
+      "sha256": "8f2c19b790f233aaa9251172854b40ad9e583ddc7a4e37b1299fe9e9dbef6e87",
+      "retrieved_at": "2026-11-02T07:07:04.723913+00:00",
+      "row_count": 11760
+    },
+    {
+      "url": "https://data.elexon.co.uk/bmrs/api/v1/datasets/DGWS/stream?publishDateTimeFrom=2023-04-01T00%3A00%3A00Z&publishDateTimeTo=2023-05-01T00%3A00%3A00Z",
+      "sha256": "3bfac907abfcef2fff6b85e30270e42be7c90c7ae93b5155f3f8bb4f1bc17b13",
+      "retrieved_at": "2026-11-02T07:07:05.451634+00:00",
+      "row_count": 4176
+    },
+    {
+      "url": "https://data.elexon.co.uk/bmrs/api/v1/datasets/AGWS/stream?publishDateTimeFrom=2023-04-01T00%3A00%3A00Z&publishDateTimeTo=2023-05-01T00%3A00%3A00Z",
+      "sha256": "d84ca51a81ef92bf222712c45ffd873a90e89c0088022c9152f0cece58ce8897",
+      "retrieved_at": "2026-11-02T07:07:05.772069+00:00",
+      "row_count": 4299
+    },
+    {
+      "url": "https://data.elexon.co.uk/bmrs/api/v1/datasets/FUELHH/stream?settlementDateFrom=2023-05-01&settlementDateTo=2023-05-31&fuelType=WIND&fuelType=NPSHYD&fuelType=BIOMASS",
+      "sha256": "4a4d45a32ca439c7920c6982ef5a90c603a5d95581b81a501675b7b91e070e18",
+      "retrieved_at": "2026-11-02T07:07:05.932569+00:00",
+      "row_count": 4464
+    },
+    {
+      "url": "https://data.elexon.co.uk/bmrs/api/v1/datasets/WINDFOR/stream?publishDateTimeFrom=2023-05-01T00%3A00%3A00Z&publishDateTimeTo=2023-06-01T00%3A00%3A00Z",
+      "sha256": "13926fc65a65f462a9bd95b1c00d700ef57c8ea93a6ad1dbc506dd35c03d4d86",
+      "retrieved_at": "2026-11-02T07:07:06.776870+00:00",
+      "row_count": 12152
+    },
+    {
+      "url": "https://data.elexon.co.uk/bmrs/api/v1/datasets/DGWS/stream?publishDateTimeFrom=2023-05-01T00%3A00%3A00Z&publishDateTimeTo=2023-06-01T00%3A00%3A00Z",
+      "sha256": "41e155608d3823216c853e9af5949f67f777a70c3ad872eccd9eddebb292400a",
+      "retrieved_at": "2026-11-02T07:07:06.953252+00:00",
+      "row_count": 4464
+    },
+    {
+      "url": "https://data.elexon.co.uk/bmrs/api/v1/datasets/AGWS/stream?publishDateTimeFrom=2023-05-01T00%3A00%3A00Z&publishDateTimeTo=2023-06-01T00%3A00%3A00Z",
+      "sha256": "2f1ae7d9a0cb31f21e00730775791ec1101964e085bdbbb6fa3396b37d653559",
+      "retrieved_at": "2026-11-02T07:07:07.118732+00:00",
+      "row_count": 4398
+    },
+    {
+      "url": "https://data.elexon.co.uk/bmrs/api/v1/datasets/FUELHH/stream?settlementDateFrom=2023-06-01&settlementDateTo=2023-06-30&fuelType=WIND&fuelType=NPSHYD&fuelType=BIOMASS",
+      "sha256": "25964804e2c4823092bd5007e6cfd93480c354e47a9ba580dd45c8919cb957b4",
+      "retrieved_at": "2026-11-02T07:07:08.065321+00:00",
+      "row_count": 4320
+    },
+    {
+      "url": "https://data.elexon.co.uk/bmrs/api/v1/datasets/WINDFOR/stream?publishDateTimeFrom=2023-06-01T00%3A00%3A00Z&publishDateTimeTo=2023-07-01T00%3A00%3A00Z",
+      "sha256": "29ea9e1e166ca6fed03cf95aac09eab69f71d0fa68327081bf5bef5c8b1dd0f1",
+      "retrieved_at": "2026-11-02T07:07:08.375975+00:00",
+      "row_count": 11711
+    },
+    {
+      "url": "https://data.elexon.co.uk/bmrs/api/v1/datasets/DGWS/stream?publishDateTimeFrom=2023-06-01T00%3A00%3A00Z&publishDateTimeTo=2023-07-01T00%3A00%3A00Z",
+      "sha256": "118c5819c96e3a16633e9c704e6ba5fab65b3f47f240d58258b0b9a1af7555cf",
+      "retrieved_at": "2026-11-02T07:07:08.293386+00:00",
+      "row_count": 4320
+    },
+    {
+      "url": "https://data.elexon.co.uk/bmrs/api/v1/datasets/AGWS/stream?publishDateTimeFrom=2023-06-01T00%3A00%3A00Z&publishDateTimeTo=2023-07-01T00%3A00%3A00Z",
+      "sha256": "2e1eca251471cb0efa89dd34afe7ad651971de261c8f9a1aa394a8ac0376bdab",
+      "retrieved_at": "2026-11-02T07:07:09.204163+00:00",
+      "row_count": 4317
+    },
+    {
+      "url": "https://data.elexon.co.uk/bmrs/api/v1/datasets/FUELHH/stream?settlementDateFrom=2023-07-01&settlementDateTo=2023-07-31&fuelType=WIND&fuelType=NPSHYD&fuelType=BIOMASS",
+      "sha256": "46c37f9406036ee260d8681d4bc8b481f880bd9639c1e39ba4ea1ae424884119",
+      "retrieved_at": "2026-11-02T07:07:09.482198+00:00",
+      "row_count": 4461
+    },
+    {
+      "url": "https://data.elexon.co.uk/bmrs/api/v1/datasets/WINDFOR/stream?publishDateTimeFrom=2023-07-01T00%3A00%3A00Z&publishDateTimeTo=2023-08-01T00%3A00%3A00Z",
+      "sha256": "e821e31c5fe0f78dbb1253e6eaf3c87163104da68ffd71af0fc609aea09bb411",
+      "retrieved_at": "2026-11-02T07:07:09.951973+00:00",
+      "row_count": 12152
+    },
+    {
+      "url": "https://data.elexon.co.uk/bmrs/api/v1/datasets/DGWS/stream?publishDateTimeFrom=2023-07-01T00%3A00%3A00Z&publishDateTimeTo=2023-08-01T00%3A00%3A00Z",
+      "sha256": "4a2c88d430d4cef23a7300a85513ec4075da77d3658d250a6295d4caee3ae977",
+      "retrieved_at": "2026-11-02T07:07:10.528080+00:00",
+      "row_count": 9504
+    },
+    {
+      "url": "https://data.elexon.co.uk/bmrs/api/v1/datasets/AGWS/stream?publishDateTimeFrom=2023-07-01T00%3A00%3A00Z&publishDateTimeTo=2023-08-01T00%3A00%3A00Z",
+      "sha256": "867976f6027ec13c862f09a70a06482f70227a5ff60a00766870c93a843385f5",
+      "retrieved_at": "2026-11-02T07:07:10.637603+00:00",
+      "row_count": 4473
+    },
+    {
+      "url": "https://data.elexon.co.uk/bmrs/api/v1/datasets/FUELHH/stream?settlementDateFrom=2023-08-01&settlementDateTo=2023-08-31&fuelType=WIND&fuelType=NPSHYD&fuelType=BIOMASS",
+      "sha256": "4f89f5f3d32c059aaab9dc6abee477e3b2ecf4f22b79d6b4264bdb72d3b16e2f",
+      "retrieved_at": "2026-11-02T07:07:11.651847+00:00",
+      "row_count": 4464
+    },
+    {
+      "url": "https://data.elexon.co.uk/bmrs/api/v1/datasets/WINDFOR/stream?publishDateTimeFrom=2023-08-01T00%3A00%3A00Z&publishDateTimeTo=2023-09-01T00%3A00%3A00Z",
+      "sha256": "ed90bc2addee8d23ef7609616b5567b0b553e82737f25094cd82da2837b4c283",
+      "retrieved_at": "2026-11-02T07:07:11.865333+00:00",
+      "row_count": 12152
+    },
+    {
+      "url": "https://data.elexon.co.uk/bmrs/api/v1/datasets/DGWS/stream?publishDateTimeFrom=2023-08-01T00%3A00%3A00Z&publishDateTimeTo=2023-09-01T00%3A00%3A00Z",
+      "sha256": "f864b2f29856aad1b8de9c06b5e5e83552081e02866ea00308011a242f49403e",
+      "retrieved_at": "2026-11-02T07:07:12.011814+00:00",
+      "row_count": 10044
+    },
+    {
+      "url": "https://data.elexon.co.uk/bmrs/api/v1/datasets/AGWS/stream?publishDateTimeFrom=2023-08-01T00%3A00%3A00Z&publishDateTimeTo=2023-09-01T00%3A00%3A00Z",
+      "sha256": "bb691aa7f405a78bf6d357ec89f00c59a7f842c7df6a20bf938934ec5575f3c5",
+      "retrieved_at": "2026-11-02T07:07:12.753219+00:00",
+      "row_count": 4461
+    },
+    {
+      "url": "https://data.elexon.co.uk/bmrs/api/v1/datasets/FUELHH/stream?settlementDateFrom=2023-09-01&settlementDateTo=2023-09-30&fuelType=WIND&fuelType=NPSHYD&fuelType=BIOMASS",
+      "sha256": "28a5cb253b061ae9b2d9c32947f48ae0a9009a3ff05657c0cea040b35176d903",
+      "retrieved_at": "2026-11-02T07:07:13.094433+00:00",
+      "row_count": 4320
+    },
+    {
+      "url": "https://data.elexon.co.uk/bmrs/api/v1/datasets/WINDFOR/stream?publishDateTimeFrom=2023-09-01T00%3A00%3A00Z&publishDateTimeTo=2023-10-01T00%3A00%3A00Z",
+      "sha256": "5bb9d278b7c87af8c1a487313617549859e0a441801a41602b64a769b4cc9100",
+      "retrieved_at": "2026-11-02T07:07:13.345796+00:00",
+      "row_count": 11711
+    },
+    {
+      "url": "https://data.elexon.co.uk/bmrs/api/v1/datasets/DGWS/stream?publishDateTimeFrom=2023-09-01T00%3A00%3A00Z&publishDateTimeTo=2023-10-01T00%3A00%3A00Z",
+      "sha256": "64071736a5bd4796406fdab5073450bd35beea9264942a863ebe83ba24ff1f78",
+      "retrieved_at": "2026-11-02T07:07:14.087682+00:00",
+      "row_count": 9576
+    },
+    {
+      "url": "https://data.elexon.co.uk/bmrs/api/v1/datasets/AGWS/stream?publishDateTimeFrom=2023-09-01T00%3A00%3A00Z&publishDateTimeTo=2023-10-01T00%3A00%3A00Z",
+      "sha256": "f692d2c9d9f20b25e215f79db9987dea1a1c19c5f800137b212659a68ef8a7bb",
+      "retrieved_at": "2026-11-02T07:07:14.182534+00:00",
+      "row_count": 4329
+    },
+    {
+      "url": "https://data.elexon.co.uk/bmrs/api/v1/datasets/FUELHH/stream?settlementDateFrom=2023-10-01&settlementDateTo=2023-10-31&fuelType=WIND&fuelType=NPSHYD&fuelType=BIOMASS",
+      "sha256": "38d05192d6425431ee10809bbe350355365c017ed77774e5320ba39cdf45130c",
+      "retrieved_at": "2026-11-02T07:07:14.556821+00:00",
+      "row_count": 4470
+    },
+    {
+      "url": "https://data.elexon.co.uk/bmrs/api/v1/datasets/WINDFOR/stream?publishDateTimeFrom=2023-10-01T00%3A00%3A00Z&publishDateTimeTo=2023-11-01T00%3A00%3A00Z",
+      "sha256": "c7e4ef143fb591f6c932bd1170e6736c1b2baf5ab96da231043665a0b9f71e49",
+      "retrieved_at": "2026-11-02T07:07:16.106416+00:00",
+      "row_count": 12119
+    },
+    {
+      "url": "https://data.elexon.co.uk/bmrs/api/v1/datasets/DGWS/stream?publishDateTimeFrom=2023-10-01T00%3A00%3A00Z&publishDateTimeTo=2023-11-01T00%3A00%3A00Z",
+      "sha256": "473db5d9b20a976bf15a69e00200645455d065ab0eca97fcd779e6210ec0e741",
+      "retrieved_at": "2026-11-02T07:07:15.528706+00:00",
+      "row_count": 9966
+    },
+    {
+      "url": "https://data.elexon.co.uk/bmrs/api/v1/datasets/AGWS/stream?publishDateTimeFrom=2023-10-01T00%3A00%3A00Z&publishDateTimeTo=2023-11-01T00%3A00%3A00Z",
+      "sha256": "14d4a5958d0070eb657697ec275d79c1033732c79323713f17026712a83cb37f",
+      "retrieved_at": "2026-11-02T07:07:15.778954+00:00",
+      "row_count": 4470
+    },
+    {
+      "url": "https://data.elexon.co.uk/bmrs/api/v1/datasets/FUELHH/stream?settlementDateFrom=2023-11-01&settlementDateTo=2023-11-30&fuelType=WIND&fuelType=NPSHYD&fuelType=BIOMASS",
+      "sha256": "d61fd919373ca4876b21fa0e4f3846360bc18b9203ad0a271b3874ca4aafa30c",
+      "retrieved_at": "2026-11-02T07:07:16.740812+00:00",
+      "row_count": 4320
+    },
+    {
+      "url": "https://data.elexon.co.uk/bmrs/api/v1/datasets/WINDFOR/stream?publishDateTimeFrom=2023-11-01T00%3A00%3A00Z&publishDateTimeTo=2023-12-01T00%3A00%3A00Z",
+      "sha256": "439fd4e333b1a3add74f31561c7fe63f5b1000219d108b3fe30b408228062445",
+      "retrieved_at": "2026-11-02T07:07:17.438788+00:00",
+      "row_count": 11760
+    },
+    {
+      "url": "https://data.elexon.co.uk/bmrs/api/v1/datasets/DGWS/stream?publishDateTimeFrom=2023-11-01T00%3A00%3A00Z&publishDateTimeTo=2023-12-01T00%3A00%3A00Z",
+      "sha256": "190f61eaf020ca9b43b91a86bb5b1d0da5dd24e3f2727179bca2c26f50be0255",
+      "retrieved_at": "2026-11-02T07:07:17.544048+00:00",
+      "row_count": 9720
+    },
+    {
+      "url": "https://data.elexon.co.uk/bmrs/api/v1/datasets/AGWS/stream?publishDateTimeFrom=2023-11-01T00%3A00%3A00Z&publishDateTimeTo=2023-12-01T00%3A00%3A00Z",
+      "sha256": "6239196bd6b0dbbd327790885ad23b18a3196d797e3b1cf5655909f54b2ab556",
+      "retrieved_at": "2026-11-02T07:07:17.904172+00:00",
+      "row_count": 4323
+    },
+    {
+      "url": "https://data.elexon.co.uk/bmrs/api/v1/datasets/FUELHH/stream?settlementDateFrom=2023-12-01&settlementDateTo=2023-12-31&fuelType=WIND&fuelType=NPSHYD&fuelType=BIOMASS",
+      "sha256": "8f61b45d4372b6dcecb90f35b6747e52f67a5b18b6afcf6ebb12d1ae1e5dc7ef",
+      "retrieved_at": "2026-11-02T07:07:18.786447+00:00",
+      "row_count": 4461
+    },
+    {
+      "url": "https://data.elexon.co.uk/bmrs/api/v1/datasets/WINDFOR/stream?publishDateTimeFrom=2023-12-01T00%3A00%3A00Z&publishDateTimeTo=2024-01-01T00%3A00%3A00Z",
+      "sha256": "e295dfac72f330957da7b5da87ea5a5c6da69935130f951a4915438684140c8d",
+      "retrieved_at": "2026-11-02T07:07:18.953758+00:00",
+      "row_count": 12152
+    },
+    {
+      "url": "https://data.elexon.co.uk/bmrs/api/v1/datasets/DGWS/stream?publishDateTimeFrom=2023-12-01T00%3A00%3A00Z&publishDateTimeTo=2024-01-01T00%3A00%3A00Z",
+      "sha256": "23ab1bf9310e847ad7747d39f34a83f3d9104d992328da20c88a0afefd9a5c3a",
+      "retrieved_at": "2026-11-02T07:07:19.209929+00:00",
+      "row_count": 10044
+    },
+    {
+      "url": "https://data.elexon.co.uk/bmrs/api/v1/datasets/AGWS/stream?publishDateTimeFrom=2023-12-01T00%3A00%3A00Z&publishDateTimeTo=2024-01-01T00%3A00%3A00Z",
+      "sha256": "f561ea508ce660d4ea8307ef47244448a37665044983d21f2c04caceb9f09023",
+      "retrieved_at": "2026-11-02T07:07:20.035813+00:00",
+      "row_count": 4461
+    },
+    {
+      "url": "https://data.elexon.co.uk/bmrs/api/v1/datasets/FUELHH/stream?settlementDateFrom=2024-01-01&settlementDateTo=2024-01-31&fuelType=WIND&fuelType=NPSHYD&fuelType=BIOMASS",
+      "sha256": "fab7443955d1ac2a2a525e3b2b5cd249d0bc316c5700b8f9ea563468090e21bd",
+      "retrieved_at": "2026-11-02T07:07:20.209799+00:00",
+      "row_count": 4464
+    },
+    {
+      "url": "https://data.elexon.co.uk/bmrs/api/v1/datasets/WINDFOR/stream?publishDateTimeFrom=2024-01-01T00%3A00%3A00Z&publishDateTimeTo=2024-02-01T00%3A00%3A00Z",
+      "sha256": "80dfc61bea3689ae4e5cb975c746c1139b23c5c0fabe1970b85ea7358160371b",
+      "retrieved_at": "2026-11-02T07:07:20.615538+00:00",
+      "row_count": 12152
+    },
+    {
+      "url": "https://data.elexon.co.uk/bmrs/api/v1/datasets/DGWS/stream?publishDateTimeFrom=2024-01-01T00%3A00%3A00Z&publishDateTimeTo=2024-02-01T00%3A00%3A00Z",
+      "sha256": "556ae1dca913b9632c47a2ec2f195aeaa29dea414f9f2e342823f007e40bb306",
+      "retrieved_at": "2026-11-02T07:07:21.461396+00:00",
+      "row_count": 9966
+    },
+    {
+      "url": "https://data.elexon.co.uk/bmrs/api/v1/datasets/AGWS/stream?publishDateTimeFrom=2024-01-01T00%3A00%3A00Z&publishDateTimeTo=2024-02-01T00%3A00%3A00Z",
+      "sha256": "5e70745203fe614b050cc97cb41cb14a0ceefad9f2622d50adad682846e1ecfb",
+      "retrieved_at": "2026-11-02T07:07:21.454220+00:00",
+      "row_count": 4416
+    },
+    {
+      "url": "https://data.elexon.co.uk/bmrs/api/v1/datasets/FUELHH/stream?settlementDateFrom=2024-02-01&settlementDateTo=2024-02-29&fuelType=WIND&fuelType=NPSHYD&fuelType=BIOMASS",
+      "sha256": "0bdc4036fa50f5d7457ce59aed4678915544ad1d9afead461f18eeb01e4bec3e",
+      "retrieved_at": "2026-11-02T07:07:21.971353+00:00",
+      "row_count": 4176
+    },
+    {
+      "url": "https://data.elexon.co.uk/bmrs/api/v1/datasets/WINDFOR/stream?publishDateTimeFrom=2024-02-01T00%3A00%3A00Z&publishDateTimeTo=2024-03-01T00%3A00%3A00Z",
+      "sha256": "2ba54d0303f2cc1fa9e60ce88e51d10580f961ab5ebd1fcc6517f1c6472fdf64",
+      "retrieved_at": "2026-11-02T07:07:22.718603+00:00",
+      "row_count": 11368
+    },
+    {
+      "url": "https://data.elexon.co.uk/bmrs/api/v1/datasets/DGWS/stream?publishDateTimeFrom=2024-02-01T00%3A00%3A00Z&publishDateTimeTo=2024-03-01T00%3A00%3A00Z",
+      "sha256": "d06c4554fc44a81a273ab4c85b07b1184021c281aa8207775d28336c15fabfe1",
+      "retrieved_at": "2026-11-02T07:07:22.887658+00:00",
+      "row_count": 9252
+    },
+    {
+      "url": "https://data.elexon.co.uk/bmrs/api/v1/datasets/AGWS/stream?publishDateTimeFrom=2024-02-01T00%3A00%3A00Z&publishDateTimeTo=2024-03-01T00%3A00%3A00Z",
+      "sha256": "3eda22ae1bad50f5db79d1bcb54f6eda8e37ec86848b0b8240d765007049d1de",
+      "retrieved_at": "2026-11-02T07:07:23.105821+00:00",
+      "row_count": 4158
+    },
+    {
+      "url": "https://data.elexon.co.uk/bmrs/api/v1/datasets/FUELHH/stream?settlementDateFrom=2024-03-01&settlementDateTo=2024-03-31&fuelType=WIND&fuelType=NPSHYD&fuelType=BIOMASS",
+      "sha256": "d350a59831bb64343325f895e57a18f254dbb07654ceed240bc755a3be14a5e0",
+      "retrieved_at": "2026-11-02T07:07:23.909828+00:00",
+      "row_count": 4458
+    },
+    {
+      "url": "https://data.elexon.co.uk/bmrs/api/v1/datasets/WINDFOR/stream?publishDateTimeFrom=2024-03-01T00%3A00%3A00Z&publishDateTimeTo=2024-04-01T00%3A00%3A00Z",
+      "sha256": "a9fee38341580948d1952f7d72be9592bc5ced469ee37f5d878d579a12d01804",
+      "retrieved_at": "2026-11-02T07:07:24.297049+00:00",
+      "row_count": 12136
+    },
+    {
+      "url": "https://data.elexon.co.uk/bmrs/api/v1/datasets/DGWS/stream?publishDateTimeFrom=2024-03-01T00%3A00%3A00Z&publishDateTimeTo=2024-04-01T00%3A00%3A00Z",
+      "sha256": "d6022a1d8d77b5ca83b6298bb957c7a39f42b04f5208b48cc3b482dc1cda68c7",
+      "retrieved_at": "2026-11-02T07:07:24.502698+00:00",
+      "row_count": 10044
+    },
+    {
+      "url": "https://data.elexon.co.uk/bmrs/api/v1/datasets/AGWS/stream?publishDateTimeFrom=2024-03-01T00%3A00%3A00Z&publishDateTimeTo=2024-04-01T00%3A00%3A00Z",
+      "sha256": "3db9b1260409ac52a12c6f0659d34dc2f06186ee283e1881b105010d1a4c248e",
+      "retrieved_at": "2026-11-02T07:07:24.978721+00:00",
+      "row_count": 4455
+    },
+    {
+      "url": "https://data.elexon.co.uk/bmrs/api/v1/datasets/FUELHH/stream?settlementDateFrom=2024-04-01&settlementDateTo=2024-04-30&fuelType=WIND&fuelType=NPSHYD&fuelType=BIOMASS",
+      "sha256": "bcd8589ede119201bfd53434fe7fccaaa7d7afdf6435ea1f1f46e0386c9ddc9e",
+      "retrieved_at": "2026-11-02T07:07:25.518434+00:00",
+      "row_count": 4320
+    },
+    {
+      "url": "https://data.elexon.co.uk/bmrs/api/v1/datasets/WINDFOR/stream?publishDateTimeFrom=2024-04-01T00%3A00%3A00Z&publishDateTimeTo=2024-05-01T00%3A00%3A00Z",
+      "sha256": "0cccdd3ef30140aba837eddabe8de33d9e6b067cd05f01a0a3e82b6dcade5f02",
+      "retrieved_at": "2026-11-02T07:07:25.891341+00:00",
+      "row_count": 11760
+    },
+    {
+      "url": "https://data.elexon.co.uk/bmrs/api/v1/datasets/DGWS/stream?publishDateTimeFrom=2024-04-01T00%3A00%3A00Z&publishDateTimeTo=2024-05-01T00%3A00%3A00Z",
+      "sha256": "0d1152751cbfcf975d759a7f062e624055f69624e3b03005cdcba962e729cad3",
+      "retrieved_at": "2026-11-02T07:07:26.280661+00:00",
+      "row_count": 9720
+    },
+    {
+      "url": "https://data.elexon.co.uk/bmrs/api/v1/datasets/AGWS/stream?publishDateTimeFrom=2024-04-01T00%3A00%3A00Z&publishDateTimeTo=2024-05-01T00%3A00%3A00Z",
+      "sha256": "d156e954bae44d3d7f9033a6c446373f0c8325d88c58e8ce8c07bbe3ebc933cc",
+      "retrieved_at": "2026-11-02T07:07:26.660097+00:00",
+      "row_count": 4320
+    },
+    {
+      "url": "https://data.elexon.co.uk/bmrs/api/v1/datasets/FUELHH/stream?settlementDateFrom=2024-05-01&settlementDateTo=2024-05-31&fuelType=WIND&fuelType=NPSHYD&fuelType=BIOMASS",
+      "sha256": "919a1936834ac514c5d89bb362d4cb7bf9096593c345dd4a0ff0c42517198a07",
+      "retrieved_at": "2026-11-02T07:07:27.138375+00:00",
+      "row_count": 4464
+    },
+    {
+      "url": "https://data.elexon.co.uk/bmrs/api/v1/datasets/WINDFOR/stream?publishDateTimeFrom=2024-05-01T00%3A00%3A00Z&publishDateTimeTo=2024-06-01T00%3A00%3A00Z",
+      "sha256": "37177ff50fae1089e8e8e6051cd11822a1bb30dd08c97d5fd7edf0877c6a95b4",
+      "retrieved_at": "2026-11-02T07:07:27.612659+00:00",
+      "row_count": 12152
+    },
+    {
+      "url": "https://data.elexon.co.uk/bmrs/api/v1/datasets/DGWS/stream?publishDateTimeFrom=2024-05-01T00%3A00%3A00Z&publishDateTimeTo=2024-06-01T00%3A00%3A00Z",
+      "sha256": "88def0a182e941afa3f2ec8d252b94309cc44d159f927852e542e79f504233c6",
+      "retrieved_at": "2026-11-02T07:07:28.123846+00:00",
+      "row_count": 10044
+    },
+    {
+      "url": "https://data.elexon.co.uk/bmrs/api/v1/datasets/AGWS/stream?publishDateTimeFrom=2024-05-01T00%3A00%3A00Z&publishDateTimeTo=2024-06-01T00%3A00%3A00Z",
+      "sha256": "97254c62c9d59e068808dd9e7182e45813034485c5a9e6f359fa7c4e17dcac27",
+      "retrieved_at": "2026-11-02T07:07:28.408585+00:00",
+      "row_count": 4461
+    },
+    {
+      "url": "https://data.elexon.co.uk/bmrs/api/v1/datasets/FUELHH/stream?settlementDateFrom=2024-06-01&settlementDateTo=2024-06-30&fuelType=WIND&fuelType=NPSHYD&fuelType=BIOMASS",
+      "sha256": "e2501c69ff20fc24801f42899253588bb9d113d3afc6521b9871f1347f4971e6",
+      "retrieved_at": "2026-11-02T07:07:29.163421+00:00",
+      "row_count": 4320
+    },
+    {
+      "url": "https://data.elexon.co.uk/bmrs/api/v1/datasets/WINDFOR/stream?publishDateTimeFrom=2024-06-01T00%3A00%3A00Z&publishDateTimeTo=2024-07-01T00%3A00%3A00Z",
+      "sha256": "b64337370f4d8ec320b679c4c2b0af6d804c2397cdda24a4a829df07fc39c4a0",
+      "retrieved_at": "2026-11-02T07:07:30.170620+00:00",
+      "row_count": 11760
+    },
+    {
+      "url": "https://data.elexon.co.uk/bmrs/api/v1/datasets/DGWS/stream?publishDateTimeFrom=2024-06-01T00%3A00%3A00Z&publishDateTimeTo=2024-07-01T00%3A00%3A00Z",
+      "sha256": "ef618937ce42dda891fe0a86687b34b973872f03ec027bf1d638caef7f4c38f9",
+      "retrieved_at": "2026-11-02T07:07:30.178850+00:00",
+      "row_count": 9720
+    },
+    {
+      "url": "https://data.elexon.co.uk/bmrs/api/v1/datasets/AGWS/stream?publishDateTimeFrom=2024-06-01T00%3A00%3A00Z&publishDateTimeTo=2024-07-01T00%3A00%3A00Z",
+      "sha256": "fa8eea0dea3572fc95bdd7851beab791a5c20a20eaf3796c72b52e413242b768",
+      "retrieved_at": "2026-11-02T07:07:30.671457+00:00",
+      "row_count": 4317
+    },
+    {
+      "url": "https://data.elexon.co.uk/bmrs/api/v1/datasets/FUELHH/stream?settlementDateFrom=2024-07-01&settlementDateTo=2024-07-31&fuelType=WIND&fuelType=NPSHYD&fuelType=BIOMASS",
+      "sha256": "d547b4bc7944d7cfe6ea67bdf16783a03209f043584c6900693f300b09c4aa92",
+      "retrieved_at": "2026-11-02T07:07:31.935958+00:00",
+      "row_count": 4464
+    },
+    {
+      "url": "https://data.elexon.co.uk/bmrs/api/v1/datasets/WINDFOR/stream?publishDateTimeFrom=2024-07-01T00%3A00%3A00Z&publishDateTimeTo=2024-08-01T00%3A00%3A00Z",
+      "sha256": "3589987f1c79078c90b314fda51512be834cd81dcc45df71afe98630466c68aa",
+      "retrieved_at": "2026-11-02T07:07:32.187251+00:00",
+      "row_count": 12103
+    },
+    {
+      "url": "https://data.elexon.co.uk/bmrs/api/v1/datasets/DGWS/stream?publishDateTimeFrom=2024-07-01T00%3A00%3A00Z&publishDateTimeTo=2024-08-01T00%3A00%3A00Z",
+      "sha256": "ea01e2f2d7c397b9ab8f64141ebdf0616225124549514c325695e81b443132b0",
+      "retrieved_at": "2026-11-02T07:07:32.442775+00:00",
+      "row_count": 10044
+    },
+    {
+      "url": "https://data.elexon.co.uk/bmrs/api/v1/datasets/AGWS/stream?publishDateTimeFrom=2024-07-01T00%3A00%3A00Z&publishDateTimeTo=2024-08-01T00%3A00%3A00Z",
+      "sha256": "3d81402b8c31d346da200e82ae5b46ce552cd28f683d431f49a6382bd72ba468",
+      "retrieved_at": "2026-11-02T07:07:33.495683+00:00",
+      "row_count": 4458
+    },
+    {
+      "url": "https://data.elexon.co.uk/bmrs/api/v1/datasets/FUELHH/stream?settlementDateFrom=2024-08-01&settlementDateTo=2024-08-31&fuelType=WIND&fuelType=NPSHYD&fuelType=BIOMASS",
+      "sha256": "8d56f0443622d6cf00ea7c805517edb34f503ce4ef49ca9c5f739ebba5274df7",
+      "retrieved_at": "2026-11-02T07:07:33.744432+00:00",
+      "row_count": 4464
+    },
+    {
+      "url": "https://data.elexon.co.uk/bmrs/api/v1/datasets/WINDFOR/stream?publishDateTimeFrom=2024-08-01T00%3A00%3A00Z&publishDateTimeTo=2024-09-01T00%3A00%3A00Z",
+      "sha256": "a543e4f3f1d40538334eb3e10aa3fd31960ca1a5da216b767d7fd89953cbd416",
+      "retrieved_at": "2026-11-02T07:07:34.262810+00:00",
+      "row_count": 12103
+    },
+    {
+      "url": "https://data.elexon.co.uk/bmrs/api/v1/datasets/DGWS/stream?publishDateTimeFrom=2024-08-01T00%3A00%3A00Z&publishDateTimeTo=2024-09-01T00%3A00%3A00Z",
+      "sha256": "04153dee541f246c5e724294d6c1ff04a2c3798156904f9899e103f173c95b63",
+      "retrieved_at": "2026-11-02T07:07:34.849051+00:00",
+      "row_count": 9966
+    },
+    {
+      "url": "https://data.elexon.co.uk/bmrs/api/v1/datasets/AGWS/stream?publishDateTimeFrom=2024-08-01T00%3A00%3A00Z&publishDateTimeTo=2024-09-01T00%3A00%3A00Z",
+      "sha256": "14fd3c47c9854969316f436333948f3121322fb12242462ff8e8a863795d40b6",
+      "retrieved_at": "2026-11-02T07:07:34.868696+00:00",
+      "row_count": 4461
+    },
+    {
+      "url": "https://data.elexon.co.uk/bmrs/api/v1/datasets/FUELHH/stream?settlementDateFrom=2024-09-01&settlementDateTo=2024-09-30&fuelType=WIND&fuelType=NPSHYD&fuelType=BIOMASS",
+      "sha256": "128d53a524fdc098b5296a6f9d945d82978022f012a19a17278a202648f1f5d0",
+      "retrieved_at": "2026-11-02T07:07:35.468119+00:00",
+      "row_count": 4320
+    },
+    {
+      "url": "https://data.elexon.co.uk/bmrs/api/v1/datasets/WINDFOR/stream?publishDateTimeFrom=2024-09-01T00%3A00%3A00Z&publishDateTimeTo=2024-10-01T00%3A00%3A00Z",
+      "sha256": "4999f7e25c4197e05366a8f17df419b44bc7346f691177ce187d48177b971fb3",
+      "retrieved_at": "2026-11-02T07:07:36.242112+00:00",
+      "row_count": 11760
+    },
+    {
+      "url": "https://data.elexon.co.uk/bmrs/api/v1/datasets/DGWS/stream?publishDateTimeFrom=2024-09-01T00%3A00%3A00Z&publishDateTimeTo=2024-10-01T00%3A00%3A00Z",
+      "sha256": "09e98ef5dad9df74ae264e1c06aef2f18706daa86eab64d807ef852032fcd550",
+      "retrieved_at": "2026-11-02T07:07:36.228255+00:00",
+      "row_count": 9720
+    },
+    {
+      "url": "https://data.elexon.co.uk/bmrs/api/v1/datasets/AGWS/stream?publishDateTimeFrom=2024-09-01T00%3A00%3A00Z&publishDateTimeTo=2024-10-01T00%3A00%3A00Z",
+      "sha256": "772e4109bef79f47f058c41b3c5847e1ff21ab1f204b4297075e189d5b265f2e",
+      "retrieved_at": "2026-11-02T07:07:36.545774+00:00",
+      "row_count": 4317
+    },
+    {
+      "url": "https://data.elexon.co.uk/bmrs/api/v1/datasets/FUELHH/stream?settlementDateFrom=2024-10-01&settlementDateTo=2024-10-31&fuelType=WIND&fuelType=NPSHYD&fuelType=BIOMASS",
+      "sha256": "6397f724db80ccb919da54d2ad947c049a73c012ad0fcb430c637a0009d23662",
+      "retrieved_at": "2026-11-02T07:07:37.328288+00:00",
+      "row_count": 4470
+    },
+    {
+      "url": "https://data.elexon.co.uk/bmrs/api/v1/datasets/WINDFOR/stream?publishDateTimeFrom=2024-10-01T00%3A00%3A00Z&publishDateTimeTo=2024-11-01T00%3A00%3A00Z",
+      "sha256": "8b6002cbd721162ef0ebdf5bd5452c492f6ba5931893fa0e5662c677909c52a5",
+      "retrieved_at": "2026-11-02T07:07:37.675158+00:00",
+      "row_count": 15368
+    },
+    {
+      "url": "https://data.elexon.co.uk/bmrs/api/v1/datasets/DGWS/stream?publishDateTimeFrom=2024-10-01T00%3A00%3A00Z&publishDateTimeTo=2024-11-01T00%3A00%3A00Z",
+      "sha256": "12a67849dd033418b8d06dc80a2ae76e07822603c89086a0cc9e7b4a16599933",
+      "retrieved_at": "2026-11-02T07:07:37.791221+00:00",
+      "row_count": 10044
+    },
+    {
+      "url": "https://data.elexon.co.uk/bmrs/api/v1/datasets/AGWS/stream?publishDateTimeFrom=2024-10-01T00%3A00%3A00Z&publishDateTimeTo=2024-11-01T00%3A00%3A00Z",
+      "sha256": "b7ace42730c4d95869ef7d93133f79d539e32d72738be198fe4b4e8ca7851188",
+      "retrieved_at": "2026-11-02T07:07:38.419876+00:00",
+      "row_count": 4467
+    },
+    {
+      "url": "https://data.elexon.co.uk/bmrs/api/v1/datasets/FUELHH/stream?settlementDateFrom=2024-11-01&settlementDateTo=2024-11-30&fuelType=WIND&fuelType=NPSHYD&fuelType=BIOMASS",
+      "sha256": "d31e6bf6f35a35fccfc5a2aed5f7581fe7c25cde8947665dffedf49c8639fd0c",
+      "retrieved_at": "2026-11-02T07:07:38.867707+00:00",
+      "row_count": 4320
+    },
+    {
+      "url": "https://data.elexon.co.uk/bmrs/api/v1/datasets/WINDFOR/stream?publishDateTimeFrom=2024-11-01T00%3A00%3A00Z&publishDateTimeTo=2024-12-01T00%3A00%3A00Z",
+      "sha256": "4c8ddc93943f5f12843edf4a8a45e3ec25d536af80191f59f6e6366363846df6",
+      "retrieved_at": "2026-11-02T07:07:39.436363+00:00",
+      "row_count": 17520
+    },
+    {
+      "url": "https://data.elexon.co.uk/bmrs/api/v1/datasets/DGWS/stream?publishDateTimeFrom=2024-11-01T00%3A00%3A00Z&publishDateTimeTo=2024-12-01T00%3A00%3A00Z",
+      "sha256": "859ad15e71b273d256e62bc93b8a1fdaa633c4d236d126b2845f3d942ed85402",
+      "retrieved_at": "2026-11-02T07:07:39.780882+00:00",
+      "row_count": 9720
+    },
+    {
+      "url": "https://data.elexon.co.uk/bmrs/api/v1/datasets/AGWS/stream?publishDateTimeFrom=2024-11-01T00%3A00%3A00Z&publishDateTimeTo=2024-12-01T00%3A00%3A00Z",
+      "sha256": "ec6cf32798a7ef3ab3b80ab75a17b5337eabb3363c65c7b65040bb0a0ca04bdb",
+      "retrieved_at": "2026-11-02T07:07:40.053696+00:00",
+      "row_count": 4317
+    },
+    {
+      "url": "https://data.elexon.co.uk/bmrs/api/v1/datasets/FUELHH/stream?settlementDateFrom=2024-12-01&settlementDateTo=2024-12-31&fuelType=WIND&fuelType=NPSHYD&fuelType=BIOMASS",
+      "sha256": "9ccfbd10364b78b004908d69a046ed5ff5f5025b24be22045ee04de7b1ba6840",
+      "retrieved_at": "2026-11-02T06:55:58.375252+00:00",
+      "row_count": 4464
+    },
+    {
+      "url": "https://data.elexon.co.uk/bmrs/api/v1/datasets/WINDFOR/stream?publishDateTimeFrom=2024-12-01T00%3A00%3A00Z&publishDateTimeTo=2025-01-01T00%3A00%3A00Z",
+      "sha256": "88bc2229238dc41a1b3c16497cdccb465fde7a157742f87bc64ca5b27043140c",
+      "retrieved_at": "2026-11-02T06:55:58.607340+00:00",
+      "row_count": 18104
+    },
+    {
+      "url": "https://data.elexon.co.uk/bmrs/api/v1/datasets/DGWS/stream?publishDateTimeFrom=2024-12-01T00%3A00%3A00Z&publishDateTimeTo=2025-01-01T00%3A00%3A00Z",
+      "sha256": "98aea2722b716ee8f142a16a976791031659244e0bad0701530f90465741c21a",
+      "retrieved_at": "2026-11-02T06:55:58.641470+00:00",
+      "row_count": 9966
+    },
+    {
+      "url": "https://data.elexon.co.uk/bmrs/api/v1/datasets/AGWS/stream?publishDateTimeFrom=2024-12-01T00%3A00%3A00Z&publishDateTimeTo=2025-01-01T00%3A00%3A00Z",
+      "sha256": "c5cfa655c362cdf4e6ccfaa764dd6ece6d9f4a3b2fb6b9aa4cc92c9319395922",
+      "retrieved_at": "2026-11-02T06:55:59.425571+00:00",
+      "row_count": 4431
+    },
+    {
+      "url": "https://data.elexon.co.uk/bmrs/api/v1/datasets/FUELHH/stream?settlementDateFrom=2025-01-01&settlementDateTo=2025-01-31&fuelType=WIND&fuelType=NPSHYD&fuelType=BIOMASS",
+      "sha256": "30dd1bfcd7bc0995652d7e2eb019263d1807fdb4f482fdd3a3e5ac2f73e1d9aa",
+      "retrieved_at": "2026-11-02T06:55:59.788161+00:00",
+      "row_count": 4464
+    },
+    {
+      "url": "https://data.elexon.co.uk/bmrs/api/v1/datasets/WINDFOR/stream?publishDateTimeFrom=2025-01-01T00%3A00%3A00Z&publishDateTimeTo=2025-02-01T00%3A00%3A00Z",
+      "sha256": "06c43401ef03ab03110ab02a948194c9415de0e75b7033fd2404db8412fa3e6f",
+      "retrieved_at": "2026-11-02T06:56:00.030219+00:00",
+      "row_count": 18104
+    },
+    {
+      "url": "https://data.elexon.co.uk/bmrs/api/v1/datasets/DGWS/stream?publishDateTimeFrom=2025-01-01T00%3A00%3A00Z&publishDateTimeTo=2025-02-01T00%3A00%3A00Z",
+      "sha256": "e6dfc4acb18f2b86862a53d97e75c6048c15d324c0bfeb1a1ee65804ee290498",
+      "retrieved_at": "2026-11-02T06:56:00.733171+00:00",
+      "row_count": 10044
+    },
+    {
+      "url": "https://data.elexon.co.uk/bmrs/api/v1/datasets/AGWS/stream?publishDateTimeFrom=2025-01-01T00%3A00%3A00Z&publishDateTimeTo=2025-02-01T00%3A00%3A00Z",
+      "sha256": "485b01236d23c4a23d044ff94759b37a88ef8ca4d4cdeccda80cc3b1bb415cbc",
+      "retrieved_at": "2026-11-02T06:56:00.987004+00:00",
+      "row_count": 4464
+    },
+    {
+      "url": "https://data.elexon.co.uk/bmrs/api/v1/datasets/FUELHH/stream?settlementDateFrom=2025-02-01&settlementDateTo=2025-02-28&fuelType=WIND&fuelType=NPSHYD&fuelType=BIOMASS",
+      "sha256": "aa782bd60107ea01323a79b9839dc26887dee4354bbf138992b8ed073ebd5260",
+      "retrieved_at": "2026-11-02T06:56:01.294447+00:00",
+      "row_count": 4032
+    },
+    {
+      "url": "https://data.elexon.co.uk/bmrs/api/v1/datasets/WINDFOR/stream?publishDateTimeFrom=2025-02-01T00%3A00%3A00Z&publishDateTimeTo=2025-03-01T00%3A00%3A00Z",
+      "sha256": "6b4f95bc66c39a4dc519738be2658962c276d322cc1cd09f90cf3800cba2d001",
+      "retrieved_at": "2026-11-02T06:56:02.350309+00:00",
+      "row_count": 16352
+    },
+    {
+      "url": "https://data.elexon.co.uk/bmrs/api/v1/datasets/DGWS/stream?publishDateTimeFrom=2025-02-01T00%3A00%3A00Z&publishDateTimeTo=2025-03-01T00%3A00%3A00Z",
+      "sha256": "469fec7306fb2412fd2ac06ff3642c33b84a9b197d82b276aa7d655601faed9d",
+      "retrieved_at": "2026-11-02T06:56:02.380851+00:00",
+      "row_count": 8850
+    },
+    {
+      "url": "https://data.elexon.co.uk/bmrs/api/v1/datasets/AGWS/stream?publishDateTimeFrom=2025-02-01T00%3A00%3A00Z&publishDateTimeTo=2025-03-01T00%3A00%3A00Z",
+      "sha256": "047bac236a6a0c00706b17fbea9bac3000f02e44eae7dda19afd87787af1d7f2",
+      "retrieved_at": "2026-11-02T06:56:02.472305+00:00",
+      "row_count": 4029
+    },
+    {
+      "url": "https://data.elexon.co.uk/bmrs/api/v1/datasets/FUELHH/stream?settlementDateFrom=2025-03-01&settlementDateTo=2025-03-31&fuelType=WIND&fuelType=NPSHYD&fuelType=BIOMASS",
+      "sha256": "7b6967ec38cfd5a79708aec8af5f2d7cedcd3e64483bed6408730b978e9d2420",
+      "retrieved_at": "2026-11-02T06:56:03.537764+00:00",
+      "row_count": 4458
+    },
+    {
+      "url": "https://data.elexon.co.uk/bmrs/api/v1/datasets/WINDFOR/stream?publishDateTimeFrom=2025-03-01T00%3A00%3A00Z&publishDateTimeTo=2025-04-01T00%3A00%3A00Z",
+      "sha256": "57c93054a228c40e286c82e65cca9f67f4d35c2b4f06033c7e2720cfef7170f9",
+      "retrieved_at": "2026-11-02T06:56:03.757776+00:00",
+      "row_count": 18080
+    },
+    {
+      "url": "https://data.elexon.co.uk/bmrs/api/v1/datasets/DGWS/stream?publishDateTimeFrom=2025-03-01T00%3A00%3A00Z&publishDateTimeTo=2025-04-01T00%3A00%3A00Z",
+      "sha256": "8f009a060438ae16f993af5a14a826c6098c29b1bfe91e1174905b83a7e048da",
+      "retrieved_at": "2026-11-02T06:56:03.881424+00:00",
+      "row_count": 10044
+    },
+    {
+      "url": "https://data.elexon.co.uk/bmrs/api/v1/datasets/AGWS/stream?publishDateTimeFrom=2025-03-01T00%3A00%3A00Z&publishDateTimeTo=2025-04-01T00%3A00%3A00Z",
+      "sha256": "80f7072fcc6f2bac479cf446ac9a1de761c9fcef095732909aff9e73ac95f317",
+      "retrieved_at": "2026-11-02T06:56:04.713618+00:00",
+      "row_count": 4455
+    },
+    {
+      "url": "https://data.elexon.co.uk/bmrs/api/v1/datasets/FUELHH/stream?settlementDateFrom=2025-04-01&settlementDateTo=2025-04-30&fuelType=WIND&fuelType=NPSHYD&fuelType=BIOMASS",
+      "sha256": "217b0f880bdee7376db604c3ec33c0e7b9ed70ad48dcbb582e2c32ff40e53850",
+      "retrieved_at": "2026-11-02T06:56:04.926805+00:00",
+      "row_count": 4320
+    },
+    {
+      "url": "https://data.elexon.co.uk/bmrs/api/v1/datasets/WINDFOR/stream?publishDateTimeFrom=2025-04-01T00%3A00%3A00Z&publishDateTimeTo=2025-05-01T00%3A00%3A00Z",
+      "sha256": "cecac4bc4f59ac17b3f053ecc0ddc9026206d50e892d1c601915ddc44000eadb",
+      "retrieved_at": "2026-11-02T06:56:05.281120+00:00",
+      "row_count": 17520
+    },
+    {
+      "url": "https://data.elexon.co.uk/bmrs/api/v1/datasets/DGWS/stream?publishDateTimeFrom=2025-04-01T00%3A00%3A00Z&publishDateTimeTo=2025-05-01T00%3A00%3A00Z",
+      "sha256": "39d0811114cf9025957692f20b63ca68bf5b2e66f237d852de63322e8d3a0584",
+      "retrieved_at": "2026-11-02T06:56:06.022230+00:00",
+      "row_count": 9720
+    },
+    {
+      "url": "https://data.elexon.co.uk/bmrs/api/v1/datasets/AGWS/stream?publishDateTimeFrom=2025-04-01T00%3A00%3A00Z&publishDateTimeTo=2025-05-01T00%3A00%3A00Z",
+      "sha256": "92054450dd72d77153dbaddbf39d308b66be5649972d8828ba97c08cf67bbfe2",
+      "retrieved_at": "2026-11-02T06:56:06.004616+00:00",
+      "row_count": 4293
+    },
+    {
+      "url": "https://data.elexon.co.uk/bmrs/api/v1/datasets/FUELHH/stream?settlementDateFrom=2025-05-01&settlementDateTo=2025-05-31&fuelType=WIND&fuelType=NPSHYD&fuelType=BIOMASS",
+      "sha256": "47a2bb27f5fad8327792aca4d7cb67a0bbb0c5d4d2ebbc82200d9363cf420c6b",
+      "retrieved_at": "2026-11-02T06:56:06.474130+00:00",
+      "row_count": 4464
+    },
+    {
+      "url": "https://data.elexon.co.uk/bmrs/api/v1/datasets/WINDFOR/stream?publishDateTimeFrom=2025-05-01T00%3A00%3A00Z&publishDateTimeTo=2025-06-01T00%3A00%3A00Z",
+      "sha256": "2d84954c729477350367e7c3895603e2d703b82113af308f07647a39dd6e3617",
+      "retrieved_at": "2026-11-02T06:56:07.382376+00:00",
+      "row_count": 18104
+    },
+    {
+      "url": "https://data.elexon.co.uk/bmrs/api/v1/datasets/DGWS/stream?publishDateTimeFrom=2025-05-01T00%3A00%3A00Z&publishDateTimeTo=2025-06-01T00%3A00%3A00Z",
+      "sha256": "e89d717908262f190b7f53e8b3f2e61a4430f008af1a7214975e3812d723f557",
+      "retrieved_at": "2026-11-02T06:56:07.364513+00:00",
+      "row_count": 10044
+    },
+    {
+      "url": "https://data.elexon.co.uk/bmrs/api/v1/datasets/AGWS/stream?publishDateTimeFrom=2025-05-01T00%3A00%3A00Z&publishDateTimeTo=2025-06-01T00%3A00%3A00Z",
+      "sha256": "5b171e9d1e2c0acfb87f935ee3bb603abbc136e5d64201b9145064070babb212",
+      "retrieved_at": "2026-11-02T06:56:07.575960+00:00",
+      "row_count": 4464
+    },
+    {
+      "url": "https://data.elexon.co.uk/bmrs/api/v1/datasets/FUELHH/stream?settlementDateFrom=2025-06-01&settlementDateTo=2025-06-30&fuelType=WIND&fuelType=NPSHYD&fuelType=BIOMASS",
+      "sha256": "0a7b5f88b02a85e901175f6cc64a4da10f86af7175ccd0a52a1e40c91de9a1e6",
+      "retrieved_at": "2026-11-02T06:56:08.586671+00:00",
+      "row_count": 4320
+    },
+    {
+      "url": "https://data.elexon.co.uk/bmrs/api/v1/datasets/WINDFOR/stream?publishDateTimeFrom=2025-06-01T00%3A00%3A00Z&publishDateTimeTo=2025-07-01T00%3A00%3A00Z",
+      "sha256": "194f2b28db97eb13747a81fa7c730353a3bcbeb6ffe5bb6a30a8cc8606ef8a68",
+      "retrieved_at": "2026-11-02T06:56:08.874296+00:00",
+      "row_count": 17520
+    },
+    {
+      "url": "https://data.elexon.co.uk/bmrs/api/v1/datasets/DGWS/stream?publishDateTimeFrom=2025-06-01T00%3A00%3A00Z&publishDateTimeTo=2025-07-01T00%3A00%3A00Z",
+      "sha256": "5e36c3f47ed32c3a5ae3dda4daf2836f2f8339c78275f0980d41e7c6b7d8c702",
+      "retrieved_at": "2026-11-02T06:56:08.980648+00:00",
+      "row_count": 9720
+    },
+    {
+      "url": "https://data.elexon.co.uk/bmrs/api/v1/datasets/AGWS/stream?publishDateTimeFrom=2025-06-01T00%3A00%3A00Z&publishDateTimeTo=2025-07-01T00%3A00%3A00Z",
+      "sha256": "904eeca34e3112ba8cbf7d7d07fd5319c6b5ca77c50353b707bc015760a3a3d2",
+      "retrieved_at": "2026-11-02T06:56:09.681947+00:00",
+      "row_count": 4317
+    },
+    {
+      "url": "https://data.elexon.co.uk/bmrs/api/v1/datasets/FUELHH/stream?settlementDateFrom=2025-07-01&settlementDateTo=2025-07-31&fuelType=WIND&fuelType=NPSHYD&fuelType=BIOMASS",
+      "sha256": "87e68de5b9155d06238ac91293498d4e60329b88c301f7ab2a1343e7e5714dde",
+      "retrieved_at": "2026-11-02T06:56:10.067568+00:00",
+      "row_count": 4464
+    },
+    {
+      "url": "https://data.elexon.co.uk/bmrs/api/v1/datasets/WINDFOR/stream?publishDateTimeFrom=2025-07-01T00%3A00%3A00Z&publishDateTimeTo=2025-08-01T00%3A00%3A00Z",
+      "sha256": "15eb55d400b4f0e7727b5b8b263fa4bb328b553a2726fdd170b8499ab6c0dcc9",
+      "retrieved_at": "2026-11-02T06:56:10.316198+00:00",
+      "row_count": 18031
+    },
+    {
+      "url": "https://data.elexon.co.uk/bmrs/api/v1/datasets/DGWS/stream?publishDateTimeFrom=2025-07-01T00%3A00%3A00Z&publishDateTimeTo=2025-08-01T00%3A00%3A00Z",
+      "sha256": "b28da500f930544e5bb09636966caf2e916ea38300468004ff4008f478e7c454",
+      "retrieved_at": "2026-11-02T06:56:11.051172+00:00",
+      "row_count": 9966
+    },
+    {
+      "url": "https://data.elexon.co.uk/bmrs/api/v1/datasets/AGWS/stream?publishDateTimeFrom=2025-07-01T00%3A00%3A00Z&publishDateTimeTo=2025-08-01T00%3A00%3A00Z",
+      "sha256": "37f51f3927e2e6b590eb5de9b485fe0045684d30a0f295bd24fded0c6f5377b6",
+      "retrieved_at": "2026-11-02T06:56:11.262722+00:00",
+      "row_count": 4464
+    },
+    {
+      "url": "https://data.elexon.co.uk/bmrs/api/v1/datasets/FUELHH/stream?settlementDateFrom=2025-08-01&settlementDateTo=2025-08-31&fuelType=WIND&fuelType=NPSHYD&fuelType=BIOMASS",
+      "sha256": "fd60941da5af6f43488bd3fa00a7000ca3211bdf9ef9bac65e9ded512db0023a",
+      "retrieved_at": "2026-11-02T06:56:11.585479+00:00",
+      "row_count": 4464
+    },
+    {
+      "url": "https://data.elexon.co.uk/bmrs/api/v1/datasets/WINDFOR/stream?publishDateTimeFrom=2025-08-01T00%3A00%3A00Z&publishDateTimeTo=2025-09-01T00%3A00%3A00Z",
+      "sha256": "fd501f303f419e417f76475f64c03eb9ffb1beff650814d1b3cf07de4b3b9c8b",
+      "retrieved_at": "2026-11-02T06:56:12.478208+00:00",
+      "row_count": 18031
+    },
+    {
+      "url": "https://data.elexon.co.uk/bmrs/api/v1/datasets/DGWS/stream?publishDateTimeFrom=2025-08-01T00%3A00%3A00Z&publishDateTimeTo=2025-09-01T00%3A00%3A00Z",
+      "sha256": "f6241d0a66aca25af56372be3629b438c0265a7e2a1eb98d11cdee2f83fc4fc6",
+      "retrieved_at": "2026-11-02T06:56:12.626409+00:00",
+      "row_count": 9966
+    },
+    {
+      "url": "https://data.elexon.co.uk/bmrs/api/v1/datasets/AGWS/stream?publishDateTimeFrom=2025-08-01T00%3A00%3A00Z&publishDateTimeTo=2025-09-01T00%3A00%3A00Z",
+      "sha256": "04fa26f8e9202d2800cf6e60b1f38d603b2b9f140132a2e9bf0f501183ed4cce",
+      "retrieved_at": "2026-11-02T06:56:12.791619+00:00",
+      "row_count": 4464
+    },
+    {
+      "url": "https://data.elexon.co.uk/bmrs/api/v1/datasets/FUELHH/stream?settlementDateFrom=2025-09-01&settlementDateTo=2025-09-30&fuelType=WIND&fuelType=NPSHYD&fuelType=BIOMASS",
+      "sha256": "9d74df7fc701905859b5787389d8117f72be8599fc89fd9e3583d4e15c418fcd",
+      "retrieved_at": "2026-11-02T06:56:13.688171+00:00",
+      "row_count": 4320
+    },
+    {
+      "url": "https://data.elexon.co.uk/bmrs/api/v1/datasets/WINDFOR/stream?publishDateTimeFrom=2025-09-01T00%3A00%3A00Z&publishDateTimeTo=2025-10-01T00%3A00%3A00Z",
+      "sha256": "fb5746da708141447b11368b4306c525d17fcc09c0710900a4388d8864c6c6d0",
+      "retrieved_at": "2026-11-02T06:56:14.035549+00:00",
+      "row_count": 17520
+    },
+    {
+      "url": "https://data.elexon.co.uk/bmrs/api/v1/datasets/DGWS/stream?publishDateTimeFrom=2025-09-01T00%3A00%3A00Z&publishDateTimeTo=2025-10-01T00%3A00%3A00Z",
+      "sha256": "85ecdd271dd5fbf69672dc5190af6022ec1527455bacf7d50d1e47a42563c5fa",
+      "retrieved_at": "2026-11-02T06:56:14.181141+00:00",
+      "row_count": 9720
+    },
+    {
+      "url": "https://data.elexon.co.uk/bmrs/api/v1/datasets/AGWS/stream?publishDateTimeFrom=2025-09-01T00%3A00%3A00Z&publishDateTimeTo=2025-10-01T00%3A00%3A00Z",
+      "sha256": "9f3d83d641b6112ed2ead607e145e0737faec22049fdcdec3421b6095e3c9649",
+      "retrieved_at": "2026-11-02T06:56:14.779267+00:00",
+      "row_count": 4317
+    },
+    {
+      "url": "https://data.elexon.co.uk/bmrs/api/v1/datasets/FUELHH/stream?settlementDateFrom=2025-10-01&settlementDateTo=2025-10-31&fuelType=WIND&fuelType=NPSHYD&fuelType=BIOMASS",
+      "sha256": "442396509ffadcbe0a8a35b4824cf3f5f0b281b57273ac6a189cfc0bdcafaaf0",
+      "retrieved_at": "2026-11-02T06:56:15.358531+00:00",
+      "row_count": 4470
+    },
+    {
+      "url": "https://data.elexon.co.uk/bmrs/api/v1/datasets/WINDFOR/stream?publishDateTimeFrom=2025-10-01T00%3A00%3A00Z&publishDateTimeTo=2025-11-01T00%3A00%3A00Z",
+      "sha256": "16c21fa540a4836e8175ff184684062eaaad2f80091125571d61d0b37570453b",
+      "retrieved_at": "2026-11-02T06:56:15.672659+00:00",
+      "row_count": 18128
+    },
+    {
+      "url": "https://data.elexon.co.uk/bmrs/api/v1/datasets/DGWS/stream?publishDateTimeFrom=2025-10-01T00%3A00%3A00Z&publishDateTimeTo=2025-11-01T00%3A00%3A00Z",
+      "sha256": "5924c433f1c40f482a8164800ad2b4e031b0e4ab5bf1a4afad64963377237fdf",
+      "retrieved_at": "2026-11-02T06:56:16.224491+00:00",
+      "row_count": 10044
+    },
+    {
+      "url": "https://data.elexon.co.uk/bmrs/api/v1/datasets/AGWS/stream?publishDateTimeFrom=2025-10-01T00%3A00%3A00Z&publishDateTimeTo=2025-11-01T00%3A00%3A00Z",
+      "sha256": "34478a9ac37a465c4cff58bb245b55c7af081cd27ccfacad1307ce980839969b",
+      "retrieved_at": "2026-11-02T06:56:16.592627+00:00",
+      "row_count": 4467
+    },
+    {
+      "url": "https://data.elexon.co.uk/bmrs/api/v1/datasets/FUELHH/stream?settlementDateFrom=2025-11-01&settlementDateTo=2025-11-30&fuelType=WIND&fuelType=NPSHYD&fuelType=BIOMASS",
+      "sha256": "1c4c2240e990829a6b0a7d9fd5cec3531c40af7007cb9e3446afce01dd4cfc93",
+      "retrieved_at": "2026-11-02T06:56:16.981165+00:00",
+      "row_count": 4320
+    },
+    {
+      "url": "https://data.elexon.co.uk/bmrs/api/v1/datasets/WINDFOR/stream?publishDateTimeFrom=2025-11-01T00%3A00%3A00Z&publishDateTimeTo=2025-12-01T00%3A00%3A00Z",
+      "sha256": "2b0851fb09aad8bc9dca2b69a0f08ffb84062b77b849467e3ddeeabbd2dc4aff",
+      "retrieved_at": "2026-11-02T06:56:18.183148+00:00",
+      "row_count": 17520
+    },
+    {
+      "url": "https://data.elexon.co.uk/bmrs/api/v1/datasets/DGWS/stream?publishDateTimeFrom=2025-11-01T00%3A00%3A00Z&publishDateTimeTo=2025-12-01T00%3A00%3A00Z",
+      "sha256": "fce50331e10d4c0cdc95f0c7816123dd4149b9f42a1937147c6c134d39fb2950",
+      "retrieved_at": "2026-11-02T06:56:18.010436+00:00",
+      "row_count": 9720
+    },
+    {
+      "url": "https://data.elexon.co.uk/bmrs/api/v1/datasets/AGWS/stream?publishDateTimeFrom=2025-11-01T00%3A00%3A00Z&publishDateTimeTo=2025-12-01T00%3A00%3A00Z",
+      "sha256": "cefc194ac9dd04d6831375e391eef5ee5474556be4e49a3a4e9f7c9963022390",
+      "retrieved_at": "2026-11-02T06:56:18.156380+00:00",
+      "row_count": 4326
+    },
+    {
+      "url": "https://data.elexon.co.uk/bmrs/api/v1/datasets/FUELHH/stream?settlementDateFrom=2025-12-01&settlementDateTo=2025-12-31&fuelType=WIND&fuelType=NPSHYD&fuelType=BIOMASS",
+      "sha256": "ba2ecc43869b7d062a3a13af7b91afa2a1d5a7769852d576895555070d944591",
+      "retrieved_at": "2026-11-02T06:56:19.298783+00:00",
+      "row_count": 4464
+    },
+    {
+      "url": "https://data.elexon.co.uk/bmrs/api/v1/datasets/WINDFOR/stream?publishDateTimeFrom=2025-12-01T00%3A00%3A00Z&publishDateTimeTo=2026-01-01T00%3A00%3A00Z",
+      "sha256": "3e0c379bc4caf6964ab78eace1abcada1a65f77856281d281e635c1210d2a816",
+      "retrieved_at": "2026-11-02T06:56:19.616250+00:00",
+      "row_count": 18104
+    },
+    {
+      "url": "https://data.elexon.co.uk/bmrs/api/v1/datasets/DGWS/stream?publishDateTimeFrom=2025-12-01T00%3A00%3A00Z&publishDateTimeTo=2026-01-01T00%3A00%3A00Z",
+      "sha256": "69e0f89ccba748350372bbd36c0d5734fb0779753f44dd4ef4ab1e4900435596",
+      "retrieved_at": "2026-11-02T06:56:19.578039+00:00",
+      "row_count": 10044
+    },
+    {
+      "url": "https://data.elexon.co.uk/bmrs/api/v1/datasets/AGWS/stream?publishDateTimeFrom=2025-12-01T00%3A00%3A00Z&publishDateTimeTo=2026-01-01T00%3A00%3A00Z",
+      "sha256": "419e07c8c83c490794be033875e43a899c10608481dd1cbf68759eabe7000171",
+      "retrieved_at": "2026-11-02T06:56:20.455428+00:00",
+      "row_count": 4467
+    },
+    {
+      "url": "https://data.elexon.co.uk/bmrs/api/v1/datasets/FUELHH/stream?settlementDateFrom=2026-01-01&settlementDateTo=2026-01-31&fuelType=WIND&fuelType=NPSHYD&fuelType=BIOMASS",
+      "sha256": "7053f9876c0d333ebad4ae01153b83049715fc91fe5d22aa44457bba7d5f630c",
+      "retrieved_at": "2026-11-02T06:56:20.777594+00:00",
+      "row_count": 4464
+    },
+    {
+      "url": "https://data.elexon.co.uk/bmrs/api/v1/datasets/WINDFOR/stream?publishDateTimeFrom=2026-01-01T00%3A00%3A00Z&publishDateTimeTo=2026-02-01T00%3A00%3A00Z",
+      "sha256": "94550bb536c188b9dde70d2532d209e5087e75f02c11e38f0ccc3a5e80ea2f53",
+      "retrieved_at": "2026-11-02T06:56:21.295464+00:00",
+      "row_count": 18104
+    },
+    {
+      "url": "https://data.elexon.co.uk/bmrs/api/v1/datasets/DGWS/stream?publishDateTimeFrom=2026-01-01T00%3A00%3A00Z&publishDateTimeTo=2026-02-01T00%3A00%3A00Z",
+      "sha256": "ac411764a7203da029339426e6fe504d6708d1638b1375b0ff2ed679d0bf611b",
+      "retrieved_at": "2026-11-02T06:56:22.318753+00:00",
+      "row_count": 9900
+    },
+    {
+      "url": "https://data.elexon.co.uk/bmrs/api/v1/datasets/AGWS/stream?publishDateTimeFrom=2026-01-01T00%3A00%3A00Z&publishDateTimeTo=2026-02-01T00%3A00%3A00Z",
+      "sha256": "8b19855d7040f9cee2e102e2257458f24eb4563309ed83b81774ffb930f88f19",
+      "retrieved_at": "2026-11-02T06:56:21.894144+00:00",
+      "row_count": 4464
+    },
+    {
+      "url": "https://data.elexon.co.uk/bmrs/api/v1/datasets/FUELHH/stream?settlementDateFrom=2026-02-01&settlementDateTo=2026-02-28&fuelType=WIND&fuelType=NPSHYD&fuelType=BIOMASS",
+      "sha256": "6523a00b6a73b97bef388062b1c2e424b1cb0eab3ca0292214a51088ed8181d0",
+      "retrieved_at": "2026-11-02T07:07:42.978045+00:00",
+      "row_count": 4032
+    },
+    {
+      "url": "https://data.elexon.co.uk/bmrs/api/v1/datasets/WINDFOR/stream?publishDateTimeFrom=2026-02-01T00%3A00%3A00Z&publishDateTimeTo=2026-03-01T00%3A00%3A00Z",
+      "sha256": "d838b4c94255424bddd244f6e850f89b2257674abb4e69e59a7ccea99d6bc443",
+      "retrieved_at": "2026-11-02T07:07:43.322188+00:00",
+      "row_count": 16352
+    },
+    {
+      "url": "https://data.elexon.co.uk/bmrs/api/v1/datasets/DGWS/stream?publishDateTimeFrom=2026-02-01T00%3A00%3A00Z&publishDateTimeTo=2026-03-01T00%3A00%3A00Z",
+      "sha256": "1d76b225dab1d8718ba74cd06cf9d289cb7aa8fa568cff2f02e5666f83a924f5",
+      "retrieved_at": "2026-11-02T07:07:43.304408+00:00",
+      "row_count": 9072
+    },
+    {
+      "url": "https://data.elexon.co.uk/bmrs/api/v1/datasets/AGWS/stream?publishDateTimeFrom=2026-02-01T00%3A00%3A00Z&publishDateTimeTo=2026-03-01T00%3A00%3A00Z",
+      "sha256": "4df98a55fc0b9f714388e3f2bae38c3061b224f9f19cbf0c7074e75ee7a8138e",
+      "retrieved_at": "2026-11-02T07:07:44.102795+00:00",
+      "row_count": 4032
+    },
+    {
+      "url": "https://data.elexon.co.uk/bmrs/api/v1/datasets/FUELHH/stream?settlementDateFrom=2026-03-01&settlementDateTo=2026-03-02&fuelType=WIND&fuelType=NPSHYD&fuelType=BIOMASS",
+      "sha256": "74b2c48075057cb940ee0efa7352fe336c533d8de66c6514fe8b1a9cec18e36d",
+      "retrieved_at": "2026-11-02T07:07:44.084632+00:00",
+      "row_count": 288
+    },
+    {
+      "url": "https://data.elexon.co.uk/bmrs/api/v1/datasets/WINDFOR/stream?publishDateTimeFrom=2026-03-01T00%3A00%3A00Z&publishDateTimeTo=2026-03-03T00%3A00%3A00Z",
+      "sha256": "db79002f0d588424abbcee3edb318afefbdc3dfd0a8be14bf9d16ea107143c2d",
+      "retrieved_at": "2026-11-02T07:07:44.138132+00:00",
+      "row_count": 1168
+    },
+    {
+      "url": "https://data.elexon.co.uk/bmrs/api/v1/datasets/DGWS/stream?publishDateTimeFrom=2026-03-01T00%3A00%3A00Z&publishDateTimeTo=2026-03-03T00%3A00%3A00Z",
+      "sha256": "5568d382dbe0fe1b4fb774f7f84b0cad3e2c86b8660aac59dd5d49071a4f2258",
+      "retrieved_at": "2026-11-02T07:07:44.927404+00:00",
+      "row_count": 648
+    },
+    {
+      "url": "https://data.elexon.co.uk/bmrs/api/v1/datasets/AGWS/stream?publishDateTimeFrom=2026-03-01T00%3A00%3A00Z&publishDateTimeTo=2026-03-03T00%3A00%3A00Z",
+      "sha256": "afba679a572a8b18167b644698da14f485797a3edc4951232c9a57004db8e0d0",
+      "retrieved_at": "2026-11-02T07:07:44.910947+00:00",
+      "row_count": 288
+    }
+  ],
+  "retrieved_at": "2026-11-02T07:07:44.927404+00:00",
+  "from_date": "2023-01-01",
+  "to_date": "2026-03-03"
+}

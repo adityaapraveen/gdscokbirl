@@ -1,0 +1,217 @@
+"""Renewables acquisition is explicit, bounded and separate from calculation.
+
+Snapshots bootstrap January scenarios; future scenarios require live acquisition.
+User portfolio inputs never leave the API or enter the public source database.
+"""
+import asyncio
+from datetime import UTC, date, datetime, timedelta
+from functools import lru_cache
+import gzip
+import hashlib
+import json
+import logging
+import os
+from pathlib import Path
+from threading import Lock
+
+import httpx
+from sqlalchemy import insert, select
+from sqlalchemy.orm import Session
+
+from .analytics import LONDON
+from .elexon import BASE_URL, ElexonError
+from .renewables import Archive, normalize
+from .repository import get_database_url
+from .storage import RenewableObservation as Row, RenewableCheck as Check, make_engine
+
+SNAPSHOT = Path(__file__).resolve().parents[1] / "data/renewables-january-2026.json.gz"
+LOG = logging.getLogger("windlens")
+_lock = Lock()
+_initialization_lock = Lock()
+_load_lock = Lock()
+
+
+def now():
+    return datetime.now(UTC)
+
+
+def validate_day(day: date):
+    tomorrow = now().astimezone(LONDON).date() + timedelta(days=1)
+    if not (date(2026, 1, 2) <= day <= date(2026, 2, 1) or day == tomorrow):
+        raise ValueError("Choose delivery 2 January–1 February 2026, or tomorrow in future day-ahead mode.")
+
+
+def scope(day: date) -> str:
+    validate_day(day)
+    return "january" if day <= date(2026, 2, 1) else f"future:{day}"
+
+
+@lru_cache(maxsize=1)
+def seed():
+    body = SNAPSHOT.read_bytes()
+    expected = SNAPSHOT.with_suffix(".sha256").read_text().strip()
+    if hashlib.sha256(body).hexdigest() != expected:
+        raise ValueError("Renewables snapshot checksum mismatch")
+    return json.loads(gzip.decompress(body))
+
+
+def _engine():
+    engine = make_engine(get_database_url())
+    with _initialization_lock:
+        Row.__table__.create(engine, checkfirst=True)
+        Check.__table__.create(engine, checkfirst=True)
+    return engine
+
+
+def persist_rows(engine, rows: list[list]):
+    """Validate all keys before a transaction; never silently overwrite a version."""
+    existing = {}
+    with engine.connect() as connection:
+        for row in connection.execute(select(Row)):
+            existing[(row.source, row.kind, row.start_ts, row.publish_ts)] = row.generation_mw
+    pending = []
+    for source, kind, start, publish, value in rows:
+        key = (source, kind, start, publish)
+        if key in existing:
+            if existing[key] != value:
+                raise ValueError("Conflicting renewable source version; retaining stored data")
+        else:
+            pending.append(dict(source=source, kind=kind, start_ts=start, publish_ts=publish, generation_mw=value))
+            existing[key] = value
+    with engine.begin() as connection:
+        for index in range(0, len(pending), 2000):
+            connection.execute(insert(Row), pending[index:index + 2000])
+
+
+@lru_cache(maxsize=4)
+def _load_archive(key: str, generation: str) -> Archive:
+    with _load_lock:
+        engine = _engine()
+        try:
+            with engine.connect() as connection:
+                rows = [[r.source, r.kind, r.start_ts, r.publish_ts, r.generation_mw]
+                        for r in connection.execute(select(Row))]
+            if not rows:
+                persist_rows(engine, seed()["rows"])
+                rows = seed()["rows"]
+            return Archive(rows, {"generation": generation, "scope": key})
+        finally:
+            engine.dispose()
+
+
+def _read_check(engine, key: str) -> dict:
+    with Session(engine) as session:
+        check = session.get(Check, key)
+        return {"last_attempt_at": check.last_attempt_at, "last_success_at": check.last_success_at,
+                "error": check.error, "source_hash": check.source_hash} if check else {
+                    "last_attempt_at": None, "last_success_at": None, "error": None, "source_hash": None}
+
+
+def _write_check(engine, key, state):
+    with Session(engine) as session, session.begin():
+        session.merge(Check(scope=key, **state))
+
+
+def _status(key, state):
+    success = state["last_success_at"]
+    fresh = success and (now() - datetime.fromisoformat(success)).total_seconds() < 3600
+    return {**state, "scope": key, "mode": ("live" if fresh and not state["error"] else "cached") if success else "snapshot",
+            "storage": "ephemeral" if os.getenv("VERCEL") and not os.getenv("DATABASE_URL") else "persistent",
+            "ttl_seconds": 3600, "cooldown_seconds": 60,
+            "snapshot_retrieved_at": seed()["metadata"]["retrieved_at"]}
+
+
+def get_archive(day: date) -> tuple[Archive, dict]:
+    key = scope(day)
+    engine = _engine()
+    try:
+        state = _read_check(engine, key)
+        archive = _load_archive(key, state["source_hash"] or "snapshot")
+        return archive, _status(key, state)
+    finally:
+        engine.dispose()
+
+
+async def _source_request(client: httpx.AsyncClient, dataset: str, params: dict) -> list[dict]:
+    # Parameters are generated by the server, never supplied as arbitrary URLs.
+    for attempt in range(2):
+        try:
+            async with client.stream("GET", f"{BASE_URL}/datasets/{dataset}/stream", params=params) as response:
+                if response.status_code in (429, 500, 502, 503, 504) and attempt == 0:
+                    await asyncio.sleep(.2)
+                    continue
+                response.raise_for_status()
+                body = bytearray()
+                async for chunk in response.aiter_bytes():
+                    body.extend(chunk)
+                    if len(body) > 8 * 1024 * 1024:
+                        raise ElexonError("Renewable response exceeded its size limit")
+                rows = json.loads(body)
+                if not isinstance(rows, list) or not rows:
+                    raise ElexonError(f"Elexon {dataset} returned no usable rows")
+                return rows
+        except (httpx.TimeoutException, httpx.NetworkError):
+            if attempt:
+                raise ElexonError(f"Elexon {dataset} timed out")
+        except (httpx.HTTPError, ValueError) as exc:
+            raise ElexonError(f"Elexon {dataset} request failed") from exc
+    raise ElexonError("Renewables retry budget exhausted")
+
+
+async def _fetch_window(day: date) -> list[list]:
+    if day <= date(2026, 2, 1):
+        first, end = date(2025, 11, 27), date(2026, 2, 3)
+    else:
+        first, end = now().astimezone(LONDON).date() - timedelta(days=35), day + timedelta(days=1)
+    tasks = []
+    async with asyncio.timeout(20), httpx.AsyncClient(timeout=8, follow_redirects=False) as client:
+        for dataset in ("FUELHH", "WINDFOR", "DGWS", "AGWS"):
+            params = ({"settlementDateFrom": str(first), "settlementDateTo": str(end - timedelta(days=1)),
+                       "fuelType": ["WIND", "NPSHYD", "BIOMASS"]} if dataset == "FUELHH" else {
+                           "publishDateTimeFrom": f"{first}T00:00:00Z", "publishDateTimeTo": f"{end}T00:00:00Z"})
+            tasks.append(_source_request(client, dataset, params))
+        batches = await asyncio.gather(*tasks)
+    normalized = [row for dataset, rows in zip(("FUELHH", "WINDFOR", "DGWS", "AGWS"), batches)
+                  for row in normalize(dataset, rows)]
+    if any(not any(row[0] == source and row[1] == "actual" for row in normalized)
+           for source in ("wind", "solar", "hydro", "biomass")):
+        raise ElexonError("Renewable response omitted an actual/estimated source")
+    return normalized
+
+
+def refresh(day: date, force: bool = False) -> dict:
+    key = scope(day)
+    with _lock:
+        archive, _ = get_archive(day)
+        engine = _engine()
+        try:
+            state = _read_check(engine, key)
+            for field, seconds in (("last_attempt_at", 60), ("last_success_at", 3600)):
+                if state[field] and (now() - datetime.fromisoformat(state[field])).total_seconds() < seconds:
+                    if field == "last_attempt_at" or (not force and not state["error"]):
+                        return _status(key, state)
+            state["last_attempt_at"] = now().isoformat()
+            _write_check(engine, key, state)
+            try:
+                rows = asyncio.run(_fetch_window(day))
+                if key == "january":
+                    first = datetime(2026, 1, 2, tzinfo=UTC).timestamp()
+                    end = datetime(2026, 2, 2, tzinfo=UTC).timestamp()
+                    expected = {tuple(row[:-1]) for row in seed()["rows"] if first <= row[2] < end}
+                    # Acquisition windows differ for historical late revisions;
+                    # never advertise a truncated January archive as refreshed.
+                    relevant = {tuple(row[:-1]) for row in rows}
+                    if not expected.issubset(relevant):
+                        raise ElexonError("Incomplete historical renewable archive; retaining stored data")
+                persist_rows(engine, rows)
+                state.update(last_success_at=now().isoformat(), error=None,
+                             source_hash=hashlib.sha256(json.dumps(rows, sort_keys=True).encode()).hexdigest())
+                LOG.info("renewable_refresh_succeeded scope=%s records=%s", key, len(rows))
+            except (ElexonError, ValueError, TimeoutError) as exc:
+                state["error"] = str(exc)[:200] or "Elexon refresh timed out; stored data retained"
+                LOG.warning("renewable_refresh_retained_data scope=%s reason=%s", key, state["error"])
+            _write_check(engine, key, state)
+            _load_archive.cache_clear()
+            return _status(key, state)
+        finally:
+            engine.dispose()

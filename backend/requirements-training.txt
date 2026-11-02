@@ -1,0 +1,5 @@
+# Offline model development only. Runtime inference has no native ML dependency.
+-r requirements.lock
+lightgbm==4.6.0
+numpy==2.2.6
+scipy==1.18.1

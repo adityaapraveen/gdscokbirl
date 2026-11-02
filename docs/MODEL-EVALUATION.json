@@ -1,0 +1,826 @@
+{
+  "created_at": "2026-11-02T07:11:03.944810+00:00",
+  "history_sha256": "37e585195335858619ae5f562b99aab5a0afd4489e992c70ced0f19b4ed2fb42",
+  "splits": {
+    "train": "2023 or 2025 start through 31 Aug 2025",
+    "early_stop": "September 2025",
+    "selection": "October 2025",
+    "calibration": "2 Nov 2025\u20131 Jan 2026",
+    "january_benchmark": "2 Jan\u20131 Feb 2026 (previously inspected)",
+    "untouched_test": "2 Feb\u20131 Mar 2026"
+  },
+  "cutoffs": [
+    "09:20",
+    "17:00"
+  ],
+  "selection_rule": "At least 2% lower October MAE than the source-specific baseline; never select on January.",
+  "candidates_per_source": 12,
+  "sources": {
+    "wind": {
+      "selected": "lightgbm",
+      "counts": {
+        "train": 46700,
+        "early_stop": 1394,
+        "selection": 1442,
+        "calibration": 2928,
+        "january_benchmark": 1488,
+        "test": 1344
+      },
+      "candidates": [
+        {
+          "training_start": "2023-01-02",
+          "training_samples": 46700,
+          "num_leaves": 7,
+          "min_data_in_leaf": 50,
+          "best_iteration": 28,
+          "selection_mae_mw": 1526.9000115558827
+        },
+        {
+          "training_start": "2023-01-02",
+          "training_samples": 46700,
+          "num_leaves": 7,
+          "min_data_in_leaf": 150,
+          "best_iteration": 28,
+          "selection_mae_mw": 1526.9000115558827
+        },
+        {
+          "training_start": "2023-01-02",
+          "training_samples": 46700,
+          "num_leaves": 15,
+          "min_data_in_leaf": 50,
+          "best_iteration": 22,
+          "selection_mae_mw": 1555.1849719919232
+        },
+        {
+          "training_start": "2023-01-02",
+          "training_samples": 46700,
+          "num_leaves": 15,
+          "min_data_in_leaf": 150,
+          "best_iteration": 22,
+          "selection_mae_mw": 1554.4255664869995
+        },
+        {
+          "training_start": "2023-01-02",
+          "training_samples": 46700,
+          "num_leaves": 31,
+          "min_data_in_leaf": 50,
+          "best_iteration": 22,
+          "selection_mae_mw": 1549.445393495928
+        },
+        {
+          "training_start": "2023-01-02",
+          "training_samples": 46700,
+          "num_leaves": 31,
+          "min_data_in_leaf": 150,
+          "best_iteration": 22,
+          "selection_mae_mw": 1536.9618326304326
+        },
+        {
+          "training_start": "2025-01-02",
+          "training_samples": 11616,
+          "num_leaves": 7,
+          "min_data_in_leaf": 50,
+          "best_iteration": 18,
+          "selection_mae_mw": 1539.6036147386196
+        },
+        {
+          "training_start": "2025-01-02",
+          "training_samples": 11616,
+          "num_leaves": 7,
+          "min_data_in_leaf": 150,
+          "best_iteration": 18,
+          "selection_mae_mw": 1539.6036147386196
+        },
+        {
+          "training_start": "2025-01-02",
+          "training_samples": 11616,
+          "num_leaves": 15,
+          "min_data_in_leaf": 50,
+          "best_iteration": 14,
+          "selection_mae_mw": 1594.07806496538
+        },
+        {
+          "training_start": "2025-01-02",
+          "training_samples": 11616,
+          "num_leaves": 15,
+          "min_data_in_leaf": 150,
+          "best_iteration": 13,
+          "selection_mae_mw": 1613.6611664940501
+        },
+        {
+          "training_start": "2025-01-02",
+          "training_samples": 11616,
+          "num_leaves": 31,
+          "min_data_in_leaf": 50,
+          "best_iteration": 12,
+          "selection_mae_mw": 1604.4920731399773
+        },
+        {
+          "training_start": "2025-01-02",
+          "training_samples": 11616,
+          "num_leaves": 31,
+          "min_data_in_leaf": 150,
+          "best_iteration": 14,
+          "selection_mae_mw": 1570.8696529453598
+        }
+      ],
+      "parameters": {
+        "training_start": "2023-01-02",
+        "training_samples": 46700,
+        "num_leaves": 7,
+        "min_data_in_leaf": 50,
+        "best_iteration": 28,
+        "selection_mae_mw": 1526.9000115558827
+      },
+      "export_parity_max_abs_error": 0.0,
+      "evaluation": {
+        "selection": {
+          "baseline": {
+            "sample_count": 1442,
+            "mae_mw": 2198.601248266297,
+            "rmse_mw": 2828.9717831504263,
+            "bias_mw": -1818.1061026352288,
+            "p90_absolute_error_mw": 4746.4
+          },
+          "lightgbm": {
+            "sample_count": 1442,
+            "mae_mw": 1526.9000115558827,
+            "rmse_mw": 1930.5725854839056,
+            "bias_mw": -505.24279242433204,
+            "p90_absolute_error_mw": 3359.2837313359955
+          },
+          "selected": {
+            "sample_count": 1442,
+            "mae_mw": 1526.9000115558827,
+            "rmse_mw": 1930.5725854839056,
+            "bias_mw": -505.24279242433204,
+            "p90_absolute_error_mw": 3359.2837313359955
+          }
+        },
+        "january_benchmark": {
+          "baseline": {
+            "sample_count": 1488,
+            "mae_mw": 1956.190188172043,
+            "rmse_mw": 2417.309844241014,
+            "bias_mw": -1728.5430107526881,
+            "p90_absolute_error_mw": 3931.85
+          },
+          "lightgbm": {
+            "sample_count": 1488,
+            "mae_mw": 1160.1339485928268,
+            "rmse_mw": 1534.521785455593,
+            "bias_mw": -450.23754787801386,
+            "p90_absolute_error_mw": 2364.38600496706
+          },
+          "selected": {
+            "sample_count": 1488,
+            "mae_mw": 1160.1339485928268,
+            "rmse_mw": 1534.521785455593,
+            "bias_mw": -450.23754787801386,
+            "p90_absolute_error_mw": 2364.38600496706
+          }
+        },
+        "test": {
+          "baseline": {
+            "sample_count": 1344,
+            "mae_mw": 1677.2723214285713,
+            "rmse_mw": 2023.4100916051407,
+            "bias_mw": -1353.642857142857,
+            "p90_absolute_error_mw": 3115.2
+          },
+          "lightgbm": {
+            "sample_count": 1344,
+            "mae_mw": 1022.7376169626622,
+            "rmse_mw": 1341.7435505941025,
+            "bias_mw": -81.07126264323198,
+            "p90_absolute_error_mw": 2035.0367967296456
+          },
+          "selected": {
+            "sample_count": 1344,
+            "mae_mw": 1022.7376169626622,
+            "rmse_mw": 1341.7435505941025,
+            "bias_mw": -81.07126264323198,
+            "p90_absolute_error_mw": 2035.0367967296456
+          }
+        }
+      }
+    },
+    "solar": {
+      "selected": "baseline",
+      "counts": {
+        "train": 46523,
+        "early_stop": 1384,
+        "selection": 1436,
+        "calibration": 2924,
+        "january_benchmark": 1486,
+        "test": 1342
+      },
+      "candidates": [
+        {
+          "training_start": "2023-01-02",
+          "training_samples": 46523,
+          "num_leaves": 7,
+          "min_data_in_leaf": 50,
+          "best_iteration": 19,
+          "selection_mae_mw": 446.8271669299185
+        },
+        {
+          "training_start": "2023-01-02",
+          "training_samples": 46523,
+          "num_leaves": 7,
+          "min_data_in_leaf": 150,
+          "best_iteration": 19,
+          "selection_mae_mw": 446.8272229677934
+        },
+        {
+          "training_start": "2023-01-02",
+          "training_samples": 46523,
+          "num_leaves": 15,
+          "min_data_in_leaf": 50,
+          "best_iteration": 3,
+          "selection_mae_mw": 451.5189178182121
+        },
+        {
+          "training_start": "2023-01-02",
+          "training_samples": 46523,
+          "num_leaves": 15,
+          "min_data_in_leaf": 150,
+          "best_iteration": 5,
+          "selection_mae_mw": 451.04665508977155
+        },
+        {
+          "training_start": "2023-01-02",
+          "training_samples": 46523,
+          "num_leaves": 31,
+          "min_data_in_leaf": 50,
+          "best_iteration": 1,
+          "selection_mae_mw": 451.8126820690927
+        },
+        {
+          "training_start": "2023-01-02",
+          "training_samples": 46523,
+          "num_leaves": 31,
+          "min_data_in_leaf": 150,
+          "best_iteration": 1,
+          "selection_mae_mw": 452.16548944391013
+        },
+        {
+          "training_start": "2025-01-02",
+          "training_samples": 11592,
+          "num_leaves": 7,
+          "min_data_in_leaf": 50,
+          "best_iteration": 40,
+          "selection_mae_mw": 455.29248149416753
+        },
+        {
+          "training_start": "2025-01-02",
+          "training_samples": 11592,
+          "num_leaves": 7,
+          "min_data_in_leaf": 150,
+          "best_iteration": 29,
+          "selection_mae_mw": 453.25829888710933
+        },
+        {
+          "training_start": "2025-01-02",
+          "training_samples": 11592,
+          "num_leaves": 15,
+          "min_data_in_leaf": 50,
+          "best_iteration": 30,
+          "selection_mae_mw": 453.1350310342822
+        },
+        {
+          "training_start": "2025-01-02",
+          "training_samples": 11592,
+          "num_leaves": 15,
+          "min_data_in_leaf": 150,
+          "best_iteration": 1,
+          "selection_mae_mw": 453.54427177639445
+        },
+        {
+          "training_start": "2025-01-02",
+          "training_samples": 11592,
+          "num_leaves": 31,
+          "min_data_in_leaf": 50,
+          "best_iteration": 14,
+          "selection_mae_mw": 460.9349921912619
+        },
+        {
+          "training_start": "2025-01-02",
+          "training_samples": 11592,
+          "num_leaves": 31,
+          "min_data_in_leaf": 150,
+          "best_iteration": 1,
+          "selection_mae_mw": 454.1657113057876
+        }
+      ],
+      "parameters": {
+        "training_start": "2023-01-02",
+        "training_samples": 46523,
+        "num_leaves": 7,
+        "min_data_in_leaf": 50,
+        "best_iteration": 19,
+        "selection_mae_mw": 446.8271669299185
+      },
+      "export_parity_max_abs_error": 0.0,
+      "evaluation": {
+        "selection": {
+          "baseline": {
+            "sample_count": 1436,
+            "mae_mw": 453.34779148428174,
+            "rmse_mw": 973.9206986241312,
+            "bias_mw": -131.84361321130123,
+            "p90_absolute_error_mw": 1631.6428571428573
+          },
+          "lightgbm": {
+            "sample_count": 1436,
+            "mae_mw": 446.8271669299185,
+            "rmse_mw": 965.5487049416184,
+            "bias_mw": -103.57155419708995,
+            "p90_absolute_error_mw": 1591.3853821670757
+          },
+          "selected": {
+            "sample_count": 1436,
+            "mae_mw": 453.34779148428174,
+            "rmse_mw": 973.9206986241312,
+            "bias_mw": -131.84361321130123,
+            "p90_absolute_error_mw": 1631.6428571428573
+          }
+        },
+        "january_benchmark": {
+          "baseline": {
+            "sample_count": 1486,
+            "mae_mw": 231.00471063257066,
+            "rmse_mw": 617.84683431557,
+            "bias_mw": -7.340223034031916,
+            "p90_absolute_error_mw": 767.8214285714287
+          },
+          "lightgbm": {
+            "sample_count": 1486,
+            "mae_mw": 231.49795553100455,
+            "rmse_mw": 619.1334204494683,
+            "bias_mw": -7.705151379209985,
+            "p90_absolute_error_mw": 763.2579474028305
+          },
+          "selected": {
+            "sample_count": 1486,
+            "mae_mw": 231.00471063257066,
+            "rmse_mw": 617.84683431557,
+            "bias_mw": -7.340223034031916,
+            "p90_absolute_error_mw": 767.8214285714287
+          }
+        },
+        "test": {
+          "baseline": {
+            "sample_count": 1342,
+            "mae_mw": 277.6858100915478,
+            "rmse_mw": 703.0102816679234,
+            "bias_mw": 21.928944006812856,
+            "p90_absolute_error_mw": 929.9285714285717
+          },
+          "lightgbm": {
+            "sample_count": 1342,
+            "mae_mw": 277.1522458506877,
+            "rmse_mw": 701.8110311188312,
+            "bias_mw": 19.94754804043491,
+            "p90_absolute_error_mw": 939.3487529675791
+          },
+          "selected": {
+            "sample_count": 1342,
+            "mae_mw": 277.6858100915478,
+            "rmse_mw": 703.0102816679234,
+            "bias_mw": 21.928944006812856,
+            "p90_absolute_error_mw": 929.9285714285717
+          }
+        }
+      }
+    },
+    "hydro": {
+      "selected": "lightgbm",
+      "counts": {
+        "train": 46678,
+        "early_stop": 1394,
+        "selection": 1442,
+        "calibration": 2928,
+        "january_benchmark": 1488,
+        "test": 1344
+      },
+      "candidates": [
+        {
+          "training_start": "2023-01-02",
+          "training_samples": 46678,
+          "num_leaves": 7,
+          "min_data_in_leaf": 50,
+          "best_iteration": 361,
+          "selection_mae_mw": 100.73558024848141
+        },
+        {
+          "training_start": "2023-01-02",
+          "training_samples": 46678,
+          "num_leaves": 7,
+          "min_data_in_leaf": 150,
+          "best_iteration": 395,
+          "selection_mae_mw": 101.31875108733209
+        },
+        {
+          "training_start": "2023-01-02",
+          "training_samples": 46678,
+          "num_leaves": 15,
+          "min_data_in_leaf": 50,
+          "best_iteration": 220,
+          "selection_mae_mw": 99.59279849239503
+        },
+        {
+          "training_start": "2023-01-02",
+          "training_samples": 46678,
+          "num_leaves": 15,
+          "min_data_in_leaf": 150,
+          "best_iteration": 284,
+          "selection_mae_mw": 99.97914219987275
+        },
+        {
+          "training_start": "2023-01-02",
+          "training_samples": 46678,
+          "num_leaves": 31,
+          "min_data_in_leaf": 50,
+          "best_iteration": 284,
+          "selection_mae_mw": 102.62549642421749
+        },
+        {
+          "training_start": "2023-01-02",
+          "training_samples": 46678,
+          "num_leaves": 31,
+          "min_data_in_leaf": 150,
+          "best_iteration": 233,
+          "selection_mae_mw": 100.94681974128385
+        },
+        {
+          "training_start": "2025-01-02",
+          "training_samples": 11616,
+          "num_leaves": 7,
+          "min_data_in_leaf": 50,
+          "best_iteration": 92,
+          "selection_mae_mw": 110.155852278753
+        },
+        {
+          "training_start": "2025-01-02",
+          "training_samples": 11616,
+          "num_leaves": 7,
+          "min_data_in_leaf": 150,
+          "best_iteration": 162,
+          "selection_mae_mw": 113.50659493706698
+        },
+        {
+          "training_start": "2025-01-02",
+          "training_samples": 11616,
+          "num_leaves": 15,
+          "min_data_in_leaf": 50,
+          "best_iteration": 50,
+          "selection_mae_mw": 109.68197094880405
+        },
+        {
+          "training_start": "2025-01-02",
+          "training_samples": 11616,
+          "num_leaves": 15,
+          "min_data_in_leaf": 150,
+          "best_iteration": 50,
+          "selection_mae_mw": 108.68446565053266
+        },
+        {
+          "training_start": "2025-01-02",
+          "training_samples": 11616,
+          "num_leaves": 31,
+          "min_data_in_leaf": 50,
+          "best_iteration": 57,
+          "selection_mae_mw": 108.35047512299927
+        },
+        {
+          "training_start": "2025-01-02",
+          "training_samples": 11616,
+          "num_leaves": 31,
+          "min_data_in_leaf": 150,
+          "best_iteration": 56,
+          "selection_mae_mw": 107.06104078580336
+        }
+      ],
+      "parameters": {
+        "training_start": "2023-01-02",
+        "training_samples": 46678,
+        "num_leaves": 15,
+        "min_data_in_leaf": 50,
+        "best_iteration": 220,
+        "selection_mae_mw": 99.59279849239503
+      },
+      "export_parity_max_abs_error": 0.0,
+      "evaluation": {
+        "selection": {
+          "baseline": {
+            "sample_count": 1442,
+            "mae_mw": 110.27843273231623,
+            "rmse_mw": 151.6584491354661,
+            "bias_mw": 10.469140083217754,
+            "p90_absolute_error_mw": 262.85000000000014
+          },
+          "lightgbm": {
+            "sample_count": 1442,
+            "mae_mw": 99.59279849239503,
+            "rmse_mw": 131.90077913886142,
+            "bias_mw": 24.811029031547903,
+            "p90_absolute_error_mw": 212.71603001352244
+          },
+          "selected": {
+            "sample_count": 1442,
+            "mae_mw": 99.59279849239503,
+            "rmse_mw": 131.90077913886142,
+            "bias_mw": 24.811029031547903,
+            "p90_absolute_error_mw": 212.71603001352244
+          }
+        },
+        "january_benchmark": {
+          "baseline": {
+            "sample_count": 1488,
+            "mae_mw": 134.5554435483871,
+            "rmse_mw": 191.664262052471,
+            "bias_mw": 2.369287634408602,
+            "p90_absolute_error_mw": 310.5
+          },
+          "lightgbm": {
+            "sample_count": 1488,
+            "mae_mw": 118.2707903342867,
+            "rmse_mw": 161.7343546089911,
+            "bias_mw": -3.360253391986748,
+            "p90_absolute_error_mw": 268.95434840144793
+          },
+          "selected": {
+            "sample_count": 1488,
+            "mae_mw": 118.2707903342867,
+            "rmse_mw": 161.7343546089911,
+            "bias_mw": -3.360253391986748,
+            "p90_absolute_error_mw": 268.95434840144793
+          }
+        },
+        "test": {
+          "baseline": {
+            "sample_count": 1344,
+            "mae_mw": 110.83072916666667,
+            "rmse_mw": 161.32645209123405,
+            "bias_mw": 5.440848214285714,
+            "p90_absolute_error_mw": 278.70000000000005
+          },
+          "lightgbm": {
+            "sample_count": 1344,
+            "mae_mw": 105.23891128532658,
+            "rmse_mw": 146.65275846294202,
+            "bias_mw": 7.876734035352638,
+            "p90_absolute_error_mw": 240.56371104653545
+          },
+          "selected": {
+            "sample_count": 1344,
+            "mae_mw": 105.23891128532658,
+            "rmse_mw": 146.65275846294202,
+            "bias_mw": 7.876734035352638,
+            "p90_absolute_error_mw": 240.56371104653545
+          }
+        }
+      }
+    },
+    "biomass": {
+      "selected": "lightgbm",
+      "counts": {
+        "train": 46678,
+        "early_stop": 1394,
+        "selection": 1442,
+        "calibration": 2928,
+        "january_benchmark": 1488,
+        "test": 1344
+      },
+      "candidates": [
+        {
+          "training_start": "2023-01-02",
+          "training_samples": 46678,
+          "num_leaves": 7,
+          "min_data_in_leaf": 50,
+          "best_iteration": 161,
+          "selection_mae_mw": 575.9079888559329
+        },
+        {
+          "training_start": "2023-01-02",
+          "training_samples": 46678,
+          "num_leaves": 7,
+          "min_data_in_leaf": 150,
+          "best_iteration": 204,
+          "selection_mae_mw": 560.6343795913011
+        },
+        {
+          "training_start": "2023-01-02",
+          "training_samples": 46678,
+          "num_leaves": 15,
+          "min_data_in_leaf": 50,
+          "best_iteration": 119,
+          "selection_mae_mw": 551.8572104653304
+        },
+        {
+          "training_start": "2023-01-02",
+          "training_samples": 46678,
+          "num_leaves": 15,
+          "min_data_in_leaf": 150,
+          "best_iteration": 118,
+          "selection_mae_mw": 557.9760485986357
+        },
+        {
+          "training_start": "2023-01-02",
+          "training_samples": 46678,
+          "num_leaves": 31,
+          "min_data_in_leaf": 50,
+          "best_iteration": 60,
+          "selection_mae_mw": 563.1020306649306
+        },
+        {
+          "training_start": "2023-01-02",
+          "training_samples": 46678,
+          "num_leaves": 31,
+          "min_data_in_leaf": 150,
+          "best_iteration": 112,
+          "selection_mae_mw": 538.0892973745824
+        },
+        {
+          "training_start": "2025-01-02",
+          "training_samples": 11616,
+          "num_leaves": 7,
+          "min_data_in_leaf": 50,
+          "best_iteration": 45,
+          "selection_mae_mw": 635.0240370561016
+        },
+        {
+          "training_start": "2025-01-02",
+          "training_samples": 11616,
+          "num_leaves": 7,
+          "min_data_in_leaf": 150,
+          "best_iteration": 78,
+          "selection_mae_mw": 623.0346229448861
+        },
+        {
+          "training_start": "2025-01-02",
+          "training_samples": 11616,
+          "num_leaves": 15,
+          "min_data_in_leaf": 50,
+          "best_iteration": 30,
+          "selection_mae_mw": 636.0174188014812
+        },
+        {
+          "training_start": "2025-01-02",
+          "training_samples": 11616,
+          "num_leaves": 15,
+          "min_data_in_leaf": 150,
+          "best_iteration": 77,
+          "selection_mae_mw": 601.4545149037103
+        },
+        {
+          "training_start": "2025-01-02",
+          "training_samples": 11616,
+          "num_leaves": 31,
+          "min_data_in_leaf": 50,
+          "best_iteration": 37,
+          "selection_mae_mw": 600.3498518589834
+        },
+        {
+          "training_start": "2025-01-02",
+          "training_samples": 11616,
+          "num_leaves": 31,
+          "min_data_in_leaf": 150,
+          "best_iteration": 57,
+          "selection_mae_mw": 597.6794087793609
+        }
+      ],
+      "parameters": {
+        "training_start": "2023-01-02",
+        "training_samples": 46678,
+        "num_leaves": 31,
+        "min_data_in_leaf": 150,
+        "best_iteration": 112,
+        "selection_mae_mw": 538.0892973745824
+      },
+      "export_parity_max_abs_error": 0.0,
+      "evaluation": {
+        "selection": {
+          "baseline": {
+            "sample_count": 1442,
+            "mae_mw": 728.751386962552,
+            "rmse_mw": 1044.455343780942,
+            "bias_mw": -49.381761442441054,
+            "p90_absolute_error_mw": 1950.5
+          },
+          "lightgbm": {
+            "sample_count": 1442,
+            "mae_mw": 538.0892973745825,
+            "rmse_mw": 755.8198058496104,
+            "bias_mw": -226.23798451787954,
+            "p90_absolute_error_mw": 1400.0218728498076
+          },
+          "selected": {
+            "sample_count": 1442,
+            "mae_mw": 538.0892973745825,
+            "rmse_mw": 755.8198058496104,
+            "bias_mw": -226.23798451787954,
+            "p90_absolute_error_mw": 1400.0218728498076
+          }
+        },
+        "january_benchmark": {
+          "baseline": {
+            "sample_count": 1488,
+            "mae_mw": 535.7792338709677,
+            "rmse_mw": 779.0975489368508,
+            "bias_mw": 62.13340053763441,
+            "p90_absolute_error_mw": 1399.0
+          },
+          "lightgbm": {
+            "sample_count": 1488,
+            "mae_mw": 502.89940157912616,
+            "rmse_mw": 669.6373075745192,
+            "bias_mw": 94.94289881574147,
+            "p90_absolute_error_mw": 1113.1106459056632
+          },
+          "selected": {
+            "sample_count": 1488,
+            "mae_mw": 502.89940157912616,
+            "rmse_mw": 669.6373075745192,
+            "bias_mw": 94.94289881574147,
+            "p90_absolute_error_mw": 1113.1106459056632
+          }
+        },
+        "test": {
+          "baseline": {
+            "sample_count": 1344,
+            "mae_mw": 454.6908482142857,
+            "rmse_mw": 687.8592585413181,
+            "bias_mw": -73.93936011904762,
+            "p90_absolute_error_mw": 1263.5
+          },
+          "lightgbm": {
+            "sample_count": 1344,
+            "mae_mw": 363.8535636261753,
+            "rmse_mw": 544.0643427611836,
+            "bias_mw": -57.79597018158846,
+            "p90_absolute_error_mw": 986.9882585061006
+          },
+          "selected": {
+            "sample_count": 1344,
+            "mae_mw": 363.8535636261753,
+            "rmse_mw": 544.0643427611836,
+            "bias_mw": -57.79597018158846,
+            "p90_absolute_error_mw": 986.9882585061006
+          }
+        }
+      }
+    }
+  },
+  "limitations": [
+    "The first delivery day of each tuning/selection/calibration phase is purged so prior-phase labels are available at decision time.",
+    "National generation allocation is a scenario proxy, not an asset/PPA forecast.",
+    "Solar AGWS outcomes may be estimates; WINDFOR is an hourly power proxy.",
+    "No external weather, plant availability or fuel-price features.",
+    "A single final winter test window does not establish year-round reliability.",
+    "Future-mode models are fixed historical models and are not automatically retrained."
+  ],
+  "portfolio_backtest": {
+    "inputs": {
+      "demand_mwh_per_hour": 100,
+      "contracted_mwh_per_hour": 60,
+      "existing_purchases_mwh_per_hour": 25,
+      "each_national_source_share_pct": 0.05
+    },
+    "scope": "Illustrative fixed-demand portfolio; does not measure real customer procurement accuracy.",
+    "windows": {
+      "january": {
+        "baseline": {
+          "daily_evaluations": 62,
+          "daily_mae_mwh": 21.76898271889401,
+          "daily_bias_mwh": -20.056448156682027,
+          "empirical_p90_coverage": 0.9193548387096774
+        },
+        "selected": {
+          "daily_evaluations": 62,
+          "daily_mae_mwh": 13.322905302560757,
+          "daily_bias_mwh": -4.391823115165395,
+          "empirical_p90_coverage": 0.9354838709677419
+        },
+        "excluded_days_with_missing_outcomes": 0
+      },
+      "february": {
+        "baseline": {
+          "daily_evaluations": 54,
+          "daily_mae_mwh": 19.024416666666667,
+          "daily_bias_mwh": -16.273892857142854,
+          "empirical_p90_coverage": 1.0
+        },
+        "selected": {
+          "daily_evaluations": 54,
+          "daily_mae_mwh": 10.00454675587959,
+          "daily_bias_mwh": -1.058448317803392,
+          "empirical_p90_coverage": 1.0
+        },
+        "excluded_days_with_missing_outcomes": 2
+      }
+    }
+  },
+  "normalized_history_rows": 827156
+}

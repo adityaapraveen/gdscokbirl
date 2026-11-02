@@ -9,6 +9,7 @@ import {
   History,
   LayoutDashboard,
   Wind,
+  Calculator,
 } from "lucide-react";
 import {
   AccuracyPage,
@@ -19,8 +20,18 @@ import {
 import { dayLabel } from "./common";
 import type { SourceStatus } from "./api";
 import { SourceStatusBar, sourceLabel } from "./source";
+import { ProcurementPage } from "./procurement";
 
 const navigation = [
+  {
+    id: "procurement",
+    label: "Procurement",
+    icon: Calculator,
+    kicker: "PORTFOLIO ENERGY BALANCE",
+    title: "Know what remains to buy.",
+    description:
+      "Combine your demand and supply positions with four renewable generation estimates.",
+  },
   {
     id: "overview",
     label: "Overview",
@@ -122,7 +133,14 @@ export default function App() {
         <div className="sidebar-bottom">
           <div className="source-dot" />
           <div>
-            {sourceLabel(source?.mode)}<small>GB operationally metered wind</small>
+            {page === "procurement"
+              ? "Elexon renewable sources"
+              : sourceLabel(source?.mode)}
+            <small>
+              {page === "procurement"
+                ? "Wind · solar · hydro · biomass"
+                : "GB operationally metered wind"}
+            </small>
           </div>
           <a
             href="https://github.com/adityaapraveen/gdscokbirl"
@@ -142,9 +160,11 @@ export default function App() {
           </div>
           <div className="topbar-meta">
             <span className="pilot-dot" />
-            Historical analysis
+            {page === "procurement"
+              ? "Procurement scenarios"
+              : "Historical analysis"}
             <span className="topbar-separator" />
-            JAN 2026
+            {page === "procurement" ? "JAN 2026 + DAY-AHEAD" : "JAN 2026"}
           </div>
         </header>
         <main id="main-content">
@@ -155,68 +175,75 @@ export default function App() {
               <p>{current.description}</p>
             </div>
             <span className="edition">
-              GB WIND
+              {page === "procurement" ? "GB RENEWABLES" : "GB WIND"}
               <br />
               <strong>Day-ahead</strong>
             </span>
           </div>
-          <SourceStatusBar onStatus={setSource} />
-          <section className="controls" aria-label="Analysis controls">
-            <div className="control-fields">
-              {decisionPage && (
+          {page !== "procurement" && <SourceStatusBar onStatus={setSource} />}
+          {page !== "procurement" && (
+            <section className="controls" aria-label="Analysis controls">
+              <div className="control-fields">
+                {decisionPage && (
+                  <label className="field">
+                    <span>Delivery date</span>
+                    <input
+                      type="date"
+                      min="2026-01-02"
+                      max="2026-02-01"
+                      value={delivery}
+                      onInput={(event) => {
+                        if (event.currentTarget.value) {
+                          setDelivery(event.currentTarget.value);
+                          setRevealedKey(null);
+                        }
+                      }}
+                    />
+                  </label>
+                )}
                 <label className="field">
-                  <span>Delivery date</span>
+                  <span title="Publications after this London time on D-1 are excluded.">
+                    Decision cutoff · D-1
+                  </span>
                   <input
-                    type="date"
-                    min="2026-01-02"
-                    max="2026-02-01"
-                    value={delivery}
+                    type="time"
+                    value={cutoff}
                     onInput={(event) => {
                       if (event.currentTarget.value) {
-                        setDelivery(event.currentTarget.value);
+                        setCutoff(event.currentTarget.value);
                         setRevealedKey(null);
                       }
                     }}
                   />
                 </label>
-              )}
-              <label className="field">
-                <span title="Publications after this London time on D-1 are excluded.">
-                  Decision cutoff · D-1
-                </span>
-                <input
-                  type="time"
-                  value={cutoff}
-                  onInput={(event) => {
-                    if (event.currentTarget.value) {
-                      setCutoff(event.currentTarget.value);
-                      setRevealedKey(null);
-                    }
-                  }}
-                />
-              </label>
-              <div className="control-context">
-                <span>{decisionPage ? "Delivery day" : "Decision dates"}</span>
-                <strong>
-                  {decisionPage ? dayLabel(delivery) : "1 – 31 January 2026"}
-                </strong>
-                <small>Europe/London · GMT</small>
+                <div className="control-context">
+                  <span>
+                    {decisionPage ? "Delivery day" : "Decision dates"}
+                  </span>
+                  <strong>
+                    {decisionPage ? dayLabel(delivery) : "1 – 31 January 2026"}
+                  </strong>
+                  <small>Europe/London · GMT</small>
+                </div>
               </div>
-            </div>
-            {decisionPage ? (
-              <button
-                className={`button reveal-button ${reveal ? "revealed" : ""}`}
-                onClick={() => setRevealedKey(reveal ? null : replayKey)}
-              >
-                {reveal ? <EyeOff size={16} /> : <Eye size={16} />}
-                <span>{reveal ? "Reset replay" : "Reveal actual outcome"}</span>
-              </button>
-            ) : (
-              <span className="small-badge">
-                {cutoff} D-1 · NATIVE TIMESTAMPS
-              </span>
-            )}
-          </section>
+              {decisionPage ? (
+                <button
+                  className={`button reveal-button ${reveal ? "revealed" : ""}`}
+                  onClick={() => setRevealedKey(reveal ? null : replayKey)}
+                >
+                  {reveal ? <EyeOff size={16} /> : <Eye size={16} />}
+                  <span>
+                    {reveal ? "Reset replay" : "Reveal actual outcome"}
+                  </span>
+                </button>
+              ) : (
+                <span className="small-badge">
+                  {cutoff} D-1 · NATIVE TIMESTAMPS
+                </span>
+              )}
+            </section>
+          )}
+          {page === "procurement" && <ProcurementPage />}
           {page === "overview" && (
             <OverviewPage
               delivery={delivery}
