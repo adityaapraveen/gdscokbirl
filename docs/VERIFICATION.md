@@ -62,3 +62,8 @@ Record and upload the required unlisted video, add its real URL to README, verif
 - Live Elexon refresh for 3 November delivery succeeded in 3.33 seconds and returned 24 forecast hours.
 - Browser inputs of 2,400 MWh demand, 1,440 contracted and 600 purchased yield 360 MWh to buy with zero renewable allocation.
 - Increasing demand in one hour by 10 MWh changes the result to 370 MWh; daily/hourly entry conversion preserves the profile.
+
+## UI refinement · 3 November 2026
+
+- Browser checks cover all five views, replay reveal, daily/hourly procurement, invalid fields inside the collapsed editor, and widths of 375, 900 and 1280 pixels.
+- The TypeScript/Vite build and Impeccable scan pass; sampled text contrast checks found no remaining failures on Overview, Accuracy, Data Quality or Procurement.

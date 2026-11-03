@@ -10,3 +10,6 @@ frontend/node_modules
 .env.*
 docs/screenshots
 .local-only/
+
+.agents/
+.impeccable/

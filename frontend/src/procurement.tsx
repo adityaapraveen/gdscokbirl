@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Calculator, Download, RefreshCw, Info } from "lucide-react";
+import { Calculator, Download, RefreshCw, Info, ChevronDown } from "lucide-react";
 import { requestApi, useApi } from "./api";
 import { ApiState, Metric, Panel, number, clock } from "./common";
 
@@ -143,8 +143,10 @@ export function ProcurementPage() {
           cached.periods.map((point) => ({
             start: point.start,
             demand_mwh: profile.demand_mwh / (entryMode === "daily" ? 24 : 1),
-            contracted_mwh: profile.contracted_mwh / (entryMode === "daily" ? 24 : 1),
-            purchased_mwh: profile.purchased_mwh / (entryMode === "daily" ? 24 : 1),
+            contracted_mwh:
+              profile.contracted_mwh / (entryMode === "daily" ? 24 : 1),
+            purchased_mwh:
+              profile.purchased_mwh / (entryMode === "daily" ? 24 : 1),
           })),
         );
         try {
@@ -227,12 +229,14 @@ export function ProcurementPage() {
   function updateProfile(next: typeof profile) {
     setProfile(next);
     const divisor = entryMode === "daily" ? 24 : 1;
-    setPositions((rows) => rows.map((row) => ({
-      start: row.start,
-      demand_mwh: next.demand_mwh / divisor,
-      contracted_mwh: next.contracted_mwh / divisor,
-      purchased_mwh: next.purchased_mwh / divisor,
-    })));
+    setPositions((rows) =>
+      rows.map((row) => ({
+        start: row.start,
+        demand_mwh: next.demand_mwh / divisor,
+        contracted_mwh: next.contracted_mwh / divisor,
+        purchased_mwh: next.purchased_mwh / divisor,
+      })),
+    );
     setResult(null);
   }
 
@@ -284,14 +288,6 @@ export function ProcurementPage() {
 
   return (
     <div className="procurement">
-      <div className="context-banner">
-        <Info size={18} />
-        <span>
-          Estimate remaining energy to buy from your own demand and supply
-          positions. Renewable shares are explicit allocations of national
-          output, not individual asset forecasts.
-        </span>
-      </div>
       <section
         className="controls"
         aria-label="Procurement delivery and model settings"
@@ -397,7 +393,15 @@ export function ProcurementPage() {
               <span>{w}</span>
             </div>
           ))}
-          <form onSubmit={(event) => void calculate(event)}>
+          <form
+            onSubmit={(event) => void calculate(event)}
+            onInvalid={(event) => {
+              const disclosure = (event.target as HTMLElement).closest(
+                "details",
+              );
+              if (disclosure) disclosure.open = true;
+            }}
+          >
             <div className="two-columns">
               <Panel
                 title="Your energy positions"
@@ -405,9 +409,18 @@ export function ProcurementPage() {
               >
                 <label className="field">
                   <span>Input quantities</span>
-                  <select value={entryMode} onChange={(e) => changeEntryMode(e.target.value as "daily" | "hourly")}>
-                    <option value="daily">Daily totals · MWh for the whole day</option>
-                    <option value="hourly">Hourly quantities · MWh in every hour</option>
+                  <select
+                    value={entryMode}
+                    onChange={(e) =>
+                      changeEntryMode(e.target.value as "daily" | "hourly")
+                    }
+                  >
+                    <option value="daily">
+                      Daily totals · MWh for the whole day
+                    </option>
+                    <option value="hourly">
+                      Hourly quantities · MWh in every hour
+                    </option>
                   </select>
                 </label>
                 <div className="procurement-fields">
@@ -422,7 +435,8 @@ export function ProcurementPage() {
                             "Already contracted supply",
                             "Electricity already purchased",
                           ][i]
-                        } · {entryMode === "daily" ? "MWh/day" : "MWh/hour"}
+                        }{" "}
+                        · {entryMode === "daily" ? "MWh/day" : "MWh/hour"}
                       </span>
                       <input
                         type="number"
@@ -430,7 +444,9 @@ export function ProcurementPage() {
                         max="1000000000"
                         step="any"
                         required
-                        value={Number.isFinite(profile[name]) ? profile[name] : ""}
+                        value={
+                          Number.isFinite(profile[name]) ? profile[name] : ""
+                        }
                         onChange={(e) => {
                           updateProfile({
                             ...profile,
@@ -442,24 +458,29 @@ export function ProcurementPage() {
                     </label>
                   ))}
                 </div>
-                <p className="panel-note">
-                  Demand is how much electricity you expect to use, not how much
-                  you still need to buy. Contracted supply is energy already
-                  committed under your contracts. Already purchased includes all
-                  additional trades for this same date; enter them only once.
-                </p>
-                <p className="panel-note">
-                  {entryMode === "daily"
-                    ? "Daily totals are spread evenly across 24 hours. Adjust the hourly profile below if your demand or deliveries vary."
-                    : "These quantities are applied to every hour. Adjust individual hours below if needed."}
-                  {" "}Changing a bulk input replaces the hourly profile. Enter 0
-                  where you have no contracted supply or purchases.
-                </p>
-                <p className="panel-note">
-                  Remaining to buy = demand − contracted supply − already
-                  purchased − allocated renewables, with a minimum of zero per hour.
-                  Your demand is an input; the model estimates renewable supply.
-                </p>
+                <details className="input-help">
+                  <summary>How to enter your supply positions</summary>
+                  <p className="panel-note">
+                    Demand is how much electricity you expect to use, not how
+                    much you still need to buy. Contracted supply is energy
+                    already committed under your contracts. Already purchased
+                    includes all additional trades for this same date; enter
+                    them only once.
+                  </p>
+                  <p className="panel-note">
+                    {entryMode === "daily"
+                      ? "Daily totals are spread evenly across 24 hours. Adjust the hourly profile below if your demand or deliveries vary."
+                      : "These quantities are applied to every hour. Adjust individual hours below if needed."}{" "}
+                    Changing a bulk input replaces the hourly profile. Enter 0
+                    where you have no contracted supply or purchases.
+                  </p>
+                  <p className="panel-note">
+                    Remaining to buy = demand − contracted supply − already
+                    purchased − allocated renewables, with a minimum of zero per
+                    hour. Your demand is an input; the model estimates renewable
+                    supply.
+                  </p>
+                </details>
               </Panel>
               <Panel
                 title="Your renewable allocation"
@@ -477,7 +498,11 @@ export function ProcurementPage() {
                         max="100"
                         step="any"
                         required
-                        value={Number.isFinite(allocations[source]) ? allocations[source] : ""}
+                        value={
+                          Number.isFinite(allocations[source])
+                            ? allocations[source]
+                            : ""
+                        }
                         onChange={(e) => {
                           setAllocations({
                             ...allocations,
@@ -498,66 +523,77 @@ export function ProcurementPage() {
                 <p className="panel-note">
                   For example, 0.1% allocates one thousandth of national output.
                   Use only a documented exposure; nameplate MW is not a
-                  percentage.
+                  percentage. These national allocations are scenarios, not
+                  individual asset forecasts.
                 </p>
               </Panel>
             </div>
-            <Panel
-              title="Hourly delivery profile"
-              subtitle="Editable MWh for each delivery hour · these values are used in the calculation"
-            >
-              <div className="table-wrap">
-                <table className="position-table">
-                  <thead>
-                    <tr>
-                      <th>Start · London</th>
-                      <th>Demand</th>
-                      <th>Firm contracts</th>
-                      <th>Existing purchases</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {positions.map((position, index) => (
-                      <tr key={position.start}>
-                        <td>{clock(position.start)}</td>
-                        {(
-                          [
-                            "demand_mwh",
-                            "contracted_mwh",
-                            "purchased_mwh",
-                          ] as const
-                        ).map((field, i) => (
-                          <td key={field}>
-                            <input
-                              aria-label={`${["Demand", "Contracted supply", "Existing purchases"][i]} ${clock(position.start)}`}
-                              type="number"
-                              min="0"
-                              max="1000000000"
-                              step="any"
-                              required
-                              value={Number.isFinite(position[field]) ? position[field] : ""}
-                              onChange={(e) => {
-                                setPositions(
-                                  positions.map((row, j) =>
-                                    j === index
-                                      ? {
-                                          ...row,
-                                          [field]: e.target.valueAsNumber,
-                                        }
-                                      : row,
-                                  ),
-                                );
-                                setResult(null);
-                              }}
-                            />
-                          </td>
-                        ))}
+            <details className="profile-details">
+              <summary>
+                Edit hourly delivery profile{" "}
+                <span>24 hours · MWh per hour</span>
+              </summary>
+              <Panel
+                title="Hourly delivery profile"
+                subtitle="Editable MWh for each delivery hour · these values are used in the calculation"
+              >
+                <div className="table-wrap">
+                  <table className="position-table">
+                    <thead>
+                      <tr>
+                        <th>Start · London</th>
+                        <th>Demand</th>
+                        <th>Firm contracts</th>
+                        <th>Existing purchases</th>
                       </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-            </Panel>
+                    </thead>
+                    <tbody>
+                      {positions.map((position, index) => (
+                        <tr key={position.start}>
+                          <td>{clock(position.start)}</td>
+                          {(
+                            [
+                              "demand_mwh",
+                              "contracted_mwh",
+                              "purchased_mwh",
+                            ] as const
+                          ).map((field, i) => (
+                            <td key={field}>
+                              <input
+                                aria-label={`${["Demand", "Contracted supply", "Existing purchases"][i]} ${clock(position.start)}`}
+                                type="number"
+                                min="0"
+                                max="1000000000"
+                                step="any"
+                                required
+                                value={
+                                  Number.isFinite(position[field])
+                                    ? position[field]
+                                    : ""
+                                }
+                                onChange={(e) => {
+                                  setPositions(
+                                    positions.map((row, j) =>
+                                      j === index
+                                        ? {
+                                            ...row,
+                                            [field]: e.target.valueAsNumber,
+                                          }
+                                        : row,
+                                    ),
+                                  );
+                                  setResult(null);
+                                }}
+                              />
+                            </td>
+                          ))}
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </Panel>
+            </details>
             <div className="procurement-submit">
               <label>
                 <input
@@ -654,7 +690,7 @@ export function ProcurementPage() {
             </p>
           </Panel>
           <details className="provenance">
-            <summary>Assumptions and limitations</summary>
+            <summary>Assumptions and limitations <ChevronDown size={15} /></summary>
             <ul>
               {result.warnings.map((w) => (
                 <li key={w}>{w}</li>
@@ -664,56 +700,62 @@ export function ProcurementPage() {
         </section>
       )}
       {report.data && (
-        <Panel
-          title="Model validation"
-          subtitle="National generation error in MW · lower MAE is better · two cutoff settings per delivery hour"
-        >
-          <div className="table-wrap">
-            <table>
-              <thead>
-                <tr>
-                  <th>Source</th>
-                  <th>Selected method</th>
-                  <th>January baseline / selected</th>
-                  <th>February baseline / selected</th>
-                  <th>Training window</th>
-                </tr>
-              </thead>
-              <tbody>
-                {sources.map((source) => {
-                  const model = report.data!.report.sources[source];
-                  const jan = model.evaluation.january_benchmark;
-                  const test = model.evaluation.test;
-                  return (
-                    <tr key={source}>
-                      <td className="strong">{source}</td>
-                      <td>{model.selected}</td>
-                      <td>
-                        {jan
-                          ? `${number(jan.baseline.mae_mw, 1)} / ${number(jan.selected.mae_mw, 1)}`
-                          : "See model report"}
-                      </td>
-                      <td>
-                        {number(test.baseline.mae_mw, 1)} /{" "}
-                        {number(test.selected.mae_mw, 1)}
-                      </td>
-                      <td>
-                        {model.parameters.training_start || "2025-01-02"} →
-                        2025-08-31
-                      </td>
-                    </tr>
-                  );
-                })}
-              </tbody>
-            </table>
-          </div>
-          <p className="panel-note">
-            Selected on October validation, with September early stopping.
-            November–December calibrates scenarios; February is a separate
-            confirmation test. Solar outcomes may be estimates. Future accuracy
-            may differ.
-          </p>
-        </Panel>
+        <details className="model-details">
+          <summary>
+            Model validation{" "}
+            <span>Compare baseline and selected forecasts</span>
+          </summary>
+          <Panel
+            title="Model validation"
+            subtitle="National generation error in MW · lower MAE is better · two cutoff settings per delivery hour"
+          >
+            <div className="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Source</th>
+                    <th>Selected method</th>
+                    <th>January baseline / selected</th>
+                    <th>February baseline / selected</th>
+                    <th>Training window</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {sources.map((source) => {
+                    const model = report.data!.report.sources[source];
+                    const jan = model.evaluation.january_benchmark;
+                    const test = model.evaluation.test;
+                    return (
+                      <tr key={source}>
+                        <td className="strong">{source}</td>
+                        <td>{model.selected}</td>
+                        <td>
+                          {jan
+                            ? `${number(jan.baseline.mae_mw, 1)} / ${number(jan.selected.mae_mw, 1)}`
+                            : "See model report"}
+                        </td>
+                        <td>
+                          {number(test.baseline.mae_mw, 1)} /{" "}
+                          {number(test.selected.mae_mw, 1)}
+                        </td>
+                        <td>
+                          {model.parameters.training_start || "2025-01-02"} →
+                          2025-08-31
+                        </td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+            </div>
+            <p className="panel-note">
+              Selected on October validation, with September early stopping.
+              November–December calibrates scenarios; February is a separate
+              confirmation test. Solar outcomes may be estimates. Future
+              accuracy may differ.
+            </p>
+          </Panel>
+        </details>
       )}
     </div>
   );
