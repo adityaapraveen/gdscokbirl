@@ -42,7 +42,7 @@ a:focus-visible,
 input:focus-visible,
 select:focus-visible,
 summary:focus-visible {
-  outline: 3px solid #60b5a7;
+  outline: 3px solid #238274;
   outline-offset: 4px;
 }
 a {
