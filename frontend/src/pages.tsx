@@ -4,7 +4,6 @@ import {
   Check,
   CheckCircle2,
   Clock3,
-  FileCheck2,
   Info,
   ShieldCheck,
   Wind,
@@ -75,6 +74,49 @@ export function OverviewPage({
           periods
         </span>
       </div>
+      <div className="overview-main">
+        <Panel
+          title="Delivery-day wind outlook"
+          subtitle={`${dayLabel(delivery)} · native hourly timestamps · GB operationally metered wind`}
+          aside={
+            <span className="small-badge">
+              {reveal ? "OUTCOME REVEALED" : "AS OF DECISION"}
+            </span>
+          }
+        >
+          <Key actual={reveal} band={history.available} />
+          <WindChart points={data.curve} reveal={reveal} />
+          <div className="chart-footnote">
+            <Info size={14} />
+            {history.available
+              ? `Historical empirical range: ${history.day_count} earlier complete days. This range does not guarantee future coverage.`
+              : history.reason}
+          </div>
+        </Panel>
+        <aside className="brief">
+          <h2>Decision summary</h2>
+          <p>{data.brief}</p>
+          <div className="brief-divider" />
+          <div className="brief-data">
+            <span>Change from first vintage</span>
+            <strong>
+              {signed(data.change_from_first_mw)} <small>MW</small>
+            </strong>
+          </div>
+          <div className="brief-data">
+            <span>Calibration window</span>
+            <strong className="small">
+              {history.date_from && history.date_to
+                ? `${dayLabel(history.date_from).replace(" 2026", "")} – ${dayLabel(history.date_to).replace(" 2026", "")}`
+                : "No prior complete days"}
+            </strong>
+          </div>
+          <div className="brief-caption">
+            Use downside exposure as an input to procurement sizing. Demand,
+            portfolio position and prices are outside this analysis.
+          </div>
+        </aside>
+      </div>
       <div className="metrics six">
         <Metric
           label="Mean wind forecast"
@@ -121,56 +163,6 @@ export function OverviewPage({
           }
           hint={data.stability_method}
         />
-      </div>
-      <div className="overview-main">
-        <Panel
-          title="Delivery-day wind outlook"
-          subtitle={`${dayLabel(delivery)} · native hourly timestamps · GB operationally metered wind`}
-          aside={
-            <span className="small-badge">
-              {reveal ? "OUTCOME REVEALED" : "AS OF DECISION"}
-            </span>
-          }
-        >
-          <Key actual={reveal} band={history.available} />
-          <WindChart points={data.curve} reveal={reveal} />
-          <div className="chart-footnote">
-            <Info size={14} />
-            {history.available
-              ? `Historical empirical range: ${history.day_count} earlier complete days. This range does not guarantee future coverage.`
-              : history.reason}
-          </div>
-        </Panel>
-        <aside className="brief">
-          <div className="brief-kicker">
-            <FileCheck2 size={16} /> PROCUREMENT BRIEF
-          </div>
-          <h2>
-            The outlook at
-            <br />
-            decision time.
-          </h2>
-          <p>{data.brief}</p>
-          <div className="brief-divider" />
-          <div className="brief-data">
-            <span>Change from first vintage</span>
-            <strong>
-              {signed(data.change_from_first_mw)} <small>MW</small>
-            </strong>
-          </div>
-          <div className="brief-data">
-            <span>Calibration window</span>
-            <strong className="small">
-              {history.date_from && history.date_to
-                ? `${dayLabel(history.date_from).replace(" 2026", "")} – ${dayLabel(history.date_to).replace(" 2026", "")}`
-                : "No prior complete days"}
-            </strong>
-          </div>
-          <div className="brief-caption">
-            Use downside exposure as an input to procurement sizing. Demand,
-            portfolio position and prices are outside this analysis.
-          </div>
-        </aside>
       </div>
       <div className="two-columns">
         <Panel
@@ -241,7 +233,7 @@ export function OverviewPage({
           )}
         </Panel>
         <Panel
-          title="An auditable decision"
+          title="Decision record"
           subtitle="Follow the information used in this view"
         >
           <ol className="decision-trace">
