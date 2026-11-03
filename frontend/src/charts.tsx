@@ -17,12 +17,12 @@ import {
 import type { AccuracyData, EvolutionData, Point } from "./api";
 import { clock, dayLabel, number } from "./common";
 
-const grid = "#e7ecee";
-const axis = { fontSize: 11, fill: "#6d7d84" };
+const grid = "#e5eae5";
+const axis = { fontSize: 12, fill: "#5a6c63" };
 const power = (value: number) => number(value / 1000, 1);
 const tooltipStyle = {
   border: "1px solid #dce4e6",
-  borderRadius: 8,
+  borderRadius: 5,
   fontSize: 12,
   boxShadow: "0 4px 20px #142b3210",
 };
@@ -106,8 +106,8 @@ export function WindChart({
                 : "Delivery time · GMT",
               position: "insideBottom",
               offset: -17,
-              fontSize: 11,
-              fill: "#6d7d84",
+              fontSize: 12,
+              fill: "#5a6c63",
             }}
           />
           <YAxis
@@ -121,8 +121,8 @@ export function WindChart({
               value: "Wind generation (GW)",
               angle: -90,
               position: "insideLeft",
-              fontSize: 11,
-              fill: "#6d7d84",
+              fontSize: 12,
+              fill: "#5a6c63",
             }}
           />
           <Tooltip
@@ -218,8 +218,8 @@ export function EvolutionChart({ data }: { data: EvolutionData }) {
               value: "Forecast publication time · GMT",
               position: "insideBottom",
               offset: -20,
-              fontSize: 11,
-              fill: "#6d7d84",
+              fontSize: 12,
+              fill: "#5a6c63",
             }}
           />
           <YAxis
@@ -232,8 +232,8 @@ export function EvolutionChart({ data }: { data: EvolutionData }) {
               value: "Wind generation (GW)",
               angle: -90,
               position: "insideLeft",
-              fontSize: 11,
-              fill: "#6d7d84",
+              fontSize: 12,
+              fill: "#5a6c63",
             }}
           />
           <Tooltip
@@ -332,8 +332,8 @@ export function ScatterPlot({ points }: { points: Point[] }) {
               value: "Forecast (GW)",
               position: "insideBottom",
               offset: -18,
-              fontSize: 11,
-              fill: "#6d7d84",
+              fontSize: 12,
+              fill: "#5a6c63",
             }}
           />
           <YAxis
@@ -348,8 +348,8 @@ export function ScatterPlot({ points }: { points: Point[] }) {
               value: "Actual (GW)",
               angle: -90,
               position: "insideLeft",
-              fontSize: 11,
-              fill: "#6d7d84",
+              fontSize: 12,
+              fill: "#5a6c63",
             }}
           />
           <Tooltip
@@ -403,8 +403,8 @@ export function Histogram({ data }: { data: AccuracyData["histogram"] }) {
               value: "Signed error (GW) · bin lower edge",
               position: "insideBottom",
               offset: -18,
-              fontSize: 11,
-              fill: "#6d7d84",
+              fontSize: 12,
+              fill: "#5a6c63",
             }}
           />
           <YAxis
@@ -416,8 +416,8 @@ export function Histogram({ data }: { data: AccuracyData["histogram"] }) {
               value: "Observations",
               angle: -90,
               position: "insideLeft",
-              fontSize: 11,
-              fill: "#6d7d84",
+              fontSize: 12,
+              fill: "#5a6c63",
             }}
           />
           <Tooltip
@@ -476,8 +476,8 @@ export function ErrorBuckets({
               value: axisLabel,
               position: "insideBottom",
               offset: -18,
-              fontSize: 11,
-              fill: "#6d7d84",
+              fontSize: 12,
+              fill: "#5a6c63",
             }}
           />
           <YAxis
@@ -490,8 +490,8 @@ export function ErrorBuckets({
               value: "MAE (GW)",
               angle: -90,
               position: "insideLeft",
-              fontSize: 11,
-              fill: "#6d7d84",
+              fontSize: 12,
+              fill: "#5a6c63",
             }}
           />
           <Tooltip

@@ -1,6 +1,5 @@
 import { useState } from "react";
 import {
-  Activity,
   ArrowUpRight,
   ChartNoAxesCombined,
   Database,
@@ -24,28 +23,18 @@ import { ProcurementPage } from "./procurement";
 
 const navigation = [
   {
-    id: "procurement",
-    label: "Procurement",
-    icon: Calculator,
-    kicker: "PORTFOLIO ENERGY BALANCE",
-    title: "Know what remains to buy.",
-    description:
-      "Combine your demand and supply positions with four renewable generation estimates.",
-  },
-  {
     id: "overview",
     label: "Overview",
     icon: LayoutDashboard,
-    kicker: "DECISION COCKPIT",
-    title: "Tomorrow’s wind, at decision time.",
-    description: "See the forecast your procurement team could actually use.",
+    title: "Wind outlook",
+    description:
+      "National wind forecasts available at your selected decision cutoff.",
   },
   {
     id: "accuracy",
     label: "Accuracy",
     icon: ChartNoAxesCombined,
-    kicker: "HISTORICAL RELIABILITY",
-    title: "Understand the size of the miss.",
+    title: "Forecast accuracy",
     description:
       "Evaluate the forecasts available when the procurement decision was made.",
   },
@@ -53,19 +42,24 @@ const navigation = [
     id: "evolution",
     label: "Forecast Evolution",
     icon: History,
-    kicker: "DECISION REPLAY",
-    title: "A forecast is a moving target.",
-    description:
-      "Trace each publication. Separate what was known from what came later.",
+    title: "Forecast history",
+    description: "Published forecast versions for a single delivery hour.",
   },
   {
     id: "quality",
     label: "Data Quality",
     icon: Database,
-    kicker: "DATA HEALTH",
-    title: "Trust starts with the source.",
+    title: "Data coverage",
     description:
       "Inspect coverage, timestamps and the records behind every calculation.",
+  },
+  {
+    id: "procurement",
+    label: "Procurement",
+    icon: Calculator,
+    title: "Procurement estimate",
+    description:
+      "Combine your demand and supply positions with four renewable generation estimates.",
   },
 ] as const;
 type Page = (typeof navigation)[number]["id"];
@@ -81,6 +75,10 @@ export default function App() {
   const reveal = revealedKey === replayKey;
   const current = navigation.find((item) => item.id === page)!;
   const decisionPage = page === "overview" || page === "evolution";
+  function navigate(next: Page) {
+    setPage(next);
+    window.scrollTo(0, 0);
+  }
   return (
     <div className="app-shell">
       <a className="skip-link" href="#main-content">
@@ -92,43 +90,40 @@ export default function App() {
           href="#"
           onClick={(event) => {
             event.preventDefault();
-            setPage("overview");
+            navigate("overview");
           }}
         >
           <span className="brand-symbol">
             <Wind size={25} />
           </span>
           <span>
-            WindLens<small>PROCUREMENT INTELLIGENCE</small>
+            WindLens<small>Wind analysis</small>
           </span>
         </a>
-        <div className="workspace-label">
-          WORKSPACE <span>PILOT</span>
-        </div>
+
         <nav aria-label="Main navigation">
           {navigation.map((item) => (
             <button
               key={item.id}
-              onClick={() => setPage(item.id)}
-              className={page === item.id ? "active" : ""}
+              onClick={() => navigate(item.id)}
+              className={`${page === item.id ? "active" : ""} ${item.id === "procurement" ? "nav-extension" : ""}`}
               aria-current={page === item.id ? "page" : undefined}
             >
               <item.icon size={18} />
-              {item.label}
-              {page === item.id && <i />}
+              <span className="nav-label">
+                {item.label}
+                {item.id === "procurement" && <small>Extension</small>}
+              </span>
             </button>
           ))}
         </nav>
         <div className="sidebar-note">
-          <div className="sidebar-note-icon">
-            <Activity size={18} />
-          </div>
-          <strong>Every decision has a timestamp.</strong>
+          <strong>January 2026 study</strong>
           <p>
-            Explore the information available before tomorrow’s power had to be
-            bought.
+            Purchase decisions
+            <br />
+            1–31 January · Great Britain
           </p>
-          <span>JANUARY 2026 PILOT</span>
         </div>
         <div className="sidebar-bottom">
           <div className="source-dot" />
@@ -155,7 +150,7 @@ export default function App() {
       <div className="workspace">
         <header className="topbar">
           <div className="breadcrumb">
-            Workspace <span>/</span>
+            Analysis <span>/</span>
             <strong>{current.label}</strong>
           </div>
           <div className="topbar-meta">
@@ -170,17 +165,10 @@ export default function App() {
         <main id="main-content">
           <div className="page-intro">
             <div>
-              <div className="eyebrow">{current.kicker}</div>
               <h1>{current.title}</h1>
               <p>{current.description}</p>
             </div>
-            <span className="edition">
-              {page === "procurement" ? "GB RENEWABLES" : "GB WIND"}
-              <br />
-              <strong>Day-ahead</strong>
-            </span>
           </div>
-          {page !== "procurement" && <SourceStatusBar onStatus={setSource} />}
           {page !== "procurement" && (
             <section className="controls" aria-label="Analysis controls">
               <div className="control-fields">
@@ -243,6 +231,7 @@ export default function App() {
               )}
             </section>
           )}
+          {page !== "procurement" && <SourceStatusBar onStatus={setSource} />}
           {page === "procurement" && <ProcurementPage />}
           {page === "overview" && (
             <OverviewPage
@@ -252,7 +241,7 @@ export default function App() {
               onEvolution={(value) => {
                 setHour(value);
                 setRevealedKey(null);
-                setPage("evolution");
+                navigate("evolution");
               }}
             />
           )}

@@ -17,8 +17,12 @@ function refreshSource(force: boolean): Promise<SourceStatus> {
   });
   pendingRefresh = request;
   void request.then(
-    () => { pendingRefresh = null; },
-    () => { pendingRefresh = null; },
+    () => {
+      pendingRefresh = null;
+    },
+    () => {
+      pendingRefresh = null;
+    },
   );
   return request;
 }
@@ -55,7 +59,9 @@ export function SourceStatusBar({
       .finally(() => {
         if (active) setPending(false);
       });
-    return () => { active = false; };
+    return () => {
+      active = false;
+    };
   }, [onStatus]);
 
   useEffect(() => {
@@ -67,7 +73,10 @@ export function SourceStatusBar({
     ? new Date(status.last_attempt_at).getTime()
     : 0;
   const remaining = status
-    ? Math.max(0, Math.ceil((attemptTime + status.cooldown_seconds * 1000 - now) / 1000))
+    ? Math.max(
+        0,
+        Math.ceil((attemptTime + status.cooldown_seconds * 1000 - now) / 1000),
+      )
     : 0;
   const error = requestError || status?.error;
 
@@ -98,35 +107,56 @@ export function SourceStatusBar({
   }
 
   return (
-    <section className={`source-status ${error ? "source-warning" : ""}`} aria-label="Elexon connection and stored data">
+    <section
+      className={`source-status ${error ? "source-warning" : ""}`}
+      aria-label="Elexon connection and stored data"
+    >
       <div className="source-status-copy">
         <div className="source-status-heading" aria-live="polite">
           {error ? <AlertCircle size={16} /> : <Database size={16} />}
-          <strong>{pending ? "Checking Elexon API…" : status ? sourceLabel(status.mode) : "Elexon source status unavailable"}</strong>
-          <span className="source-status-scope">January 2026 decision window</span>
+          <strong>
+            {pending
+              ? "Checking Elexon API…"
+              : status
+                ? sourceLabel(status.mode)
+                : "Elexon source status unavailable"}
+          </strong>
         </div>
-        <p>
-          {pending
-            ? "Fetching the historical source data when due. Stored analysis remains available."
-            : !status
-              ? "Source freshness is unavailable. Showing the last loaded dataset."
-              : status.last_success_at
-                ? `Historical January data fetched: ${stamp(status.last_success_at)}.`
-                : "No successful API fetch recorded. Showing the stored startup data."}
-          {!pending && status && (
-            <> {status.storage === "persistent" ? "Saved in the database." : "Server cache may reset on restart."} Automatic checks reuse data for {Math.round(status.ttl_seconds / 60)} minutes.</>
-          )}
-        </p>
+        <details className="source-details">
+          <summary>
+            {status?.last_success_at
+              ? `Last checked ${stamp(status.last_success_at)}`
+              : pending
+                ? "Checking source freshness"
+                : "Source details"}
+          </summary>
+          <p>
+            January 2026 historical data.{" "}
+            {status?.storage === "persistent"
+              ? "Stored in the database."
+              : "The server cache is temporary; startup data is bundled."}
+            {status &&
+              ` Automatic checks reuse data for ${Math.round(status.ttl_seconds / 60)} minutes.`}
+          </p>
+        </details>
         {error && (
           <p className="source-status-error" role="alert">
-            Elexon refresh could not complete. Stored analysis is still available. {error}
+            Elexon refresh could not complete. Stored analysis is still
+            available. {error}
           </p>
         )}
       </div>
       <div className="source-status-action">
-        <button className="button" onClick={() => void refresh()} disabled={pending || remaining > 0}>
-          <RefreshCw size={14} className={pending ? "source-refreshing" : undefined} />
-          {pending ? "Fetching from Elexon…" : "Refresh from Elexon"}
+        <button
+          className="button"
+          onClick={() => void refresh()}
+          disabled={pending || remaining > 0}
+        >
+          <RefreshCw
+            size={14}
+            className={pending ? "source-refreshing" : undefined}
+          />
+          {pending ? "Checking…" : "Refresh Elexon"}
         </button>
         {!pending && remaining > 0 && (
           <small>Refresh available in {remaining}s</small>

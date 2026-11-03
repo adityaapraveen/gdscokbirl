@@ -12,3 +12,6 @@ frontend/dist
 !.env.example
 docs/screenshots
 .local-only/
+
+.agents/
+.impeccable/
